@@ -1,0 +1,84 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    background-position: right top;
+    background-size: cover;
+    background-image: url("../img/background.png");
+    background-color: #E4DDCA;
+}
+
+
+/* Containers */
+
+.quiz, .file {
+    text-align: center;
+}
+
+.quiz.container, .file.container {
+    position: relative;
+    top: 15%;
+
+    max-height: 75%;
+    width: 600px;
+    max-width: 80%;
+
+    margin: 0 auto;
+    border-radius: 20px;
+
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+
+    background-color: #e2e2da;
+    overflow-y: scroll;
+}
+
+
+/* Quiz */
+
+.quiz.form {
+    max-width: 90%;
+    margin: 6% auto;
+    margin-top: 5%;
+}
+
+.quiz.translate {
+    color: #3E3E3E;
+    font-size: 2em;
+}
+
+.quiz.translation {
+    height: 50px;
+    width: 100%;
+
+    border: none;
+    border: 1px solid #AEAEAE;
+    border-radius: 10px;
+
+    color: #3E3E3E;
+    font-size: 1.2em;
+
+    background-color: #f5f5f0;
+}
+
+
+/* File */
+
+.file.text {
+    padding: 5%;
+    background-color: red;
+}
+
+.file.buttons {
+    background-color: blue;
+}
+
+.file.kanji {
+    font-size: 4em;
+}
+
+.file.kana {
+}
+
+.file.romaji {
+}
