@@ -19,7 +19,7 @@ var api = require("./controllers/api.js");
 /* app configuration
 ========================================================================== */
 
-app.use(cors({origin:"http://chema22r.duckdns.org/memoriizu/"}));
+app.use(cors());
 app.use(bodyParser.json())
 app.use("/api", router);
 
