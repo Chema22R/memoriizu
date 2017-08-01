@@ -2,7 +2,6 @@ $(function() {
     $.ajax({
         url: "http://"+serverAddress+":"+serverPort+"/api/info",
         method: "GET",
-        crossDomain: true,
         success: function(res, status) {
             entriesGenerator(res);
         },
@@ -16,6 +15,14 @@ $(function() {
     });
 
     function entriesGenerator(res) {
-        alert(res);
+        console.log(res);
+
+        for (var i=0; i<res.length; i++) {
+            console.log(res[i].name);
+
+            for (var j=0; j<res[i].languages.length; j++) {
+                console.log(res[i].languages[j]);
+            }
+        }
     }
 });

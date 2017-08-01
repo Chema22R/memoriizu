@@ -101,6 +101,7 @@ p {
     border: none;
 
     font-weight: normal;
+    text-transform: capitalize;
     background: transparent;
 }
 
