@@ -17,28 +17,61 @@
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	<body>
-		<section id="fixedButtons">
+		<section id="fixedContent">
+			<div id="logFixed">
+				<div id="logFixedMsj" hidden></div>
+			</div>
 			<div id="editFixed">
-				<button id="editFixedTrigger" class="icon-edit icon" title="add a user/language/word" accesskey="a"></button>
+				<button id="editFixedTrigger" class="icon-edit icon" title="add/remove a user/language/word" accesskey="a"></button>
 				<div id="editFixedSubmenu" hidden>
-					<button class="icon-user icon" title="add a user"></button>
-					<button class="icon-language icon" title="add a language"></button>
-					<button class="icon-word icon" title="add a word"></button>
+					<button id="editFixedUser" class="submenu icon-user icon" value="user" title="add/remove a user"></button>
+					<button id="editFixedLang" class="submenu icon-language icon" value="language" title="add/remove a language"></button>
+					<button id="editFixedWord" class="submenu icon-word icon" value="word" title="add/remove a word"></button>
+					<div id="editFixedSubsubmenu" hidden>
+						<button id="editFixedAdd" class="subsubmenu icon-add icon" value="add" title="add"></button>
+						<button id="editFixedRemove" class="subsubmenu icon-remove icon" value="remove" title="remove"></button>
+					</div>
 				</div>
 			</div>
 		</section>
 
 		<section id="mainContent">
-			<div id="introContainer" class="container">
-				<h2 class="introUser" title="user chema">chema</h2>
-				<button class="introLanguage" title="language japanese">japanese (5/20)</button>
-				<button class="introLanguage" title="language english">engish (38/40)</button>
+			<div id="editMenu" class="container">
+				<form id="">
+					<input type="text" value="" placeholder="New user" autocomplete="on" required autofocus>
+					<p>------------------------</p>
+					<select required autofocus>
+						<option></option>
+						<option value="chema">chema</option>
+						<option value="roberto">roberto</option>
+					</select>
+					<p>------------------------</p>
+					<input type="text" value="" placeholder="New language" autocomplete="on" required autofocus>
+					<p>------------------------</p>
+					<select required autofocus>
+						<option></option>
+						<option value="japanese">japanese</option>
+						<option value="english">english</option>
+					</select>
+					<p>------------------------</p>
+					<textarea name="textarea" dirname="textarea.dir" placeholder="New words" required autofocus></textarea>
+					<p>------------------------</p>
+					<select required autofocus>
+						<option></option>
+						<option value="word1">word1</option>
+						<option value="word2">word2</option>
+					</select>
+
+					<input type="submit">
+				</form>
 			</div>
+
+			<div id="introContainer" class="container" hidden></div>
 
 			<div id="quizContainer" class="container" hidden>
 				<form id="quizForm" action="" method="get">
 					<label id="quizTranslate">Persona</label>
-					<input id="quizTranslation" type="text" value="" placeholder="Translation" autocomplete="off" alt="text translated" autofocus>
+					<input id="quizTranslation" type="text" value="" placeholder="Translation" autocomplete="off" autofocus>
 				</form>
 			</div>
 

@@ -6,9 +6,14 @@ html, body {
     font-family: sans-serif;
 }
 
-button {
-    cursor: pointer;
+body {
+    background-position: right top;
+    background-size: cover;
+    background-image: url("../img/background.png");
+    background-color: #E4DDCA;
 }
+
+button {cursor: pointer;}
 
 p {
   margin: 0;
@@ -23,9 +28,10 @@ p {
 
 
 
-/* Fixed */
+/* Fixed Content
+    ========================================================================== */
 
-#fixedButtons .icon {
+#fixedContent .icon {
     position: fixed;
     border: none;
 
@@ -33,9 +39,29 @@ p {
     background: transparent;
 }
 
-#fixedButtons .icon:hover {
-    color: #777068;
+#fixedContent .icon:hover {color: #777068;}
+
+
+/* Log */
+
+#logFixed {
+    position: fixed;
+    top: 20px;
+    left: 50%;
 }
+
+#logFixedMsj {
+    position: relative;
+    left: -50%;
+
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-align: center;
+    cursor: default;
+}
+
+
+/* Edit Buttons */
 
 #editFixedTrigger {
     top: 10px;
@@ -43,26 +69,32 @@ p {
     font-size: 40px;
 }
 
-#editFixedSubmenu * {
+#editFixedSubmenu .submenu {
     left: 10px;
+    height: 40px;
     width: 40px;
 }
 
-#editFixedSubmenu .icon-user {top: 60px;}
-#editFixedSubmenu .icon-language {top: 100px;}
-#editFixedSubmenu .icon-word {top: 140px;}
+#editFixedSubsubmenu .subsubmenu {
+    height: 40px;
+    width: 30px;
+    font-size: 20px;
+}
+
+#editFixedUser {top: 55px;}
+#editFixedLang {top: 95px;}
+#editFixedWord {top: 135px;}
+#editFixedAdd {left: 50px;}
+#editFixedRemove {left: 80px;}
 
 
-/* Containers (general) */
+
+/* Main Content
+    ========================================================================== */
 
 #mainContent {
     height: 100%;
     width: 100%;
-
-    background-position: right top;
-    background-size: cover;
-    background-image: url("../img/background.png");
-    background-color: #E4DDCA;
 }
 
 #mainContent .container {
@@ -84,18 +116,23 @@ p {
     overflow-y: scroll;
 }
 
-#mainContent * {
-    text-align: center;
+#mainContent * {text-align: center;}
+
+
+/* Edit Menu */
+
+#editMenu {
+
 }
 
 
 /* Intro */
 
-#introContainer {
-    padding-bottom: 10px;
-}
+#introContainer {padding-bottom: 10px;}
 
-#introContainer .introUser, #introContainer .introLanguage {
+#introContainer .introUser,
+#introContainer .introLanguage,
+#introContainer .noInfo {
     display: block;
 
     border: none;
@@ -105,20 +142,21 @@ p {
     background: transparent;
 }
 
-#introContainer .introUser {
-    margin: 20px auto 5px auto;
+#introContainer .introUser,
+#introContainer .noInfo {
+    margin: 20px auto 8px auto;
     font-size: 1.4em;
     cursor: default;
 }
 
 #introContainer .introLanguage {
-    margin: 5px auto 10px auto;
+    margin: 8px auto;
     font-size: 1em;
 }
 
-#introContainer .introLanguage:hover {
-    color: #878078;
-}
+#introContainer .introLanguage:hover {color: #878078;}
+
+#introContainer .noInfo {text-transform: none;}
 
 
 /* Quiz */
@@ -128,9 +166,7 @@ p {
     margin: 25px auto;
 }
 
-#quizTranslate {
-    font-size: 1.8em;
-}
+#quizTranslate {font-size: 1.8em;}
 
 #quizTranslation {
     height: 45px;
@@ -155,13 +191,9 @@ p {
     cursor: default;
 }
 
-#fileText p {
-    margin: 15px auto;
-}
+#fileText p {margin: 15px auto;}
 
-#fileTextKanji {
-    font-size: 3em;
-}
+#fileTextKanji {font-size: 3em;}
 
 
 #fileButtons button {
