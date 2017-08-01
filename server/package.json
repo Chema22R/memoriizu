@@ -1,0 +1,23 @@
+{
+  "name": "memoriizu",
+  "version": "1.0.0",
+  "description": "Memoriizu",
+  "main": "server.js",
+  "dependencies": {
+  	"express": "4.x",
+    "mongoose": "4.x",
+    "body-parser": "1.x",
+    "cors": "2.x"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://chemarivera.visualstudio.com/_git/Memoriizu"
+  },
+  "author": "Jose Maria Rivera Alonso",
+  "license": "ISC"
+}

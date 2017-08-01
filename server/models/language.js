@@ -1,0 +1,21 @@
+var mongoose = require("mongoose");
+
+var languageSchema = new mongoose.Schema({
+    name: String,
+    user: String,
+	dictionary: [{
+        fields: [],
+        count: {
+            total: {type: Number, default: 0},
+            correct: {type: Number, default: 0},
+            wrong: {type: Number, default: 0}
+        },
+        countdown: {
+            new: {type: Number, default: 5},
+            wrong: {type: Number, default: 0}
+        }
+    }],
+    date: {type: Date, default: Date.now}
+});
+
+module.exports = mongoose.model("language", languageSchema);

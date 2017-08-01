@@ -1,25 +1,76 @@
 html, body {
     height: 100%;
     width: 100%;
+
+    color: #3E3E3E;
+    font-family: sans-serif;
+}
+
+button {
+    cursor: pointer;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.icon {
+    padding: 0;
+    font-size: 25px;
+    color: #e2e2da;
+}
+
+
+
+/* Fixed */
+
+#fixedButtons .icon {
+    position: fixed;
+    border: none;
+
+    color: #575048;
+    background: transparent;
+}
+
+#fixedButtons .icon:hover {
+    color: #777068;
+}
+
+#editFixedTrigger {
+    top: 10px;
+    left: 10px;
+    font-size: 40px;
+}
+
+#editFixedSubmenu * {
+    left: 10px;
+    width: 40px;
+}
+
+#editFixedSubmenu .icon-user {top: 60px;}
+#editFixedSubmenu .icon-language {top: 100px;}
+#editFixedSubmenu .icon-word {top: 140px;}
+
+
+/* Containers (general) */
+
+#mainContent {
+    height: 100%;
+    width: 100%;
+
     background-position: right top;
     background-size: cover;
     background-image: url("../img/background.png");
     background-color: #E4DDCA;
 }
 
-
-/* Containers */
-
-.quiz, .file {
-    text-align: center;
-}
-
-.quiz.container, .file.container {
+#mainContent .container {
     position: relative;
     top: 15%;
 
     max-height: 75%;
-    width: 600px;
+    width: 500px;
     max-width: 80%;
 
     margin: 0 auto;
@@ -33,52 +84,119 @@ html, body {
     overflow-y: scroll;
 }
 
+#mainContent * {
+    text-align: center;
+}
+
+
+/* Intro */
+
+#introContainer {
+    padding-bottom: 10px;
+}
+
+#introContainer .introUser, #introContainer .introLanguage {
+    display: block;
+
+    border: none;
+
+    font-weight: normal;
+    background: transparent;
+}
+
+#introContainer .introUser {
+    margin: 20px auto 5px auto;
+    font-size: 1.4em;
+    cursor: default;
+}
+
+#introContainer .introLanguage {
+    margin: 5px auto 10px auto;
+    font-size: 1em;
+}
+
+#introContainer .introLanguage:hover {
+    color: #878078;
+}
+
 
 /* Quiz */
 
-.quiz.form {
+#quizForm {
     max-width: 90%;
-    margin: 6% auto;
-    margin-top: 5%;
+    margin: 25px auto;
 }
 
-.quiz.translate {
-    color: #3E3E3E;
-    font-size: 2em;
+#quizTranslate {
+    font-size: 1.8em;
 }
 
-.quiz.translation {
-    height: 50px;
+#quizTranslation {
+    height: 45px;
     width: 100%;
+
+    margin-top: 10px;
 
     border: none;
     border: 1px solid #AEAEAE;
     border-radius: 10px;
 
-    color: #3E3E3E;
     font-size: 1.2em;
-
     background-color: #f5f5f0;
 }
 
 
 /* File */
 
-.file.text {
-    padding: 5%;
-    background-color: red;
+#fileText {
+    max-width: 90%;
+    margin: 20px auto 15px auto;
+    cursor: default;
 }
 
-.file.buttons {
-    background-color: blue;
+#fileText p {
+    margin: 15px auto;
 }
 
-.file.kanji {
-    font-size: 4em;
+#fileTextKanji {
+    font-size: 3em;
 }
 
-.file.kana {
+
+#fileButtons button {
+    height: 38px;
+    border: none;
 }
 
-.file.romaji {
+#fileButtonRight {
+    float: left;
+    width: 50%;
+    background-color: #008000;
+}
+
+#fileButtonWrong {
+    float: left;
+    width: 50%;
+    background-color: #EE0000;
+}
+
+#fileButtonContinue {
+    float: left;
+    width: 100%;
+    background-color: #0066FF;
+}
+
+#fileButtonRight:hover {
+    font-size: 28px;
+    background-color: #229022;
+}
+
+#fileButtonWrong:hover {
+    font-size: 28px;
+    background-color: #FF2222;
+}
+
+#fileButtonContinue:hover {
+    font-size: 28px;
+    background-color: #0088FF;
 }

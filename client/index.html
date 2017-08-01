@@ -3,9 +3,10 @@
 	<head>
 		<title>メモリーズ</title>
 		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1"/>
 		<link rel="stylesheet" type="text/css" href="css/normalize.css">
 		<link rel="stylesheet" type="text/css" href="css/index.css">
+		<link rel="stylesheet" href="fonts/icomoon/style.css">
 		<link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png">
@@ -16,23 +17,43 @@
 		<meta name="theme-color" content="#ffffff">
 	</head>
 	<body>
-		<section class="quiz container" hidden>
-			<form class="quiz form" action="" method="get">
-				<label class="quiz translate">Persona</label><br><br>
-				<input class="quiz translation" type="text" value="" placeholder="Translation" autocomplete="off" alt="text translated" autofocus>
-			</form>
+		<section id="fixedButtons">
+			<div id="editFixed">
+				<button id="editFixedTrigger" class="icon-edit icon" title="add a user/language/word" accesskey="a"></button>
+				<div id="editFixedSubmenu" hidden>
+					<button class="icon-user icon" title="add a user"></button>
+					<button class="icon-language icon" title="add a language"></button>
+					<button class="icon-word icon" title="add a word"></button>
+				</div>
+			</div>
 		</section>
 
-		<section class="file container">
-			<div class="file text">
-				<p class="file kanji">人人人人人人人</p>
-				<p class="file kana">ひと ひと ひと ひと ひと ひと ひと ひと ひと</p>
-				<p class="file translate">Person Person Person Person Person Person Person Person</p>
+		<section id="mainContent">
+			<div id="introContainer" class="container">
+				<h2 class="introUser" title="user chema">Chema</h2>
+				<button class="introLanguage" title="language japanese">Japanese (5/20)</button>
+				<button class="introLanguage" title="language english">Engish (38/40)</button>
 			</div>
 
-			<div class="file buttons">
-				<button>si</button>
-				<button>no</button>
+			<div id="quizContainer" class="container" hidden>
+				<form id="quizForm" action="" method="get">
+					<label id="quizTranslate">Persona</label>
+					<input id="quizTranslation" type="text" value="" placeholder="Translation" autocomplete="off" alt="text translated" autofocus>
+				</form>
+			</div>
+
+			<div id="fileContainer" class="container" hidden>
+				<div id="fileText">
+					<p id="fileTextKanji">人</p>
+					<p id="fileTextKana">ひと</p>
+					<p id="fileTextTranslation">Person</p>
+				</div>
+
+				<div id="fileButtons">
+					<button id="fileButtonRight" class="icon-right icon" title="correct translation" accesskey="y"></button>
+					<button id="fileButtonWrong" class="icon-wrong icon" title="wrong translation" accesskey="n"></button>
+					<button id="fileButtonContinue" class="icon-continue icon" title="next quiz" accesskey="c"></button>
+				</div>
 			</div>
 		</section>
 
@@ -42,5 +63,8 @@
 
 		<!-- scripts -->
 		<script src="js/serverConnectionInfo.js" type="text/javascript"></script>
+		<script src="js/window.js" type="text/javascript"></script>
+		<script src="js/fixed.js" type="text/javascript"></script>
+		<script src="js/getInfo.js" type="text/javascript"></script>
 	</body>
 </html>

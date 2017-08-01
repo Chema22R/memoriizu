@@ -1,2 +1,2 @@
-var serverAddress="chema22r.duckdns.org";
+var serverAddress="localhost";
 var serverPort="8080";
