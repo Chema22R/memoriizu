@@ -18,54 +18,29 @@
 	</head>
 	<body>
 		<section id="fixedContent">
-			<div id="logFixed">
-				<div id="logFixedMsj" hidden></div>
+			<div id="fixedLog">
+				<div id="fixedLogMsj" hidden></div>
 			</div>
-			<div id="editFixed">
-				<button id="editFixedTrigger" class="icon-edit icon" title="add/remove a user/language/word" accesskey="a"></button>
-				<div id="editFixedSubmenu" hidden>
-					<button id="editFixedUser" class="submenu icon-user icon" value="user" title="add/remove a user"></button>
-					<button id="editFixedLang" class="submenu icon-language icon" value="language" title="add/remove a language"></button>
-					<button id="editFixedWord" class="submenu icon-word icon" value="word" title="add/remove a word"></button>
-					<div id="editFixedSubsubmenu" hidden>
-						<button id="editFixedAdd" class="subsubmenu icon-add icon" value="add" title="add"></button>
-						<button id="editFixedRemove" class="subsubmenu icon-remove icon" value="remove" title="remove"></button>
+
+			<div id="fixedEditButtons">
+				<button id="fixedEditTrigger" class="icon-edit icon" title="add/remove a user/language/word" accesskey="a"></button>
+				<div id="fixedEditSubButtons" hidden>
+					<button id="fixedEditUser" class="subButton icon-user icon" value="user" title="add/remove a user"></button>
+					<button id="fixedEditLang" class="subButton icon-language icon" value="language" title="add/remove a language"></button>
+					<button id="fixedEditWord" class="subButton icon-word icon" value="word" title="add/remove a word"></button>
+					<div id="fixedEditSubSubButtons" hidden>
+						<button id="fixedEditAdd" class="subSubButton icon-add icon" value="add" title="add"></button>
+						<button id="fixedEditRemove" class="subSubButton icon-remove icon" value="remove" title="remove"></button>
 					</div>
 				</div>
 			</div>
+
+			<div id="fixedEditMenu" hidden></div>
+
+			<div id="fixedLeftover" hidden></div>
 		</section>
 
 		<section id="mainContent">
-			<div id="editMenu" class="container">
-				<form id="">
-					<input type="text" value="" placeholder="New user" autocomplete="on" required autofocus>
-					<p>------------------------</p>
-					<select required autofocus>
-						<option></option>
-						<option value="chema">chema</option>
-						<option value="roberto">roberto</option>
-					</select>
-					<p>------------------------</p>
-					<input type="text" value="" placeholder="New language" autocomplete="on" required autofocus>
-					<p>------------------------</p>
-					<select required autofocus>
-						<option></option>
-						<option value="japanese">japanese</option>
-						<option value="english">english</option>
-					</select>
-					<p>------------------------</p>
-					<textarea name="textarea" dirname="textarea.dir" placeholder="New words" required autofocus></textarea>
-					<p>------------------------</p>
-					<select required autofocus>
-						<option></option>
-						<option value="word1">word1</option>
-						<option value="word2">word2</option>
-					</select>
-
-					<input type="submit">
-				</form>
-			</div>
-
 			<div id="introContainer" class="container" hidden></div>
 
 			<div id="quizContainer" class="container" hidden>
@@ -97,7 +72,8 @@
 		<!-- scripts -->
 		<script src="js/serverConnectionInfo.js" type="text/javascript"></script>
 		<script src="js/window.js" type="text/javascript"></script>
-		<script src="js/fixed.js" type="text/javascript"></script>
-		<script src="js/getInfo.js" type="text/javascript"></script>
+		<script src="js/log.js" type="text/javascript"></script>
+		<script src="js/intro.js" type="text/javascript"></script>
+		<script src="js/editMenu.js" type="text/javascript"></script>
 	</body>
 </html>

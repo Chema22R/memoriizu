@@ -48,10 +48,10 @@ promise = mongoose.connect(uri, {useMongoClient: true}, function(err) {
 ========================================================================== */
 
 router.route("/info")
+	.get(api.getInfo)
 	.post(api.addInfo)
-	.delete(api.delInfo)
-	.get(api.getInfo);
+	.delete(api.delInfo);
 
-/*router.route("/file/:id")
-	.get(api.getById)
-	.delete(api.deleteById);*/
+router.route("/session")
+	.get(api.getSession)
+	.post();

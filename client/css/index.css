@@ -31,26 +31,17 @@ p {
 /* Fixed Content
     ========================================================================== */
 
-#fixedContent .icon {
-    position: fixed;
-    border: none;
-
-    color: #575048;
-    background: transparent;
-}
-
-#fixedContent .icon:hover {color: #777068;}
-
+#fixedContent * {z-index: 9999;}
 
 /* Log */
 
-#logFixed {
+#fixedLog {
     position: fixed;
     top: 20px;
     left: 50%;
 }
 
-#logFixedMsj {
+#fixedLogMsj {
     position: relative;
     left: -50%;
 
@@ -63,29 +54,137 @@ p {
 
 /* Edit Buttons */
 
-#editFixedTrigger {
+#fixedEditButtons .icon {
+    position: fixed;
+    border: none;
+
+    color: #575048;
+    background: transparent;
+}
+
+#fixedEditButtons .icon:hover {color: #777068;}
+
+#fixedEditTrigger {
     top: 10px;
     left: 10px;
+    padding-bottom: 10px;
+
     font-size: 40px;
 }
 
-#editFixedSubmenu .submenu {
+#fixedEditSubButtons .subButton {
     left: 10px;
     height: 40px;
     width: 40px;
 }
 
-#editFixedSubsubmenu .subsubmenu {
+#fixedEditSubSubButtons .subSubButton {
     height: 40px;
     width: 30px;
     font-size: 20px;
 }
 
-#editFixedUser {top: 55px;}
-#editFixedLang {top: 95px;}
-#editFixedWord {top: 135px;}
-#editFixedAdd {left: 50px;}
-#editFixedRemove {left: 80px;}
+#fixedEditUser {top: 55px;}
+#fixedEditLang {top: 95px;}
+#fixedEditWord {top: 135px;}
+#fixedEditAdd {left: 50px;}
+#fixedEditRemove {left: 80px;}
+
+
+/* Edit Menu */
+
+#fixedEditMenu {
+    position: fixed;
+    top: 15%;
+
+    max-height: 75%;
+    width: 500px;
+    max-width: 80%;
+
+    border-radius: 10px;
+
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+
+    background-color: #e2e2da;
+    overflow-y: scroll;
+    z-index: 9999;
+}
+
+#fixedEditMenu * {text-align: center;}
+
+#fixedEditMenuForm {
+    max-width: 90%;
+    margin: 20px auto 10px auto;
+}
+
+#fixedEditMenuTitle {
+    margin: 10px auto;
+
+    font-weight: bold;
+    font-size: 1.5em;
+    text-transform: capitalize;
+}
+
+#fixedEditMenuSubmit {
+    border: none;
+    border-radius: 10px;
+
+    color: #575048;
+    background-color: transparent;
+}
+
+#fixedEditMenuSubmit:hover {color: #777068;}
+
+
+#fixedEditMenuForm input[type=text] {
+    display: block;
+    margin: 10px auto;
+    padding: 0 10px;
+
+    height: 30px;
+    
+    border: 1px solid #AEAEAE;
+    border-radius: 10px;
+}
+
+
+#fixedEditMenuForm select {
+    display: block;
+    margin: 5px auto;
+    padding: 0 15px;
+
+    height: 30px;
+    min-width: 40%;
+    max-width: 90%;
+
+    text-transform: capitalize;
+}
+
+
+#fixedEditMenuForm textarea {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+
+    min-width: 60%;
+    max-width: 90%;
+}
+
+
+/* Leftover */
+
+#fixedLeftover {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+
+    background-color: #000;
+    opacity: 0.3;
+    
+    z-index: 9998;
+}
 
 
 
@@ -117,13 +216,6 @@ p {
 }
 
 #mainContent * {text-align: center;}
-
-
-/* Edit Menu */
-
-#editMenu {
-
-}
 
 
 /* Intro */
@@ -174,7 +266,6 @@ p {
 
     margin-top: 10px;
 
-    border: none;
     border: 1px solid #AEAEAE;
     border-radius: 10px;
 
