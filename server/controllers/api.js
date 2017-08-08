@@ -469,6 +469,7 @@ exports.getSession = function(req, res) {
 
         Language.findById(language, {
             _id: 1,
+            period: 1,
             dictionary: 1
         }, function(err, query) {
             if (err) {
@@ -495,49 +496,186 @@ exports.getSession = function(req, res) {
 
     function generateSession(language) {
         var dictionarySize = language.dictionary.length;
-        var sessionSize = Math.ceil(language.dictionary.length/7); // tentative session size, could be bigger than dictionary size (normal session + new/wrong)
-        var sessionRef;
+        var pendingWords = 0;
+        var sessionSize;
+        var sequenceSpecial = new Array();
+        var sequenceNormal = new Array();
         var sequence = new Array();
         var session = new Array();
 
-        logger.log("    Getting session counter reference...");
+        if (language.period.current == 0) {
+            resetWords(language._id, dictionarySize);
+        }
+
+        logger.log("    Getting session size...");
 
         for (var i=0; i<dictionarySize; i++) {
-            if ((sessionRef === undefined) || (language.dictionary[i].count.total < sessionRef)) {
-                sessionRef = language.dictionary[i].count.total;
+            if ((!language.dictionary[i].ref) && (language.dictionary[i].countdown.new == 0) && (language.dictionary[i].countdown.wrong == 0)) {
+                pendingWords++;
             }
         }
 
-        logger.log("      Counter reference obtained: " + sessionRef);
+        sessionSize = Math.ceil(pendingWords/(language.period.length-language.period.current+1));
+
+        logger.log("      Session size calculated: " + sessionSize);
         logger.log("    Getting session sequence...");
 
         for (var i=0; i<dictionarySize; i++) {
-            if ((language.dictionary[i].countdown.new != 0) || (language.dictionary[i].countdown.wrong != 0)) {
-                sequence[sequence.length] = i;
-                sessionSize++;
+            if ((language.dictionary[i].countdown.new > 0) || (language.dictionary[i].countdown.wrong > 0)) {
+                sequenceSpecial[sequenceSpecial.length] = i;
             }
         }
 
-        logger.log("      Added " + sequence.length + " new/wrong elements to sequence");
+        logger.log("      Special session sequence obtained (" + sequenceSpecial.length + " elements): [" + sequenceSpecial + "]");
 
-        while ((sequence.length < dictionarySize) && (sequence.length < sessionSize)) {
-            var n = Math.floor(Math.random() * dictionarySize);
-            if ((sequence.indexOf(n) >= 0) || (language.dictionary[n].count.total != sessionRef)) continue;
-            sequence[sequence.length] = n;
+        for (var i=0; i<dictionarySize && sequenceNormal.length<sessionSize; i++) {
+            if ((sequenceNormal.indexOf(i) == -1) && (sequenceSpecial.indexOf(i) == -1) && (!language.dictionary[i].ref)) {
+                sequenceNormal[sequenceNormal.length] = i;
+            }
         }
 
-        logger.log("      Sequence obtained from language '" + language.id + "' (" + sequence.length + " elements)");
+        logger.log("      Normal session sequence obtained (" + sequenceNormal.length + " elements): [" + sequenceNormal + "]");
+
+        sequence = sequenceSpecial.concat(sequenceNormal);
+
+        for (var j, x, i=sequence.length; i; i--) {
+            j = Math.floor(Math.random() * i);
+            x = sequence[i-1];
+            sequence[i-1] = sequence[j];
+            sequence[j] = x;
+        }
+
+        logger.log("      Session sequences combined and shuffled (" + sequence.length + " elements): [" + sequence + "]");
         logger.log("    Generating session with calculated sequence...");
-        logger.log("      Sequence [" + sequence + "]");
 
         for (var i=0; i<sequence.length; i++) {
             session[i] = language.dictionary[sequence[i]];
         }
 
         logger.log("      Session generated (" + session.length + " elements)");
+        logger.log("    Updating language period state...");
 
-        res.json(session);
+        if (language.period.current == language.period.length) {
+            language.period.current = 0;
+        } else {
+            language.period.current++;
+        }
 
-        logger.log("  GETSESSION request completed");
+        Language.update({
+            _id: language._id,
+        }, {
+            "period.current": language.period.current
+        }, function(err, query) {
+            if (err) {
+                logger.error("\n- ERROR GETSESSION at updating period state of language '" + language._id + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                res.sendStatus(500);
+            } else {
+                logger.log("      Period state for language '" + language._id + "' updated (next session is " + language.period.current + "/" + language.period.length + ")");
+                res.json(session);
+            }
+            
+            logger.log("  GETSESSION request completed");
+        });
+    }
+
+    function resetWords(language, dictionarySize) {
+        logger.log("    Reseting words references...");
+
+        for (var i=0; i<dictionarySize; i++) {
+            Language.update({
+                _id: language,
+                "dictionary.ref": true
+            }, {
+                "dictionary.$.ref": false
+            }, function(err, query) {
+                if (err) {
+                    logger.error("\n- ERROR GETSESSION at reseting words references on language '" + language + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                }
+            });
+        }
+
+        logger.log("      Words references reseted on language '" + language + "'");
+    }
+};
+
+
+exports.postResults = function(req, res) {
+    logger.log("\n> POSTRESULTS request initiated (" + new Date().toUTCString() + ", " + req.connection.remoteAddress + ")");
+    logger.time("  POSTRESULTS request completed");
+
+    if (mongoose.connection.readyState === 1) {
+        getWord(req.query.language, req.query.word, req.query.state);
+    } else {
+        logger.error("\n- ERROR POSTRESULTS database disconnected (" + new Date().toUTCString() + ")");
+        res.sendStatus(500);
+        logger.log("  POSTRESULTS request completed");
+    }
+
+
+    function getWord(language, word, state) {
+        logger.log("    Checking language and word existence...");
+
+        Language.findOne({
+            _id: language,
+            "dictionary._id": word
+        }, {
+            "dictionary.$": 1
+        }, function(err, query) {
+            if (err) {
+                logger.error("\n- ERROR POSTRESULTS at checking language '" + language + "' and word '" + word + "' existence (" + new Date().toUTCString() + "):\n    " + err.message);
+                res.sendStatus(500);
+                logger.log("  POSTRESULTS request completed");
+            } else if (query === null) {
+                logger.error("\n- ERROR POSTRESULTS language '" + language + "' or word '" + word + "' doesn't exist (" + new Date().toUTCString() + ")");
+                res.sendStatus(400);
+                logger.log("  POSTRESULTS request completed");
+            } else {
+                logger.log("      Word '" + word + "' into language '" + language + "' existence confirmed");
+                postResult(query, state);
+            }
+        });
+    }
+
+    function postResult(data, state) {
+        var word = data.dictionary[0];
+
+        logger.log("    Generating changes...");
+
+        if (state == 0) {
+            word.ref = true;
+            word.count.correct++;
+
+            if (word.countdown.new > 0) {word.countdown.new--;}
+            if (word.countdown.wrong > 0) {word.countdown.wrong--;}
+        } else if (state == 1) {
+            word.ref = true;
+            word.count.wrong++;
+
+            word.countdown.wrong = 3;
+        }
+
+        logger.log("      Changes generated for word '" + word._id + "' with state " + state);
+        logger.log("    Applying changes into database...");
+
+        Language.update({
+            _id: data._id,
+            "dictionary._id": word._id
+        }, {
+            "dictionary.$.ref": word.ref,
+            "dictionary.$.count.correct": word.count.correct,
+            "dictionary.$.count.wrong": word.count.wrong,
+            "dictionary.$.countdown.new": word.countdown.new,
+            "dictionary.$.countdown.wrong": word.countdown.wrong
+        }, function(err, query) {
+            if (err) {
+                logger.error("\n- ERROR POSTRESULTS at applying changes into database for word '" + word._id + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                res.sendStatus(500);
+            } else {
+                logger.log("      Changes sucesfully applied to word '" + word._id + "'");
+                res.sendStatus(200);
+            }
+
+            logger.log("  POSTRESULTS request completed");
+        });
     }
 };

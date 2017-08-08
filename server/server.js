@@ -54,4 +54,4 @@ router.route("/info")
 
 router.route("/session")
 	.get(api.getSession)
-	.post();
+	.post(api.postResults);

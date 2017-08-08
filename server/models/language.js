@@ -3,10 +3,14 @@ var mongoose = require("mongoose");
 var languageSchema = new mongoose.Schema({
     name: String,
     user: String,
+    period: {
+        current: {type: Number, default: 0},
+        length: {type: Number, default: 9}
+    },
 	dictionary: [{
+        ref: {type: Boolean, default: true},
         fields: [],
         count: {
-            total: {type: Number, default: 0},
             correct: {type: Number, default: 0},
             wrong: {type: Number, default: 0}
         },
