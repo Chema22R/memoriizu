@@ -143,7 +143,7 @@ exports.addInfo = function(req, res) {
         switch (req.body.type) {
             case "user":
                 try {
-                    req.body.user = req.body.user.trim().toLowerCase();
+                    req.body.user = req.body.user.trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
                     addUser(req.body.user);
                 } catch (err) {
                     logger.error("\n- ERROR ADDINFO field 'user' doesn't exist (" + new Date().toUTCString() + ")");
@@ -153,7 +153,7 @@ exports.addInfo = function(req, res) {
                 break;
             case "language":
                 try {
-                    req.body.language = req.body.language.trim().toLowerCase();
+                    req.body.language = req.body.language.trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
                     addLanguage(req.body.user, req.body.language);
                 } catch (err) {
                     logger.error("\n- ERROR ADDINFO field 'language' doesn't exist (" + new Date().toUTCString() + ")");
@@ -165,7 +165,7 @@ exports.addInfo = function(req, res) {
                 try {
                     for (var i=0; i<req.body.word.length; i++) {
                         for (var j=0; j<req.body.word[i].fields.length; j++) {
-                            req.body.word[i].fields[j] = req.body.word[i].fields[j].trim().toLowerCase();
+                            req.body.word[i].fields[j] = req.body.word[i].fields[j].trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
                         }
                     }
                     addWord(req.body.language, req.body.word);
@@ -641,20 +641,20 @@ exports.postResults = function(req, res) {
 
         logger.log("    Generating changes...");
 
-        if (state == 0) {
+        if ((state == "true") || (state == true)) {
             word.ref = true;
             word.count.correct++;
 
             if (word.countdown.new > 0) {word.countdown.new--;}
             if (word.countdown.wrong > 0) {word.countdown.wrong--;}
-        } else if (state == 1) {
+        } else if ((state == "false") || (state == false)) {
             word.ref = true;
             word.count.wrong++;
 
             word.countdown.wrong = 3;
         }
 
-        logger.log("      Changes generated for word '" + word._id + "' with state " + state);
+        logger.log("      Changes generated for word '" + word._id + "' with state '" + state + "'");
         logger.log("    Applying changes into database...");
 
         Language.update({

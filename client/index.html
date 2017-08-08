@@ -45,22 +45,18 @@
 
 			<div id="quizContainer" class="container" hidden>
 				<form id="quizForm" action="" method="get">
-					<label id="quizTranslate">Persona</label>
+					<label id="quizTranslate"></label>
 					<input id="quizTranslation" type="text" value="" placeholder="Translation" autocomplete="off" autofocus>
 				</form>
 			</div>
 
 			<div id="fileContainer" class="container" hidden>
-				<div id="fileText">
-					<p id="fileTextKanji">人</p>
-					<p id="fileTextKana">ひと</p>
-					<p id="fileTextTranslation">Person</p>
-				</div>
+				<div id="fileText"></div>
 
 				<div id="fileButtons">
-					<button id="fileButtonRight" class="icon-right icon" title="correct translation" accesskey="y"></button>
-					<button id="fileButtonWrong" class="icon-wrong icon" title="wrong translation" accesskey="n"></button>
-					<button id="fileButtonContinue" class="icon-continue icon" title="next quiz" accesskey="c"></button>
+					<button id="fileButtonRight" class="icon-right icon" title="correct translation" accesskey="y" hidden></button>
+					<button id="fileButtonWrong" class="icon-wrong icon" title="wrong translation" accesskey="n" hidden></button>
+					<button id="fileButtonContinue" class="icon-continue icon" title="next quiz" accesskey="c" hidden></button>
 				</div>
 			</div>
 		</section>

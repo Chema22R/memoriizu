@@ -258,7 +258,10 @@ p {
     margin: 25px auto;
 }
 
-#quizTranslate {font-size: 1.8em;}
+#quizTranslate {
+    font-size: 1.8em;
+    text-transform: capitalize;
+}
 
 #quizTranslation {
     height: 45px;
@@ -282,45 +285,44 @@ p {
     cursor: default;
 }
 
-#fileText p {margin: 15px auto;}
-
-#fileTextKanji {font-size: 3em;}
+#fileText p {margin: 10px auto;}
+#fileText .fileTextBig {font-size: 2em;}
+#fileText .fileTextMed {font-size: 1.5em;}
 
 
 #fileButtons button {
-    height: 38px;
+    float: left;
+    height: 32px;
     border: none;
+    font-size: 20px;
 }
 
 #fileButtonRight {
-    float: left;
     width: 50%;
     background-color: #008000;
 }
 
 #fileButtonWrong {
-    float: left;
     width: 50%;
     background-color: #EE0000;
 }
 
 #fileButtonContinue {
-    float: left;
     width: 100%;
     background-color: #0066FF;
 }
 
 #fileButtonRight:hover {
-    font-size: 28px;
+    font-size: 23px;
     background-color: #229022;
 }
 
 #fileButtonWrong:hover {
-    font-size: 28px;
+    font-size: 23px;
     background-color: #FF2222;
 }
 
 #fileButtonContinue:hover {
-    font-size: 28px;
+    font-size: 23px;
     background-color: #0088FF;
 }

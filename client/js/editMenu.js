@@ -173,11 +173,11 @@ $(function() {
                 if (operation === "fixedEditAdd") {
                     switch (element) {
                         case("fixedEditUser"):
-                            data.user = $("#fixedEditMenuInputUser").val().trim().toLowerCase();
+                            data.user = $("#fixedEditMenuInputUser").val().trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
                             break;
                         case("fixedEditLang"):
                             data.user = selectUser.id;
-                            data.language = $("#fixedEditMenuInputLang").val().trim().toLowerCase();
+                            data.language = $("#fixedEditMenuInputLang").val().trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
                             break;
                         case("fixedEditWord"):
                             data.language = selectLang.id;
@@ -188,7 +188,7 @@ $(function() {
                                 data.word[i] = {fields: words[i].split(";")};
 
                                 for (var j=0; j<data.word[i].fields.length; j++) {
-                                    data.word[i].fields[j] = data.word[i].fields[j].trim().toLowerCase();
+                                    data.word[i].fields[j] = data.word[i].fields[j].trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
                                 }
                             }
                             break;
@@ -247,7 +247,7 @@ $(function() {
                 if (!err) {
                     showMessage("Unable to connect to server", "red");
                 } else {
-                    showMessage(status, "red");
+                    showMessage(jqXHR.responseText, "red");
                 }
             }
         });
