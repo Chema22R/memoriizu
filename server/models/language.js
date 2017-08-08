@@ -7,6 +7,10 @@ var languageSchema = new mongoose.Schema({
         current: {type: Number, default: 0},
         length: {type: Number, default: 9}
     },
+    session: {
+        last: {type: Object, default: []},
+        date: Date
+    },
 	dictionary: [{
         ref: {type: Boolean, default: true},
         fields: [],

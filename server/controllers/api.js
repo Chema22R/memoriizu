@@ -27,7 +27,7 @@ var logger = new Console(log, logErr);
 ========================================================================== */
 
 exports.getInfo = function(req, res) {
-    logger.log("\n> GETINFO request initiated (" + new Date().toUTCString() + ", " + req.connection.remoteAddress + ")");
+    logger.log("\n> GETINFO request initiated (" + new Date() + ", " + req.connection.remoteAddress + ")");
     logger.time("  GETINFO request completed");
     
     if (mongoose.connection.readyState === 1) {
@@ -37,12 +37,12 @@ exports.getInfo = function(req, res) {
             case "languages": getLanguages(req.query.id);break;
             case "words": getWords(req.query.id);break;
             default:
-                logger.error("\n- ERROR GETINFO unknown type '" + req.query.type + "' (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR GETINFO unknown type '" + req.query.type + "' (" + new Date() + ")");
                 res.sendStatus(400);
                 logger.timeEnd("  GETINFO request completed");
         }
     } else {
-        logger.error("\n- ERROR GETINFO database disconnected (" + new Date().toUTCString() + ")");
+        logger.error("\n- ERROR GETINFO database disconnected (" + new Date() + ")");
         res.sendStatus(500);
         logger.log("  GETINFO request completed");
     }
@@ -57,7 +57,7 @@ exports.getInfo = function(req, res) {
             languages: 1
         }, function (err, query) {
             if (err) {
-				logger.error("\n- ERROR GETINFO at getting tree info from database (" + new Date().toUTCString() + "):\n    " + err.message);
+				logger.error("\n- ERROR GETINFO at getting tree info from database (" + new Date() + "):\n    " + err.message);
 				res.sendStatus(500);
 			} else {
                 logger.log("      Tree info obtained (" + query.length + " users)");
@@ -77,7 +77,7 @@ exports.getInfo = function(req, res) {
             name: 1
         }, function (err, query) {
             if (err) {
-				logger.error("\n- ERROR GETINFO at getting users list from database (" + new Date().toUTCString() + "):\n    " + err.message);
+				logger.error("\n- ERROR GETINFO at getting users list from database (" + new Date() + "):\n    " + err.message);
 				res.sendStatus(500);
 			} else {
                 logger.log("      Users list obtained (" + query.length + " elements)");
@@ -96,10 +96,10 @@ exports.getInfo = function(req, res) {
             languages: 1
         }, function (err, query) {
             if (err) {
-				logger.error("\n- ERROR GETINFO at getting languages list from user '" + user + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+				logger.error("\n- ERROR GETINFO at getting languages list from user '" + user + "' (" + new Date() + "):\n    " + err.message);
 				res.sendStatus(500);
 			} else if (query === null) {
-                logger.error("\n- ERROR GETINFO user '" + user + "' doesn't exist (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR GETINFO user '" + user + "' doesn't exist (" + new Date() + ")");
                 res.sendStatus(400);
             } else {
                 logger.log("      Languages list obtained from user '" + user + "' (" + query.languages.length + " elements)");
@@ -119,10 +119,10 @@ exports.getInfo = function(req, res) {
             dictionary: 1
         }, function (err, query) {
             if (err) {
-				logger.error("\n- ERROR GETINFO at getting words list from language '" + language + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+				logger.error("\n- ERROR GETINFO at getting words list from language '" + language + "' (" + new Date() + "):\n    " + err.message);
 				res.sendStatus(500);
 			} else if (query === null) {
-                logger.error("\n- ERROR GETINFO language '" + language + "' doesn't exist (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR GETINFO language '" + language + "' doesn't exist (" + new Date() + ")");
                 res.sendStatus(400);
             } else {
                 logger.log("      Words list obtained from language '" + language + "' (" + query.dictionary.length + " elements)");
@@ -136,7 +136,7 @@ exports.getInfo = function(req, res) {
 
 
 exports.addInfo = function(req, res) {
-    logger.log("\n> ADDINFO request initiated (" + new Date().toUTCString() + ", " + req.connection.remoteAddress + ")");
+    logger.log("\n> ADDINFO request initiated (" + new Date() + ", " + req.connection.remoteAddress + ")");
     logger.time("  ADDINFO request completed");
 
     if (mongoose.connection.readyState === 1) {
@@ -146,7 +146,7 @@ exports.addInfo = function(req, res) {
                     req.body.user = req.body.user.trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
                     addUser(req.body.user);
                 } catch (err) {
-                    logger.error("\n- ERROR ADDINFO field 'user' doesn't exist (" + new Date().toUTCString() + ")");
+                    logger.error("\n- ERROR ADDINFO field 'user' doesn't exist (" + new Date() + ")");
                     res.sendStatus(400);
                     logger.timeEnd("  ADDINFO request completed");
                 }
@@ -156,7 +156,7 @@ exports.addInfo = function(req, res) {
                     req.body.language = req.body.language.trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
                     addLanguage(req.body.user, req.body.language);
                 } catch (err) {
-                    logger.error("\n- ERROR ADDINFO field 'language' doesn't exist (" + new Date().toUTCString() + ")");
+                    logger.error("\n- ERROR ADDINFO field 'language' doesn't exist (" + new Date() + ")");
                     res.sendStatus(400);
                     logger.timeEnd("  ADDINFO request completed");
                 }
@@ -170,18 +170,18 @@ exports.addInfo = function(req, res) {
                     }
                     addWord(req.body.language, req.body.word);
                 } catch (err) {
-                    logger.error("\n- ERROR ADDINFO field 'word' doesn't exist (" + new Date().toUTCString() + ")");
+                    logger.error("\n- ERROR ADDINFO field 'word' doesn't exist (" + new Date() + ")");
                     res.sendStatus(400);
                     logger.timeEnd("  ADDINFO request completed");
                 }
                 break;
             default:
-                logger.error("\n- ERROR ADDINFO unknown type '" + req.body.type + "' (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR ADDINFO unknown type '" + req.body.type + "' (" + new Date() + ")");
                 res.sendStatus(400);
                 logger.timeEnd("  ADDINFO request completed");
         }
     } else {
-        logger.error("\n- ERROR ADDINFO database disconnected (" + new Date().toUTCString() + ")");
+        logger.error("\n- ERROR ADDINFO database disconnected (" + new Date() + ")");
         res.sendStatus(500);
         logger.timeEnd("  ADDINFO request completed");
     }
@@ -194,7 +194,7 @@ exports.addInfo = function(req, res) {
             name: user
         }, {}, function (err, query) {
             if (err) {
-                logger.error("\n- ERROR ADDINFO at checking user '" + user + "' dublicity (" + new Date().toUTCString() + "):\n    " + err.message);
+                logger.error("\n- ERROR ADDINFO at checking user '" + user + "' dublicity (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
                 logger.timeEnd("  ADDINFO request completed");
             } else if (query.length > 0) {
@@ -209,7 +209,7 @@ exports.addInfo = function(req, res) {
                     name: user
                 }, function(err, query) {
                     if (err) {
-                        logger.error("\n- ERROR ADDINFO at adding user '" + user + "' to database (" + new Date().toUTCString() + "):\n    " + err.message);
+                        logger.error("\n- ERROR ADDINFO at adding user '" + user + "' to database (" + new Date() + "):\n    " + err.message);
                         res.sendStatus(500);
                     } else {
                         logger.log("      User '" + user + "' successfully added");
@@ -228,11 +228,11 @@ exports.addInfo = function(req, res) {
 
         User.findById(user, function (err, query) {
             if (err) {
-                logger.error("\n- ERROR ADDINFO at checking user '" + user + "' existence (" + new Date().toUTCString() + "):\n    " + err.message);
+                logger.error("\n- ERROR ADDINFO at checking user '" + user + "' existence (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
                 logger.timeEnd("  ADDINFO request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR ADDINFO user '" + user + "' doesn't exist (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR ADDINFO user '" + user + "' doesn't exist (" + new Date() + ")");
                 res.sendStatus(400);
                 logger.timeEnd("  ADDINFO request completed");
             } else {
@@ -259,7 +259,7 @@ exports.addInfo = function(req, res) {
                         user: user
                     }, function(err, query) {
                         if (err) {
-                            logger.error("\n- ERROR ADDINFO at adding language '" + language + "' to database (" + new Date().toUTCString() + "):\n    " + err.message);
+                            logger.error("\n- ERROR ADDINFO at adding language '" + language + "' to database (" + new Date() + "):\n    " + err.message);
                             res.sendStatus(500);
                             logger.timeEnd("  ADDINFO request completed");
                         } else {
@@ -270,7 +270,7 @@ exports.addInfo = function(req, res) {
                                 $push: {"languages": query}
                             }, {}, function (err, query) {
                                 if (err) {
-                                    logger.error("\n- ERROR ADDINFO at linking language '" + language + "' with user '" + query.name + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                                    logger.error("\n- ERROR ADDINFO at linking language '" + language + "' with user '" + query.name + "' (" + new Date() + "):\n    " + err.message);
                                     res.sendStatus(500);
                                 } else {
                                     logger.log("      Language '" + language + "' linked with user '" + query.name +"'");
@@ -292,11 +292,11 @@ exports.addInfo = function(req, res) {
 
         Language.findById(language, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR ADDINFO at checking language '" + language + "' existence (" + new Date().toUTCString() + "):\n    " + err.message);
+                logger.error("\n- ERROR ADDINFO at checking language '" + language + "' existence (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
                 logger.timeEnd("  ADDINFO request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR ADDINFO language '" + language + "' doesn't exist (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR ADDINFO language '" + language + "' doesn't exist (" + new Date() + ")");
                 res.sendStatus(400);
                 logger.timeEnd("  ADDINFO request completed");
             } else {
@@ -311,7 +311,7 @@ exports.addInfo = function(req, res) {
                     }, function(err, query) {
                         if (err) {
                             error = true;
-                            logger.error("\n- ERROR ADDINFO at adding words to language '" + language + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                            logger.error("\n- ERROR ADDINFO at adding words to language '" + language + "' (" + new Date() + "):\n    " + err.message);
                             res.status(500).send("One or more words couldn't be added");
                         }
                     });
@@ -326,7 +326,7 @@ exports.addInfo = function(req, res) {
 
 
 exports.delInfo = function(req, res) {
-    logger.log("\n> DELETEINFO request initiated (" + new Date().toUTCString() + ", " + req.connection.remoteAddress + ")");
+    logger.log("\n> DELETEINFO request initiated (" + new Date() + ", " + req.connection.remoteAddress + ")");
     logger.time("  DELETEINFO request completed");
 
     if (mongoose.connection.readyState === 1) {
@@ -341,12 +341,12 @@ exports.delInfo = function(req, res) {
                 delWord(req.body.language, req.body.word);
                 break;
             default:
-                logger.error("\n- ERROR DELETEINFO unknown type '" + req.body.type + "' (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR DELETEINFO unknown type '" + req.body.type + "' (" + new Date() + ")");
                 res.sendStatus(400);
                 logger.timeEnd("  DELETEINFO request completed");
         }
     } else {
-        logger.error("\n- ERROR DELETEINFO database disconnected (" + new Date().toUTCString() + ")");
+        logger.error("\n- ERROR DELETEINFO database disconnected (" + new Date() + ")");
         res.sendStatus(500);
         logger.time("  DELETEINFO request completed");
     }
@@ -357,11 +357,11 @@ exports.delInfo = function(req, res) {
 
         User.findByIdAndRemove(user, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR DELETEINFO at removing user '" + user + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                logger.error("\n- ERROR DELETEINFO at removing user '" + user + "' (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
                 logger.timeEnd("  DELETEINFO request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR DELETEINFO user '" + user + "' doesn't exist (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR DELETEINFO user '" + user + "' doesn't exist (" + new Date() + ")");
                 res.sendStatus(400);
                 logger.timeEnd("  DELETEINFO request completed");
             } else {
@@ -371,7 +371,7 @@ exports.delInfo = function(req, res) {
                 for (var i=0; i<query.languages.length; i++) {
                     Language.findByIdAndRemove(query.languages[i]._id, function(err, query) {
                         if (err) {
-                            logger.error("\n- ERROR DELETEINFO at removing languages of user '" + user + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                            logger.error("\n- ERROR DELETEINFO at removing languages of user '" + user + "' (" + new Date() + "):\n    " + err.message);
                         }
                     });
                 }
@@ -388,11 +388,11 @@ exports.delInfo = function(req, res) {
 
         Language.findByIdAndRemove(language, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR DELETEINFO at removing language '" + language + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                logger.error("\n- ERROR DELETEINFO at removing language '" + language + "' (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
                 logger.timeEnd("  DELETEINFO request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR DELETEINFO language '" + language + "' doesn't exist (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR DELETEINFO language '" + language + "' doesn't exist (" + new Date() + ")");
                 res.sendStatus(400);
                 logger.timeEnd("  DELETEINFO request completed");
             } else {
@@ -403,7 +403,7 @@ exports.delInfo = function(req, res) {
                     $pull: {"languages": {"_id": language}}
                 }, {},function (err, query) {
                     if (err) {
-                        logger.error("\n- ERROR DELETEINFO at removing link with language '" + language + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                        logger.error("\n- ERROR DELETEINFO at removing link with language '" + language + "' (" + new Date() + "):\n    " + err.message);
                         res.sendStatus(500);
                     } else {
                         logger.log("      User link with language '" + language + "' removed");
@@ -422,11 +422,11 @@ exports.delInfo = function(req, res) {
 
         Language.findById(language, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR DELETEINFO at checking language '" + language + "' existence (" + new Date().toUTCString() + "):\n    " + err.message);
+                logger.error("\n- ERROR DELETEINFO at checking language '" + language + "' existence (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
                 logger.timeEnd("  DELETEINFO request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR DELETEINFO language '" + language + "' doesn't exist (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR DELETEINFO language '" + language + "' doesn't exist (" + new Date() + ")");
                 res.sendStatus(400);
                 logger.timeEnd("  DELETEINFO request completed");
             } else {
@@ -437,7 +437,7 @@ exports.delInfo = function(req, res) {
                     $pull: {"dictionary": {"_id": word}}
                 }, function(err, query) {
                     if (err) {
-                        logger.error("\n- ERROR DELETEINFO at removing word '" + word + "' from language '" + language + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                        logger.error("\n- ERROR DELETEINFO at removing word '" + word + "' from language '" + language + "' (" + new Date() + "):\n    " + err.message);
                         res.sendStatus(500);
                     } else {
                         logger.log("      Word '" + word + "' removed from language '" + language + "'");
@@ -453,13 +453,13 @@ exports.delInfo = function(req, res) {
 
 
 exports.getSession = function(req, res) {
-    logger.log("\n> GETSESSION request initiated (" + new Date().toUTCString() + ", " + req.connection.remoteAddress + ")");
+    logger.log("\n> GETSESSION request initiated (" + new Date() + ", " + req.connection.remoteAddress + ")");
     logger.time("  GETSESSION request completed");
 
     if (mongoose.connection.readyState === 1) {
         getDictionary(req.query.language);
     } else {
-        logger.error("\n- ERROR GETSESSION database disconnected (" + new Date().toUTCString() + ")");
+        logger.error("\n- ERROR GETSESSION database disconnected (" + new Date() + ")");
         res.sendStatus(500);
         logger.log("  GETSESSION request completed");
     }
@@ -470,21 +470,33 @@ exports.getSession = function(req, res) {
         Language.findById(language, {
             _id: 1,
             period: 1,
+            session: 1,
             dictionary: 1
         }, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR GETSESSION at getting dictionary from language '" + language + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                logger.error("\n- ERROR GETSESSION at getting dictionary from language '" + language + "' (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
                 logger.log("  GETSESSION request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR GETSESSION language '" + language + "' doesn't exist (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR GETSESSION language '" + language + "' doesn't exist (" + new Date() + ")");
                 res.sendStatus(400);
                 logger.log("  GETSESSION request completed");
             } else {
                 logger.log("      Dictionary obtained from language '" + language + "' (" + query.dictionary.length + " elements)");
 
                 if (query.dictionary.length > 0) {
-                    generateSession(query);
+                    var current = new Date();
+                    
+                    if ((query.session.date == undefined) ||
+                        ((current.getFullYear() >= query.session.date.getFullYear()) &&
+                        (current.getMonth() >= query.session.date.getMonth()) &&
+                        (current.getDate() > query.session.date.getDate()))) {
+                            generateSession(query);
+                    } else {
+                        logger.log("      Today's session already done for language '" + language + "', new session won't be generated");
+                        res.status(400).send("Today's session already done");
+                        logger.timeEnd("  GETSESSION request completed");
+                    }
                 } else {
                     logger.log("      Dictionary is empty, session won't be generated");
                     res.status(400).send("Dictionary is empty");
@@ -564,10 +576,12 @@ exports.getSession = function(req, res) {
         Language.update({
             _id: language._id,
         }, {
-            "period.current": language.period.current
+            "period.current": language.period.current,
+            "session.last": session,
+            "session.date": new Date()
         }, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR GETSESSION at updating period state of language '" + language._id + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                logger.error("\n- ERROR GETSESSION at updating period state of language '" + language._id + "' (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
             } else {
                 logger.log("      Period state for language '" + language._id + "' updated (next session is " + language.period.current + "/" + language.period.length + ")");
@@ -589,7 +603,7 @@ exports.getSession = function(req, res) {
                 "dictionary.$.ref": false
             }, function(err, query) {
                 if (err) {
-                    logger.error("\n- ERROR GETSESSION at reseting words references on language '" + language + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                    logger.error("\n- ERROR GETSESSION at reseting words references on language '" + language + "' (" + new Date() + "):\n    " + err.message);
                 }
             });
         }
@@ -600,13 +614,13 @@ exports.getSession = function(req, res) {
 
 
 exports.postResults = function(req, res) {
-    logger.log("\n> POSTRESULTS request initiated (" + new Date().toUTCString() + ", " + req.connection.remoteAddress + ")");
+    logger.log("\n> POSTRESULTS request initiated (" + new Date() + ", " + req.connection.remoteAddress + ")");
     logger.time("  POSTRESULTS request completed");
 
     if (mongoose.connection.readyState === 1) {
         getWord(req.query.language, req.query.word, req.query.state);
     } else {
-        logger.error("\n- ERROR POSTRESULTS database disconnected (" + new Date().toUTCString() + ")");
+        logger.error("\n- ERROR POSTRESULTS database disconnected (" + new Date() + ")");
         res.sendStatus(500);
         logger.log("  POSTRESULTS request completed");
     }
@@ -622,11 +636,11 @@ exports.postResults = function(req, res) {
             "dictionary.$": 1
         }, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR POSTRESULTS at checking language '" + language + "' and word '" + word + "' existence (" + new Date().toUTCString() + "):\n    " + err.message);
+                logger.error("\n- ERROR POSTRESULTS at checking language '" + language + "' and word '" + word + "' existence (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
                 logger.log("  POSTRESULTS request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR POSTRESULTS language '" + language + "' or word '" + word + "' doesn't exist (" + new Date().toUTCString() + ")");
+                logger.error("\n- ERROR POSTRESULTS language '" + language + "' or word '" + word + "' doesn't exist (" + new Date() + ")");
                 res.sendStatus(400);
                 logger.log("  POSTRESULTS request completed");
             } else {
@@ -668,7 +682,7 @@ exports.postResults = function(req, res) {
             "dictionary.$.countdown.wrong": word.countdown.wrong
         }, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR POSTRESULTS at applying changes into database for word '" + word._id + "' (" + new Date().toUTCString() + "):\n    " + err.message);
+                logger.error("\n- ERROR POSTRESULTS at applying changes into database for word '" + word._id + "' (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
             } else {
                 logger.log("      Changes sucesfully applied to word '" + word._id + "'");
