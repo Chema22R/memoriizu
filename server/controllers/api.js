@@ -116,7 +116,10 @@ exports.getInfo = function(req, res) {
 
         Language.findById(language, {
             _id: 1,
-            dictionary: 1
+            period: 1,
+            "session.date": 1,
+            dictionary: 1,
+            date: 1
         }, function (err, query) {
             if (err) {
 				logger.error("\n- ERROR GETINFO at getting words list from language '" + language + "' (" + new Date() + "):\n    " + err.message);
@@ -126,7 +129,7 @@ exports.getInfo = function(req, res) {
                 res.sendStatus(400);
             } else {
                 logger.log("      Words list obtained from language '" + language + "' (" + query.dictionary.length + " elements)");
-				res.json(query.dictionary);
+				res.json(query);
             }
 
             logger.log("  GETINFO request completed");
@@ -493,9 +496,7 @@ exports.getSession = function(req, res) {
                         (current.getDate() > query.session.date.getDate()))) {
                             generateSession(query);
                     } else {
-                        logger.log("      Today's session already done for language '" + language + "', new session won't be generated");
-                        res.status(400).send("Today's session already done");
-                        logger.timeEnd("  GETSESSION request completed");
+                        continueSession(query);
                     }
                 } else {
                     logger.log("      Dictionary is empty, session won't be generated");
@@ -592,6 +593,34 @@ exports.getSession = function(req, res) {
         });
     }
 
+    function continueSession(language) {
+        var lastSession = language.session.last;
+        var newSession = new Array();
+
+        logger.log("    Recovering today's session...");
+
+        for (var i=0; i<lastSession.length; i++) {
+            for (var j=0; j<language.dictionary.length; j++) {
+                if ((lastSession[i]._id.equals(language.dictionary[j]._id)) &&
+                    (lastSession[i].count.correct == language.dictionary[j].count.correct) &&
+                    (lastSession[i].count.wrong == language.dictionary[j].count.wrong)) {
+                        newSession[newSession.length] = language.dictionary[j];
+                        break;
+                }
+            }
+        }
+
+        if (newSession.length > 0) {
+            logger.log("      Today's session recovered and incompleted yet (" + newSession.length + "/" + lastSession.length + " left)");
+            res.json(newSession);
+        } else {
+            logger.log("      Today's session already completed for language '" + language._id + "'");
+            res.status(400).send("Today's session already completed");
+        }
+        
+        logger.timeEnd("  GETSESSION request completed");
+    }
+
     function resetWords(language, dictionarySize) {
         logger.log("    Reseting words references...");
 
@@ -653,7 +682,7 @@ exports.postResults = function(req, res) {
     function postResult(data, state) {
         var word = data.dictionary[0];
 
-        logger.log("    Generating changes...");
+        logger.log("    Generating and applying changes...");
 
         if ((state == "true") || (state == true)) {
             word.ref = true;
@@ -669,7 +698,6 @@ exports.postResults = function(req, res) {
         }
 
         logger.log("      Changes generated for word '" + word._id + "' with state '" + state + "'");
-        logger.log("    Applying changes into database...");
 
         Language.update({
             _id: data._id,
@@ -685,7 +713,7 @@ exports.postResults = function(req, res) {
                 logger.error("\n- ERROR POSTRESULTS at applying changes into database for word '" + word._id + "' (" + new Date() + "):\n    " + err.message);
                 res.sendStatus(500);
             } else {
-                logger.log("      Changes sucesfully applied to word '" + word._id + "'");
+                logger.log("      Changes successfully applied to word '" + word._id + "'");
                 res.sendStatus(200);
             }
 

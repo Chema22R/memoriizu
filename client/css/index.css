@@ -65,15 +65,15 @@ p {
 #fixedEditButtons .icon:hover {color: #777068;}
 
 #fixedEditTrigger {
-    top: 10px;
+    top: 5px;
     left: 10px;
-    padding-bottom: 10px;
+    padding: 5px 5px 10px 5px;
 
     font-size: 40px;
 }
 
 #fixedEditSubButtons .subButton {
-    left: 10px;
+    left: 15px;
     height: 40px;
     width: 40px;
 }
@@ -87,8 +87,8 @@ p {
 #fixedEditUser {top: 55px;}
 #fixedEditLang {top: 95px;}
 #fixedEditWord {top: 135px;}
-#fixedEditAdd {left: 50px;}
-#fixedEditRemove {left: 80px;}
+#fixedEditAdd {left: 55px;}
+#fixedEditRemove {left: 85px;}
 
 
 /* Edit Menu */
@@ -109,7 +109,6 @@ p {
 
     background-color: #e2e2da;
     overflow-y: scroll;
-    z-index: 9999;
 }
 
 #fixedEditMenu * {text-align: center;}
@@ -149,7 +148,6 @@ p {
     border-radius: 10px;
 }
 
-
 #fixedEditMenuForm select {
     display: block;
     margin: 5px auto;
@@ -162,7 +160,6 @@ p {
     text-transform: capitalize;
 }
 
-
 #fixedEditMenuForm textarea {
     display: block;
     margin: 10px auto;
@@ -170,6 +167,82 @@ p {
 
     min-width: 60%;
     max-width: 90%;
+}
+
+
+/* Stats Button */
+
+#fixedStatsButton {
+    position: fixed;
+    top: 5px;
+    left: 75px;
+    padding: 5px;
+
+    border: none;
+
+    font-size: 40px;
+    color: #575048;
+    background: transparent;
+
+    z-index: 9997;
+}
+
+#fixedStatsButton:hover {color: #777068;}
+
+
+/* Stats Menu */
+
+#fixedStatsMenu {
+    position: fixed;
+    top: 15%;
+
+    max-height: 75%;
+    width: 800px;
+    max-width: 80%;
+
+    border-radius: 10px;
+
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+
+    background-color: #e2e2da;
+    overflow-y: scroll;
+}
+
+#fixedStatsMenu * {text-align: center;}
+
+#fixedStatsMenuForm {
+    max-width: 90%;
+    margin: 20px auto 10px auto;
+}
+
+#fixedStatsMenuTitle {
+    margin: 10px auto;
+
+    font-weight: bold;
+    font-size: 1.5em;
+    text-transform: capitalize;
+}
+
+#fixedStatsMenu select {
+    display: block;
+    margin: 5px auto;
+    padding: 0 15px;
+
+    height: 30px;
+    min-width: 25%;
+    max-width: 100%;
+
+    text-transform: capitalize;
+}
+
+#fixedStatsMenuSubmit {
+    border: none;
+    border-radius: 10px;
+
+    color: #575048;
+    background-color: transparent;
 }
 
 
@@ -290,39 +363,34 @@ p {
 #fileText .fileTextMed {font-size: 1.5em;}
 
 
-#fileButtons button {
+#fileButtons * {
     float: left;
-    height: 32px;
+    height: 40px;
+
     border: none;
-    font-size: 20px;
+    border-top: 1px solid #AEAEAE;
+    
+    background-color: transparent;
 }
 
 #fileButtonRight {
     width: 50%;
-    background-color: #008000;
+    border-right: 1px solid #AEAEAE;
+    color: #229022;
 }
 
 #fileButtonWrong {
     width: 50%;
-    background-color: #EE0000;
+    font-size: 22px;
+    color: #FF2222;
 }
 
 #fileButtonContinue {
     width: 100%;
-    background-color: #0066FF;
+    height: 45px;
+    color: #676058;
 }
 
-#fileButtonRight:hover {
-    font-size: 23px;
-    background-color: #229022;
-}
-
-#fileButtonWrong:hover {
-    font-size: 23px;
-    background-color: #FF2222;
-}
-
-#fileButtonContinue:hover {
-    font-size: 23px;
-    background-color: #0088FF;
-}
+#fileButtonRight:hover {font-size: 28px;}
+#fileButtonWrong:hover {font-size: 25px;}
+#fileButtonContinue:hover {font-size: 28px;}

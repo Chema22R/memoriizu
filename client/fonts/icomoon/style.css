@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?xb0ofc');
-  src:  url('fonts/icomoon.eot?xb0ofc#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?xb0ofc') format('truetype'),
-    url('fonts/icomoon.woff?xb0ofc') format('woff'),
-    url('fonts/icomoon.svg?xb0ofc#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?8rm8x9');
+  src:  url('fonts/icomoon.eot?8rm8x9#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?8rm8x9') format('truetype'),
+    url('fonts/icomoon.woff?8rm8x9') format('woff'),
+    url('fonts/icomoon.svg?8rm8x9#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,20 +24,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-stats:before {
+  content: "\25d4";
+}
 .icon-edit:before {
-  content: "\1f4dd";
+  content: "\270e";
 }
 .icon-continue:before {
   content: "\2771";
 }
 .icon-word:before {
-  content: "\1f4d4";
+  content: "\2630";
 }
 .icon-language:before {
-  content: "\1f30e";
+  content: "\25c9";
 }
 .icon-user:before {
-  content: "\1f471";
+  content: "\263b";
 }
 .icon-remove:before {
   content: "\2796";

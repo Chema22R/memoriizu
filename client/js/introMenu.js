@@ -49,11 +49,7 @@ $(function() {
                     url: "http://"+serverAddress+":"+serverPort+"/api/session?language=" + e.target.id,
                     method: "GET",
                     success: function(res, status) {
-                        if (res.length > 0) {
-                            new Session().start(e.target.id, res);
-                        } else {
-                            showMessage("Empty session", "green");
-                        }
+                        new Session().start(e.target.id, res);
                     },
                     error: function(jqXHR, status, err) {
                         if (!err) {
@@ -80,7 +76,7 @@ $(function() {
             
             newQuiz();
             
-            $("#introContainer, #fixedEditButtons").fadeOut("fast", function() {
+            $("#introContainer, #fixedEditButtons, #fixedStatsButton").fadeOut("fast", function() {
                 $("#quizContainer").fadeIn("slow");
             });
             window.onbeforeunload = exitBlocked;

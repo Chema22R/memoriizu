@@ -224,6 +224,8 @@ $(function() {
                 var options = "<option>" + type + "</option>";
 
                 if (type === "words") {
+                    res = res.dictionary;
+                    
                     for (var i=0; i<res.length; i++) {
                         var fields = "";
 

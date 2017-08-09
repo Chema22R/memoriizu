@@ -35,7 +35,19 @@
 				</div>
 			</div>
 
+			<button id="fixedStatsButton" class="icon-stats icon" title="show stats" accesskey="s"></button>
+
+
 			<div id="fixedEditMenu" hidden></div>
+
+			<div id="fixedStatsMenu" hidden>
+				<form id="fixedStatsMenuForm">
+					<h2 id="fixedStatsMenuTitle">Statistics</h2>
+					<select id="fixedStatsMenuSelectUser" required><option>Users</option></select>
+					<select id="fixedStatsMenuSelectLang" required><option>Languages</option></select>
+					<button id="fixedStatsMenuSubmit" class="icon-continue icon" type="submit" title="send form"></button>
+				</form>
+			</div>
 
 			<div id="fixedLeftover" hidden></div>
 		</section>
@@ -44,7 +56,7 @@
 			<div id="introContainer" class="container" hidden></div>
 
 			<div id="quizContainer" class="container" hidden>
-				<form id="quizForm" action="" method="get">
+				<form id="quizForm">
 					<label id="quizTranslate"></label>
 					<input id="quizTranslation" type="text" value="" placeholder="Translation" autocomplete="off" autofocus>
 				</form>
@@ -69,7 +81,8 @@
 		<script src="js/serverConnectionInfo.js" type="text/javascript"></script>
 		<script src="js/window.js" type="text/javascript"></script>
 		<script src="js/log.js" type="text/javascript"></script>
-		<script src="js/intro.js" type="text/javascript"></script>
+		<script src="js/introMenu.js" type="text/javascript"></script>
 		<script src="js/editMenu.js" type="text/javascript"></script>
+		<script src="js/statsMenu.js" type="text/javascript"></script>
 	</body>
 </html>
