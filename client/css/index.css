@@ -212,6 +212,7 @@ p {
 
 #fixedStatsMenu * {text-align: center;}
 
+
 #fixedStatsMenuForm {
     max-width: 90%;
     margin: 20px auto 10px auto;
@@ -243,6 +244,56 @@ p {
 
     color: #575048;
     background-color: transparent;
+}
+
+
+#fixedStatsMenuInfo {
+    max-width: 100%;
+    border-top: 1px solid #AEAEAE;
+}
+
+#fixedStatsMenuLanguage {
+    margin: 10px auto 5px auto;
+
+    font-weight: bold;
+    font-size: 1.5em;
+    text-transform: capitalize;
+}
+
+#fixedStatsMenuInfo01, #fixedStatsMenuInfo02 {
+    float: left;
+    width: 50%;
+}
+
+#fixedStatsMenuInfo01 *, #fixedStatsMenuInfo02 * {
+    margin: 7px auto;
+
+    font-weight: bold;
+    font-size: 1em;
+}
+
+#fixedStatsMenuInfo01 * {
+    margin-right: 3px;
+    text-align: right;
+}
+
+#fixedStatsMenuInfo02 * {
+    margin-left: 3px;
+    text-align: left;
+}
+
+
+#fixedStatsMenuTable {
+    max-width: 95%;
+    margin: 20px auto;
+}
+
+#fixedStatsMenuTable * {padding: 3px;}
+#fixedStatsMenuTable th {padding: 10px 8px 3px 8px;}
+
+#fixedStatsMenuTable .alignLeft {
+    padding-left: 3px;
+    text-align: left;
 }
 
 

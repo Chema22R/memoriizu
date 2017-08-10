@@ -1,4 +1,5 @@
 $(function() {
+    var selectUser;
     var selectLang;
 
 
@@ -12,6 +13,7 @@ $(function() {
     $("#fixedStatsMenuSelectUser").off().on("click touchstart", function(e) {
         if ((e.target != this) && (e.target.id)) {
             if (!this[0].id) {this[0].remove();}
+            selectUser = e.target;
             selectLang = undefined;
             fillSelector("languages", e.target.id, "#fixedStatsMenuSelectLang");
         }
@@ -29,9 +31,9 @@ $(function() {
     $("#fixedStatsMenuForm").on("submit", function(e) {
         e.preventDefault();
         
-        if ($("#fixedStatsMenuSelectUser").val() == "users") {
+        if (($("#fixedStatsMenuSelectUser").length > 0) && (!selectUser)) {
             showMessage("Undefined user", "red");
-        } else if ($("#fixedStatsMenuSelectLang").val() == "languages") {
+        } else if (($("#fixedStatsMenuSelectLang").length > 0) && (!selectLang)) {
             showMessage("Undefined language", "red");
         } else {
             submitForm(selectLang.id);
@@ -44,11 +46,12 @@ $(function() {
     ========================================================================== */
 
     function showStatsMenu() {
+        selectUser = undefined;
         selectLang = undefined;
 
         fillSelector("users", "", "#fixedStatsMenuSelectUser");
         $("#fixedStatsMenuSelectLang option").remove();
-        $("<option>Languages</option>").appendTo("#fixedStatsMenuSelectLang");
+        $("<option>languages</option>").appendTo("#fixedStatsMenuSelectLang");
 
         $("#fixedStatsMenu").css({left: (window.innerWidth - $("#fixedStatsMenu").width()) / 2});
 

@@ -124,7 +124,7 @@ $(function() {
         var next = function() {
             if (++counter == session.length) {
                 $("#fileContainer").fadeOut("fast", function() {
-                    $("#introContainer, #fixedEditButtons").fadeIn("slow");
+                    $("#introContainer, #fixedEditButtons, #fixedStatsButton").fadeIn("slow");
                 });
                 window.onbeforeunload = exitUnblocked;
             } else {
