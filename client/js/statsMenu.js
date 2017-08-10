@@ -58,7 +58,7 @@ $(function() {
         $("#fixedLeftover").fadeIn("slow");
         $("#fixedStatsMenu").fadeIn("slow");
 
-        document.getElementById("fixedStatsMenu").scrollTop = 0;
+        document.getElementById("fixedStatsMenu").scrollTo(0, 0);
     }
 
     function fillSelector(type, id, selector) {
@@ -109,11 +109,18 @@ $(function() {
                     "<h3>" + new Date(language.date).toLocaleDateString() + "</h3>";
         var table = "<tr><th class='alignLeft'>Fields</th><th>Count</th><th>Countdown</th><th>Completed</th></tr>";
 
+        language.dictionary.sort(function(a, b){
+            var a=a.fields[0].trim().toLowerCase(), b=b.fields[0].trim().toLowerCase();
+            if (a < b) return -1;
+            if (a > b) return 1;
+            return 0;
+        });
+
         for (var i=0; i<language.dictionary.length; i++) {
             table += "<tr>";
 
             table += "<td class='alignLeft'>" + language.dictionary[i].fields[0];
-            for (var j=0; j<language.dictionary[i].fields.length; j++) {
+            for (var j=1; j<language.dictionary[i].fields.length; j++) {
                 table += " / " + language.dictionary[i].fields[j]
             }
             table += "</td>";
