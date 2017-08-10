@@ -194,9 +194,9 @@ p {
 
 #fixedStatsMenu {
     position: fixed;
-    top: 15%;
+    top: 10%;
 
-    max-height: 75%;
+    max-height: 80%;
     width: 800px;
     max-width: 80%;
 

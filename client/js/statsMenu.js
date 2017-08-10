@@ -57,6 +57,8 @@ $(function() {
 
         $("#fixedLeftover").fadeIn("slow");
         $("#fixedStatsMenu").fadeIn("slow");
+
+        document.getElementById("fixedStatsMenu").scrollTop = 0;
     }
 
     function fillSelector(type, id, selector) {
@@ -101,6 +103,37 @@ $(function() {
     }
 
     function fillTable(language) {
-        console.log(language);
+        var info =  "<h3>" + language.dictionary.length + " words</h3>"+
+                    "<h3>" + ++language.period.current + "/" + ++language.period.length + " sessions</h3>"+
+                    "<h3>" + new Date(language.session.date).toLocaleDateString() + "</h3>"+
+                    "<h3>" + new Date(language.date).toLocaleDateString() + "</h3>";
+        var table = "<tr><th class='alignLeft'>Fields</th><th>Count</th><th>Countdown</th><th>Completed</th></tr>";
+
+        for (var i=0; i<language.dictionary.length; i++) {
+            table += "<tr>";
+
+            table += "<td class='alignLeft'>" + language.dictionary[i].fields[0];
+            for (var j=0; j<language.dictionary[i].fields.length; j++) {
+                table += " / " + language.dictionary[i].fields[j]
+            }
+            table += "</td>";
+
+            table +=    "<td>" + language.dictionary[i].count.correct + "/" + language.dictionary[i].count.wrong + "</td>"+
+                        "<td>" + language.dictionary[i].countdown.new + "/" + language.dictionary[i].countdown.wrong + "</td>"+
+                        "<td>" + language.dictionary[i].ref + "</td>";
+
+            table += "</tr>";
+        }
+
+        $("#fixedStatsMenuLanguage").text(selectLang.value);
+
+        $("#fixedStatsMenuInfo02 h3").remove();
+        $("#fixedStatsMenuTable tr").remove();
+        $(info).appendTo("#fixedStatsMenuInfo02");
+        $(table).appendTo("#fixedStatsMenuTable");
+
+        $("#fixedStatsMenu").animate({
+            scrollTop: $("#fixedStatsMenuLanguage").position().top
+        }, 1000);
     }
 });
