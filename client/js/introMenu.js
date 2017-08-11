@@ -144,7 +144,7 @@ $(function() {
             e.preventDefault();
 
             var fields = session[counter].fields.slice(0, session[counter].fields.length-1); // ignoring the last one
-            var input = $("#quizTranslation").val().trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
+            var input = $("#quizTranslation").val().trim().toLowerCase().replace(/\s\s+/g, " ");
 
             if (fields.indexOf(input) != -1) {
                 newFile(true);

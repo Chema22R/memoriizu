@@ -104,16 +104,14 @@ $(function() {
 
     function fillTable(language) {
         var info =  "<h3>" + language.dictionary.length + " words</h3>"+
-                    "<h3>" + ++language.period.current + "/" + ++language.period.length + " sessions</h3>"+
+                    "<h3>" + language.period.current + "/" + ++language.period.length + " sessions</h3>"+
                     "<h3>" + new Date(language.session.date).toLocaleDateString() + "</h3>"+
                     "<h3>" + new Date(language.date).toLocaleDateString() + "</h3>";
         var table = "<tr><th class='alignLeft'>Fields</th><th>Count</th><th>Countdown</th><th>Completed</th></tr>";
 
         language.dictionary.sort(function(a, b){
             var a=a.fields[0].trim().toLowerCase(), b=b.fields[0].trim().toLowerCase();
-            if (a < b) return -1;
-            if (a > b) return 1;
-            return 0;
+            return a.localeCompare(b);
         });
 
         for (var i=0; i<language.dictionary.length; i++) {

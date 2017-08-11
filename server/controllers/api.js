@@ -129,6 +129,7 @@ exports.getInfo = function(req, res) {
                 res.sendStatus(400);
             } else {
                 logger.log("      Words list obtained from language '" + language + "' (" + query.dictionary.length + " elements)");
+                if (!query.session.date) {query.session.date = null;}
 				res.json(query);
             }
 
@@ -146,7 +147,7 @@ exports.addInfo = function(req, res) {
         switch (req.body.type) {
             case "user":
                 try {
-                    req.body.user = req.body.user.trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
+                    req.body.user = req.body.user.trim().toLowerCase().replace(/\s\s+/g, " ");
                     addUser(req.body.user);
                 } catch (err) {
                     logger.error("\n- ERROR ADDINFO field 'user' doesn't exist (" + new Date() + ")");
@@ -156,8 +157,8 @@ exports.addInfo = function(req, res) {
                 break;
             case "language":
                 try {
-                    req.body.language = req.body.language.trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
-                    addLanguage(req.body.user, req.body.language);
+                    req.body.language = req.body.language.trim().toLowerCase().replace(/\s\s+/g, " ");
+                    addLanguage(req.body.user, req.body.language, req.body.period);
                 } catch (err) {
                     logger.error("\n- ERROR ADDINFO field 'language' doesn't exist (" + new Date() + ")");
                     res.sendStatus(400);
@@ -168,7 +169,7 @@ exports.addInfo = function(req, res) {
                 try {
                     for (var i=0; i<req.body.word.length; i++) {
                         for (var j=0; j<req.body.word[i].fields.length; j++) {
-                            req.body.word[i].fields[j] = req.body.word[i].fields[j].trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
+                            req.body.word[i].fields[j] = req.body.word[i].fields[j].trim().toLowerCase().replace(/\s\s+/g, " ");
                         }
                     }
                     addWord(req.body.language, req.body.word);
@@ -226,7 +227,7 @@ exports.addInfo = function(req, res) {
     }
 
 
-    function addLanguage(user, language) {
+    function addLanguage(user, language, period) {
         logger.log("    Checking user existence...");
 
         User.findById(user, function (err, query) {
@@ -259,7 +260,8 @@ exports.addInfo = function(req, res) {
 
                     Language.create({
                         name: language,
-                        user: user
+                        user: user,
+                        "period.length": --period
                     }, function(err, query) {
                         if (err) {
                             logger.error("\n- ERROR ADDINFO at adding language '" + language + "' to database (" + new Date() + "):\n    " + err.message);

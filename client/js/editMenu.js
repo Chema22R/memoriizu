@@ -82,6 +82,7 @@ $(function() {
                 case("fixedEditLang"):
                     form += "<select id='fixedEditMenuSelectUser' required><option>Users</option></select>";
                     form += "<input id='fixedEditMenuInputLang' type='text' maxlength='20' placeholder='New language' autocomplete='on' required>";
+                    form += "<input id='fixedEditMenuInputNumb' type='number' min='1' placeholder='Period length' required>";
                     break;
                 case("fixedEditWord"):
                     form += "<select id='fixedEditMenuSelectUser' required><option>Users</option></select>";
@@ -173,11 +174,12 @@ $(function() {
                 if (operation === "fixedEditAdd") {
                     switch (element) {
                         case("fixedEditUser"):
-                            data.user = $("#fixedEditMenuInputUser").val().trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
+                            data.user = $("#fixedEditMenuInputUser").val().trim().toLowerCase().replace(/\s\s+/g, " ");
                             break;
                         case("fixedEditLang"):
                             data.user = selectUser.id;
-                            data.language = $("#fixedEditMenuInputLang").val().trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
+                            data.language = $("#fixedEditMenuInputLang").val().trim().toLowerCase().replace(/\s\s+/g, " ");
+                            data.period = $("#fixedEditMenuInputNumb").val();
                             break;
                         case("fixedEditWord"):
                             data.language = selectLang.id;
@@ -188,7 +190,7 @@ $(function() {
                                 data.word[i] = {fields: words[i].split(";")};
 
                                 for (var j=0; j<data.word[i].fields.length; j++) {
-                                    data.word[i].fields[j] = data.word[i].fields[j].trim().toLowerCase().replace(/[^\w\s]/gi, "").replace(/\s\s+/g, ' ');
+                                    data.word[i].fields[j] = data.word[i].fields[j].trim().toLowerCase().replace(/\s\s+/g, " ");
                                 }
                             }
                             break;
