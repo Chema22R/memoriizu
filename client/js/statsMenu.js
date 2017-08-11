@@ -110,18 +110,18 @@ $(function() {
         var table = "<tr><th class='alignLeft'>Fields</th><th>Count</th><th>Countdown</th><th>Completed</th></tr>";
 
         language.dictionary.sort(function(a, b){
-            var a=a.fields[0].trim().toLowerCase(), b=b.fields[0].trim().toLowerCase();
+            var a=a.fields[a.fields.length-1].trim().toLowerCase(), b=b.fields[b.fields.length-1].trim().toLowerCase();
             return a.localeCompare(b);
         });
 
         for (var i=0; i<language.dictionary.length; i++) {
             table += "<tr>";
 
-            table += "<td class='alignLeft'>" + language.dictionary[i].fields[0];
-            for (var j=1; j<language.dictionary[i].fields.length; j++) {
-                table += " / " + language.dictionary[i].fields[j]
+            table += "<td class='alignLeft'>";
+            for (var j=language.dictionary[i].fields.length-1; j; j--) {
+                table += language.dictionary[i].fields[j] + " <strong>/</strong> ";
             }
-            table += "</td>";
+            table += language.dictionary[i].fields[0] + "</td>";
 
             table +=    "<td>" + language.dictionary[i].count.correct + "/" + language.dictionary[i].count.wrong + "</td>"+
                         "<td>" + language.dictionary[i].countdown.new + "/" + language.dictionary[i].countdown.wrong + "</td>"+
