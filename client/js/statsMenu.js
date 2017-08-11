@@ -119,7 +119,7 @@ $(function() {
 
             table += "<td class='alignLeft'>";
             for (var j=language.dictionary[i].fields.length-1; j; j--) {
-                table += language.dictionary[i].fields[j] + " <strong>/</strong> ";
+                table += language.dictionary[i].fields[j] + " <strong>&#92;</strong> ";
             }
             table += language.dictionary[i].fields[0] + "</td>";
 
