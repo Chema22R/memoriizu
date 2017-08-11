@@ -198,12 +198,16 @@ $(function() {
 
                     submitForm(data, "POST");
                 } else if (operation === "fixedEditRemove") {
+                    var msj;
+
                     switch (element) {
                         case("fixedEditUser"):
                             data.user = selectUser.id;
+                            msj = "You are attempting to delete the user '" + selectUser.value + "' and all its content, are you sure?";
                             break;
                         case("fixedEditLang"):
                             data.language = selectLang.id;
+                            msj = "You are attempting to delete the language '" + selectLang.value + "' of the user '" + selectUser.value + "' and all its content, are you sure?";
                             break;
                         case("fixedEditWord"):
                             data.language = selectLang.id;
@@ -211,7 +215,9 @@ $(function() {
                             break;
                     }
 
-                    submitForm(data, "DELETE");
+                    if (confirm(msj)) {
+                        submitForm(data, "DELETE");
+                    }
                 }
             }
         });
