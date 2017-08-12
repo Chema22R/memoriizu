@@ -162,9 +162,9 @@ p {margin: 0;padding: 0;}
     height: 30px;
     min-width: 40%;
     max-width: 90%;
-
-    text-transform: capitalize;
 }
+
+#fixedEditMenuSelectUser, #fixedEditMenuSelectLang {text-transform: capitalize;}
 
 #fixedEditMenuForm textarea {
     display: block;
@@ -396,8 +396,14 @@ p {margin: 0;padding: 0;}
 }
 
 #quizTranslate {
+    display:block;
     font-size: 1.8em;
-    text-transform: capitalize;
+}
+
+#quizDescription{
+    display:block;
+    margin-top: 3px;
+    font-size: 1em;
 }
 
 #quizTranslation {

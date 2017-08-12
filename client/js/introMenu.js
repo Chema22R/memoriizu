@@ -83,8 +83,9 @@ $(function() {
         }
 
         var newQuiz = function() {
-            var fields = session[counter].fields;
-            $("#quizTranslate").text(fields[fields.length-1]);
+            var translate = session[counter].fields[session[counter].fields.length-1];
+            $("#quizTranslate").text(translate.substring(0, translate.indexOf("(")).trim());
+            $("#quizDescription").text(translate.substring(translate.indexOf("(")).trim());
             $("#quizTranslation").val("");
         }
 
@@ -143,12 +144,15 @@ $(function() {
         $("#quizForm").off().on("submit", function(e) {
             e.preventDefault();
 
+            var regexDel = /(<em>|<\/em>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+            var regexSust = /aa|ii|uu|ee|oo|au|iu|eu|ou/ig;
+            var mapSust = {"aa":"ā", "ii":"ī", "uu":"ū", "ee":"ē", "oo":"ō", "au":"ā", "iu":"ī", "eu":"ē", "ou":"ō"};
+
+            var input = $("#quizTranslation").val().toLowerCase().replace(regexDel, "").replace(regexSust, function(match) {return mapSust[match];});
             var fields = session[counter].fields.slice(0, session[counter].fields.length-1); // ignoring the last one
-            var input = $("#quizTranslation").val().trim().toLowerCase().replace(/\s\s+/g, " ");
-
-            /*for (var i=0; i<fields; i++) {
-
-            }*/
+            for (var i=0; i<fields.length; i++) {
+                fields[i] = fields[i].toLowerCase().replace(regexDel, "").replace(regexSust, function(match) {return mapSust[match];});
+            }
 
             if (fields.indexOf(input) != -1) {
                 newFile(true);
