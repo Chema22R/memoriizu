@@ -235,9 +235,9 @@ $(function() {
                     res = res.dictionary;
 
                     res.sort(function(a, b){
-                        var regexpSort = /<em>|<\/em>|([¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
-                        var a=a.fields[a.fields.length-1].toLowerCase().replace(regexpSort, "");
-                        var b=b.fields[b.fields.length-1].toLowerCase().replace(regexpSort, "");
+                        var regexSort = /<em>|<\/em>|([¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+                        var a=a.fields[a.fields.length-1].toLowerCase().replace(regexSort, "");
+                        var b=b.fields[b.fields.length-1].toLowerCase().replace(regexSort, "");
                         if (!isNaN(a) && !isNaN(b)) {
                             return Number(a)>Number(b);
                         } else {

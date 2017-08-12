@@ -103,16 +103,18 @@ $(function() {
     }
 
     function fillTable(language) {
-        var regexpSort = /<em>|<\/em>|([¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+        var regexSort = /(<em>|<\/em>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+        var regexSeparator = /([0-9áªàäâãåąæāéèëêęėēíïìîįīóºòöôõøœōúüùûū¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-])/ig;
         var info =  "<h3>" + language.dictionary.length + " words</h3>"+
                     "<h3>" + language.period.current + "/" + ++language.period.length + " sessions</h3>"+
                     "<h3>" + new Date(language.session.date).toLocaleDateString() + "</h3>"+
                     "<h3>" + new Date(language.date).toLocaleDateString() + "</h3>";
         var table = "<tr><th class='alignLeft'>Fields</th><th>Count</th><th>Countdown</th><th>Completed</th></tr>";
+        var letterSeparator;
 
         language.dictionary.sort(function(a, b){
-            var a=a.fields[a.fields.length-1].toLowerCase().replace(regexpSort, "");
-            var b=b.fields[b.fields.length-1].toLowerCase().replace(regexpSort, "");
+            var a=a.fields[a.fields.length-1].toLowerCase().replace(regexSort, "");
+            var b=b.fields[b.fields.length-1].toLowerCase().replace(regexSort, "");
             if (!isNaN(a) && !isNaN(b)) {
                 return Number(a)>Number(b);
             } else {
@@ -121,9 +123,13 @@ $(function() {
         });
 
         for (var i=0; i<language.dictionary.length; i++) {
-            table += "<tr>";
-
-            table += "<td class='alignLeft'>";
+            var firstLetter = language.dictionary[i].fields[language.dictionary[i].fields.length-1].substring(0, 1).replace(regexSeparator, "");
+            if ((firstLetter != letterSeparator) && (firstLetter != "")) {
+                letterSeparator = firstLetter;
+                table += "<tr><td class='alignLeft letterSeparator' colspan='4'>" + letterSeparator + "</td></tr>";
+            }
+            
+            table +=    "<tr><td class='alignLeft'>";
             for (var j=language.dictionary[i].fields.length-1; j; j--) {
                 table += language.dictionary[i].fields[j] + " <strong>&#92;</strong> ";
             }
@@ -131,9 +137,8 @@ $(function() {
 
             table +=    "<td>" + language.dictionary[i].count.correct + "/" + language.dictionary[i].count.wrong + "</td>"+
                         "<td>" + language.dictionary[i].countdown.new + "/" + language.dictionary[i].countdown.wrong + "</td>"+
-                        "<td>" + language.dictionary[i].ref + "</td>";
-
-            table += "</tr>";
+                        "<td>" + language.dictionary[i].ref + "</td>"+
+                        "</tr>";
         }
 
         $("#fixedStatsMenuLanguage").text(selectLang.value);

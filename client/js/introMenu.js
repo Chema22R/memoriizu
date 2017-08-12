@@ -146,6 +146,10 @@ $(function() {
             var fields = session[counter].fields.slice(0, session[counter].fields.length-1); // ignoring the last one
             var input = $("#quizTranslation").val().trim().toLowerCase().replace(/\s\s+/g, " ");
 
+            /*for (var i=0; i<fields; i++) {
+
+            }*/
+
             if (fields.indexOf(input) != -1) {
                 newFile(true);
             } else {
