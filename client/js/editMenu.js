@@ -207,7 +207,7 @@ $(function() {
                             break;
                         case("fixedEditLang"):
                             data.language = selectLang.id;
-                            msj = "You are attempting to delete the language '" + selectLang.value + "' of the user '" + selectUser.value + "' and all its content, are you sure?";
+                            msj = "You are attempting to delete the language '" + selectLang.value + "' of user '" + selectUser.value + "' and all its content, are you sure?";
                             break;
                         case("fixedEditWord"):
                             data.language = selectLang.id;
@@ -215,7 +215,7 @@ $(function() {
                             break;
                     }
 
-                    if (confirm(msj)) {
+                    if (element == "fixedEditWord" || confirm(msj)) {
                         submitForm(data, "DELETE");
                     }
                 }
@@ -233,14 +233,25 @@ $(function() {
 
                 if (type === "words") {
                     res = res.dictionary;
+
+                    res.sort(function(a, b){
+                        var regexpSort = /<em>|<\/em>|([¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+                        var a=a.fields[a.fields.length-1].toLowerCase().replace(regexpSort, "");
+                        var b=b.fields[b.fields.length-1].toLowerCase().replace(regexpSort, "");
+                        if (!isNaN(a) && !isNaN(b)) {
+                            return Number(a)>Number(b);
+                        } else {
+                            return a.localeCompare(b);
+                        }
+                    });
                     
                     for (var i=0; i<res.length; i++) {
                         var fields = "";
 
-                        for (var j=0; j<res[i].fields.length; j++) {
-                            fields += res[i].fields[j];
-                            if (j != res[i].fields.length-1) {fields += " / ";}
+                        for (var j=res[i].fields.length-1; j; j--) {
+                            fields += res[i].fields[j] + " <strong>&#92;</strong> ";
                         }
+                        fields += res[i].fields[0];
 
                         options += "<option id='" + res[i]._id + "' value='" + fields + "'>" + fields  + "</option>";
                     }

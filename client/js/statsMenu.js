@@ -103,6 +103,7 @@ $(function() {
     }
 
     function fillTable(language) {
+        var regexpSort = /<em>|<\/em>|([¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
         var info =  "<h3>" + language.dictionary.length + " words</h3>"+
                     "<h3>" + language.period.current + "/" + ++language.period.length + " sessions</h3>"+
                     "<h3>" + new Date(language.session.date).toLocaleDateString() + "</h3>"+
@@ -110,8 +111,13 @@ $(function() {
         var table = "<tr><th class='alignLeft'>Fields</th><th>Count</th><th>Countdown</th><th>Completed</th></tr>";
 
         language.dictionary.sort(function(a, b){
-            var a=a.fields[a.fields.length-1].trim().toLowerCase(), b=b.fields[b.fields.length-1].trim().toLowerCase();
-            return a.localeCompare(b);
+            var a=a.fields[a.fields.length-1].toLowerCase().replace(regexpSort, "");
+            var b=b.fields[b.fields.length-1].toLowerCase().replace(regexpSort, "");
+            if (!isNaN(a) && !isNaN(b)) {
+                return Number(a)>Number(b);
+            } else {
+                return a.localeCompare(b);
+            }
         });
 
         for (var i=0; i<language.dictionary.length; i++) {
