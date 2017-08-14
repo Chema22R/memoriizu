@@ -27,7 +27,7 @@ app.use("/api", router);
 /* connections
 ========================================================================== */
 
-var serverPort = 8081;
+var serverPort = 8082;
 var uri = "mongodb://localhost/memoriizu";
 var promise;
 

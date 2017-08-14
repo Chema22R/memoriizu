@@ -13,7 +13,7 @@ body {
     background-color: #E4DDCA;
 }
 
-button {cursor: pointer;}
+button, select {cursor: pointer;}
 p {margin: 0;padding: 0;}
 
 .icon {
@@ -120,6 +120,7 @@ p {margin: 0;padding: 0;}
     font-weight: bold;
     font-size: 1.5em;
     text-transform: capitalize;
+    cursor: default;
 }
 
 #fixedEditMenuSubmit {
@@ -201,10 +202,11 @@ p {margin: 0;padding: 0;}
 #fixedStatsMenu {
     position: fixed;
     top: 10%;
+    left: 10%;
+    right: 10%;
 
     max-height: 80%;
-    width: 800px;
-    max-width: 80%;
+    max-width: 1000px;
 
     border-radius: 10px;
 
@@ -222,6 +224,7 @@ p {margin: 0;padding: 0;}
 #fixedStatsMenuForm {
     max-width: 90%;
     margin: 20px auto 10px auto;
+    cursor: default;
 }
 
 #fixedStatsMenuTitle {
@@ -256,6 +259,7 @@ p {margin: 0;padding: 0;}
 #fixedStatsMenuInfo {
     max-width: 100%;
     border-top: 1px solid #AEAEAE;
+    cursor: default;
 }
 
 #fixedStatsMenuLanguage {
@@ -292,10 +296,12 @@ p {margin: 0;padding: 0;}
 #fixedStatsMenuTable {
     max-width: 95%;
     margin: 20px auto;
+    cursor: default;
 }
 
 #fixedStatsMenuTable * {padding: 3px;}
 #fixedStatsMenuTable th {padding: 10px 8px 3px 8px;}
+#fixedStatsMenuTable tr:hover {font-weight: bold;}
 
 #fixedStatsMenuTable .alignLeft {
     padding-left: 3px;
@@ -353,6 +359,26 @@ p {margin: 0;padding: 0;}
 }
 
 #mainContent * {text-align: center;}
+
+
+/* Exit button */
+
+#fixedExit {
+    position: fixed;
+    top: 10px;
+    left: 15px;
+    padding: 5px;
+
+    border: none;
+
+    font-size: 30px;
+    color: #575048;
+    background: transparent;
+
+    z-index: 9999;
+}
+
+#fixedExit:hover {color: #777068;}
 
 
 /* Intro */
@@ -431,6 +457,11 @@ p {margin: 0;padding: 0;}
 #fileText p {margin: 10px auto;}
 #fileText .fileTextBig {font-size: 2em;}
 #fileText .fileTextMed {font-size: 1.5em;}
+
+#fileText .fileTextWrong {
+    margin-top: 15px;
+    color: #E00;
+}
 
 
 #fileButtons * {

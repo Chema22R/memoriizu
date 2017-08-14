@@ -1,9 +1,7 @@
 $(function() {
     var element;
     var operation;
-    var selectUser;
-    var selectLang;
-    var selectWord;
+    var selected = "#fixedEditMenuForm option:selected";
 
 
     /* Edit Buttons
@@ -67,9 +65,6 @@ $(function() {
 
     function showEditMenu() {
         var form = "";
-        selectUser = undefined;
-        selectLang = undefined;
-        selectWord = undefined;
 
         form += "<form id='fixedEditMenuForm'>";
         form += "<h2 id='fixedEditMenuTitle'>" + $("#"+operation).val() + " " + $("#"+element).val() + "</h2>";
@@ -125,35 +120,28 @@ $(function() {
 
     function delayedLoad() {
         // trigger the user selector
-        $("#fixedEditMenuSelectUser").off().on("click touchstart", function(e) {
-            if ((e.target != this) && (e.target.id)) {
+        $("#fixedEditMenuSelectUser").off().on("change", function(e) {
+            if ($(selected)[0].id) {
                 if (!this[0].id) {this[0].remove();}
-                selectUser = e.target;
-                selectLang = undefined;
-                selectWord = undefined;
-
                 $("#fixedEditMenuSelectWord option").remove();
                 $("<option>Words</option>").appendTo("#fixedEditMenuSelectWord");
 
-                fillSelector("languages", e.target.id, "#fixedEditMenuSelectLang");
+                fillSelector("languages", $(selected)[0].id, "#fixedEditMenuSelectLang");
             }
         });
 
         // trigger the language selector
-        $("#fixedEditMenuSelectLang").off().on("click touchstart", function(e) {
-            if ((e.target != this) && (e.target.id)) {
+        $("#fixedEditMenuSelectLang").off().on("change", function(e) {
+            if ($(selected)[1].id) {
                 if (!this[0].id) {this[0].remove();}
-                selectLang = e.target;
-                selectWord = undefined;
-                fillSelector("words", e.target.id, "#fixedEditMenuSelectWord");
+                fillSelector("words", $(selected)[1].id, "#fixedEditMenuSelectWord");
             }
         });
 
         // trigger the word selector
-        $("#fixedEditMenuSelectWord").off().on("click touchstart", function(e) {
-            if ((e.target != this) && (e.target.id)) {
+        $("#fixedEditMenuSelectWord").off().on("change", function(e) {
+            if ($(selected)[2].id) {
                 if (!this[0].id) {this[0].remove();}
-                selectWord = e.target;
             }
         });
 
@@ -161,11 +149,13 @@ $(function() {
         $("#fixedEditMenuForm").off().on("submit", function(e) {
             e.preventDefault();
 
-            if (($("#fixedEditMenuSelectUser").length > 0) && (!selectUser)) {
+            var selection = $(selected);
+
+            if ((selection[0]) && (!selection[0].id)) {
                 showMessage("Undefined user", "red");
-            } else if (($("#fixedEditMenuSelectLang").length > 0) && (!selectLang)) {
+            } else if ((selection[1]) && (!selection[1].id)) {
                 showMessage("Undefined language", "red");
-            } else if (($("#fixedEditMenuSelectWord").length > 0) && (!selectWord)) {
+            } else if ((selection[2]) && (!selection[2].id)) {
                 showMessage("Undefined word", "red");
             } else {
                 var data = new Object();
@@ -177,12 +167,12 @@ $(function() {
                             data.user = $("#fixedEditMenuInputUser").val().trim().toLowerCase().replace(/\s\s+/g, " ");
                             break;
                         case("fixedEditLang"):
-                            data.user = selectUser.id;
+                            data.user = selection[0].id;
                             data.language = $("#fixedEditMenuInputLang").val().trim().toLowerCase().replace(/\s\s+/g, " ");
                             data.period = $("#fixedEditMenuInputNumb").val();
                             break;
                         case("fixedEditWord"):
-                            data.language = selectLang.id;
+                            data.language = selection[1].id;
                             data.word = new Array();
 
                             var words = $("#fixedEditMenuInputWord").val().split("\n");
@@ -202,16 +192,16 @@ $(function() {
 
                     switch (element) {
                         case("fixedEditUser"):
-                            data.user = selectUser.id;
-                            msj = "You are attempting to delete the user '" + selectUser.value + "' and all its content, are you sure?";
+                            data.user = selection[0].id;
+                            msj = "You are attempting to delete the user '" + selection[0].value + "' and all its content, are you sure?";
                             break;
                         case("fixedEditLang"):
-                            data.language = selectLang.id;
-                            msj = "You are attempting to delete the language '" + selectLang.value + "' of user '" + selectUser.value + "' and all its content, are you sure?";
+                            data.language = selection[1].id;
+                            msj = "You are attempting to delete the language '" + selection[1].value + "' of user '" + selection[0].value + "' and all its content, are you sure?";
                             break;
                         case("fixedEditWord"):
-                            data.language = selectLang.id;
-                            data.word = selectWord.id;
+                            data.language = selection[1].id;
+                            data.word = selection[2].id;
                             break;
                     }
 
@@ -235,7 +225,7 @@ $(function() {
                     res = res.dictionary;
 
                     res.sort(function(a, b){
-                        var regexSort = /<em>|<\/em>|([¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+                        var regexSort = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
                         var a=a.fields[a.fields.length-1].toLowerCase().replace(regexSort, "");
                         var b=b.fields[b.fields.length-1].toLowerCase().replace(regexSort, "");
                         if (!isNaN(a) && !isNaN(b)) {

@@ -246,7 +246,8 @@
         "isMulticolor": false,
         "isMulticolor2": false,
         "tags": [
-          "wrong"
+          "wrong",
+          "exit"
         ],
         "grid": 32
       },
@@ -254,9 +255,9 @@
         {}
       ],
       "properties": {
-        "order": 1,
+        "order": 14,
         "id": 3,
-        "name": "wrong",
+        "name": "wrong, exit",
         "prevSize": 32,
         "code": 10007
       },

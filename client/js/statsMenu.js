@@ -1,8 +1,5 @@
 $(function() {
-    var selectUser;
-    var selectLang;
-
-
+    var selected = "#fixedStatsMenuForm option:selected";
     /* Stats Buttons
     ========================================================================== */
 
@@ -10,33 +7,32 @@ $(function() {
     $("#fixedStatsButton").on("click touchstart", function() {showStatsMenu();});
 
     // trigger the user selector
-    $("#fixedStatsMenuSelectUser").off().on("click touchstart", function(e) {
-        if ((e.target != this) && (e.target.id)) {
+    $("#fixedStatsMenuSelectUser").off().on("change", function() {
+        if ($(selected)[0].id) {
             if (!this[0].id) {this[0].remove();}
-            selectUser = e.target;
-            selectLang = undefined;
-            fillSelector("languages", e.target.id, "#fixedStatsMenuSelectLang");
+            fillSelector("languages", $(selected)[0].id, "#fixedStatsMenuSelectLang");
         }
     });
 
     // trigger the language selector
-    $("#fixedStatsMenuSelectLang").off().on("click touchstart", function(e) {
-        if ((e.target != this) && (e.target.id)) {
+    $("#fixedStatsMenuSelectLang").off().on("change", function(e) {
+        if ($(selected)[1].id) {
             if (!this[0].id) {this[0].remove();}
-            selectLang = e.target;
         }
     });
 
     // trigger the submit button on the stats menu form
-    $("#fixedStatsMenuForm").on("submit", function(e) {
+    $("#fixedStatsMenuForm").off().on("submit", function(e) {
         e.preventDefault();
+
+        var selection = $(selected);
         
-        if (($("#fixedStatsMenuSelectUser").length > 0) && (!selectUser)) {
+        if (!selection[0].id) {
             showMessage("Undefined user", "red");
-        } else if (($("#fixedStatsMenuSelectLang").length > 0) && (!selectLang)) {
+        } else if (!selection[1].id) {
             showMessage("Undefined language", "red");
         } else {
-            submitForm(selectLang.id);
+            submitForm(selection[1].id);
         }
     });
 
@@ -46,9 +42,6 @@ $(function() {
     ========================================================================== */
 
     function showStatsMenu() {
-        selectUser = undefined;
-        selectLang = undefined;
-
         fillSelector("users", "", "#fixedStatsMenuSelectUser");
         $("#fixedStatsMenuSelectLang option").remove();
         $("<option>languages</option>").appendTo("#fixedStatsMenuSelectLang");
@@ -103,7 +96,7 @@ $(function() {
     }
 
     function fillTable(language) {
-        var regexSort = /(<em>|<\/em>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+        var regexSort = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
         var regexSeparator = /([0-9áªàäâãåąæāéèëêęėēíïìîįīóºòöôõøœōúüùûū¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-])/ig;
         var info =  "<h3>" + language.dictionary.length + " words</h3>"+
                     "<h3>" + language.period.current + "/" + ++language.period.length + " sessions</h3>"+
@@ -141,7 +134,7 @@ $(function() {
                         "</tr>";
         }
 
-        $("#fixedStatsMenuLanguage").text(selectLang.value);
+        $("#fixedStatsMenuLanguage").text($("#fixedStatsMenuSelectLang").val());
 
         $("#fixedStatsMenuInfo02 h3").remove();
         $("#fixedStatsMenuTable tr").remove();

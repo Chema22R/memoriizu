@@ -65,6 +65,11 @@ $(function() {
 
 
     function Session() {
+        var regexJapChars = /[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B/g; // https://gist.github.com/ryanmcgrath/982242
+        var regexSpecials = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+        var regexSust = /aa|ii|uu|ee|oo|au|iu|eu|ou/ig;
+        var mapSust = {"aa":"ā", "ii":"ī", "uu":"ū", "ee":"ē", "oo":"ō", "au":"ā", "iu":"ī", "eu":"ē", "ou":"ō"};
+        
         var session;
         var language;
         var counter;
@@ -77,31 +82,40 @@ $(function() {
             newQuiz();
             
             $("#introContainer, #fixedEditButtons, #fixedStatsButton").fadeOut("fast", function() {
-                $("#quizContainer").fadeIn("slow");
+                $("#quizContainer, #fixedExit").fadeIn("slow");
             });
             window.onbeforeunload = exitBlocked;
         }
 
         var newQuiz = function() {
             var translate = session[counter].fields[session[counter].fields.length-1];
-            $("#quizTranslate").text(translate.substring(0, translate.indexOf("(")).trim());
-            $("#quizDescription").text(translate.substring(translate.indexOf("(")).trim());
+            var separator = translate.indexOf("(");
+            if (separator != -1) {
+                $("#quizTranslate").text(translate.charAt(0).toUpperCase() + translate.substring(1, separator).trim());
+                $("#quizDescription").text(translate.substring(separator).trim());
+            } else {
+                $("#quizTranslate").text(translate.charAt(0).toUpperCase() + translate.substring(1).trim());
+                $("#quizDescription").text("");
+            }
             $("#quizTranslation").val("");
         }
 
         var newFile = function(state) {
             var fields = session[counter].fields;
-            var japaneseRegex = /[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B/g; // https://gist.github.com/ryanmcgrath/982242
             var entry = "";
 
-            if (japaneseRegex.test(fields[0])) {   // first field
+            if (regexJapChars.test(fields[0])) {   // first field
                 entry += "<p class='fileTextBig'>" + fields[0] + "</p>";
             } else {
-                entry += "<p class='fileTextMed'>" + fields[0] + "</p>";
+                entry += "<p class='fileTextMed'>" + fields[0].charAt(0).toUpperCase() + fields[0].substring(1).trim() + "</p>";
             }
 
             for (var i=1; i<fields.length; i++) {   // rest fields
                 entry += "<p>" + fields[i] + "</p>";
+            }
+
+            if (!state) {
+                entry += "<p class='fileTextWrong'>" + $("#quizTranslation").val().toLowerCase().trim().replace(regexSust, function(match) {return mapSust[match];}) + "</p>";
             }
 
             $("#fileText p").remove();
@@ -122,9 +136,9 @@ $(function() {
             });
         }
 
-        var next = function() {
-            if (++counter == session.length) {
-                $("#fileContainer").fadeOut("fast", function() {
+        var next = function(exit) {
+            if (++counter == session.length || exit) {
+                $("#quizContainer, #fileContainer, #fixedExit").fadeOut(0, function() {
                     $("#introContainer, #fixedEditButtons, #fixedStatsButton").fadeIn("slow");
                 });
                 window.onbeforeunload = exitUnblocked;
@@ -144,14 +158,10 @@ $(function() {
         $("#quizForm").off().on("submit", function(e) {
             e.preventDefault();
 
-            var regexDel = /(<em>|<\/em>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
-            var regexSust = /aa|ii|uu|ee|oo|au|iu|eu|ou/ig;
-            var mapSust = {"aa":"ā", "ii":"ī", "uu":"ū", "ee":"ē", "oo":"ō", "au":"ā", "iu":"ī", "eu":"ē", "ou":"ō"};
-
-            var input = $("#quizTranslation").val().toLowerCase().replace(regexDel, "").replace(regexSust, function(match) {return mapSust[match];});
+            var input = $("#quizTranslation").val().toLowerCase().replace(regexSpecials, "").replace(regexSust, function(match) {return mapSust[match];});
             var fields = session[counter].fields.slice(0, session[counter].fields.length-1); // ignoring the last one
             for (var i=0; i<fields.length; i++) {
-                fields[i] = fields[i].toLowerCase().replace(regexDel, "").replace(regexSust, function(match) {return mapSust[match];});
+                fields[i] = fields[i].toLowerCase().replace(regexSpecials, "").replace(regexSust, function(match) {return mapSust[match];});
             }
 
             if (fields.indexOf(input) != -1) {
@@ -190,6 +200,12 @@ $(function() {
                 });
             } else {
                 next();
+            }
+        });
+
+        $("#fixedExit").off().on("click touchstart", function(e) {
+            if (confirm("You are leaving without finishing the session, are you sure? You can resume the session later")) {
+                next(true);
             }
         });
     }
