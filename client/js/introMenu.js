@@ -167,7 +167,18 @@ $(function() {
             if (fields.indexOf(input) != -1) {
                 newFile(true);
             } else {
-                newFile(false);
+                var inputSorted = input.split("").sort().join("");
+                var fieldsSorted = new Array();
+                
+                for (var i=0; i<fields.length; i++) {
+                    fieldsSorted[fieldsSorted.length] = fields[i].split("").sort().join("");
+                }
+
+                if (fieldsSorted.indexOf(inputSorted) != -1) {
+                    newFile(true);
+                } else {
+                    newFile(false);
+                }
             }
         });
 

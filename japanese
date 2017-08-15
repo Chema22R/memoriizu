@@ -7,7 +7,7 @@
 ヌーど;nūdo;desnudo
 面白い;おもしろい;omoshiroi;interesante / gracioso
 全;ぜん;zen;entero / completo
-はじめまして;hajimemashite;encantado (saludar)
+はじめまして;hajimemashite;encantado (al saludar)
 よろしくおねがいします;yoroshiku onegai shimasu;encantado de conocerle
 こちらこそよろしく;kochira koso yoroshiku;encantado de conocerle también
 おはよう<em>ございます</em>;ohayō <em>gozaimasu</em>;buenos días
@@ -31,8 +31,8 @@
 どうもありがとう;dōmo arigatō;muchas gracias (informal)
 どうもありがとうございます;dōmo arigatō gozaimasu;muchas gracias (muy formal)
 どういたしまして / いいえ;dō itashimashite / īe;de nada
-いただきます;itadakimasu;gracias por la comida (a animales) (antes)
-ごちそうさま;gochisōsama;gracias por la comida (a cocineros) (después)
+いただきます;itadakimasu;gracias por la comida (a animales, antes)
+ごちそうさま;gochisōsama;gracias por la comida (a cocineros, después)
 すみません;sumimasen;disculpe
 ごめん　<em>なさい</em>;gomen <em>nasai</em>;lo siento
 お願い　<em>します</em>;おねがい　<em>します</em>;onegai <em>shimasu</em>;por favor
@@ -50,9 +50,9 @@
 本当;ほんとう;hontō;verdad / cierto
 本当ですか?;ほんとうですか?;hontō desu ka?;de verdad?
 お元気ですか?;おげんきですか?;ogenki desu ka?;¿cómo estás?
-はい, 元気です;はい, げんきです;hai, genki desu;estoy bien
+はい, 元気です;はい, げんきです;hai, genki desu;estoy bien (respuesta a "ogenki desu ka?")
 大丈夫ですか?;だいじょうぶですか?;daijōbu desu ka?;¿estás bien?
-大丈夫です;だいじょうぶです;daijōbu desu;estoy bien
+大丈夫です;だいじょうぶです;daijōbu desu;estoy bien (respuesta a "daijōbu desu ka?")
 いらっしゃいませ;irasshaimase;bienvenido / ¿como puedo ayudarle? (vendedor)
 これはいくらですか?;kore wa ikura desu ka?;¿cuánto cuesta esto?
 これをください;kore o kudasai;esto, por favor
@@ -83,11 +83,11 @@
 これ;kore;esto
 それ;sore;eso
 あれ;are;aquello
-どれ?;dore?;¿cuál?
+どれ?;dore?;¿cuál? (sustantivo)
 この;kono;este
 その;sono;ese
 あの;ano;aquel
-どの?;dono?;¿cuál?
+どの?;dono?;¿cuál? / ¿qué? (adjetivo interrogativo)
 ここ;koko;aquí
 そこ;soko;ahí
 あそこ;asoko;allí
@@ -97,19 +97,19 @@
 あそこに犬がいる;あそこにいぬがいる;asoko ni inu ga iru;allí hay un perro
 何?;なに? / なん?;nani? / nan?;¿qué?
 これは何ですか?;これはなんですか?;kore wa nan desu ka;¿qué es esto?
-私;わたくし;watakushi;yo (muy formal)
+私;わたくし;watakushi;yo (la versión mas formal)
 我;われ;ware;yo (muy formal)
 私;わたし;watashi;yo (formal)
 僕;ぼく;boku;yo (informal masculino)
 私;あたし;atashi;yo (informal femenino)
 俺;おれ;ore;yo (vulgar masculino, familiares y amigos íntimos)
-私達 / 私共;わたくしたち / わたくしども;watakushitachi / watakushidomo;nosotros (muy formal)
+私達 / 私共;わたくしたち / わたくしども;watakushitachi / watakushidomo;nosotros (la versión mas formal)
+我々;われわれ;wareware;nosotros (muy formal)
 私達;わたしたち;watashitachi;nosotros (formal)
-我々;われわれ;wareware;nosotros (formal)
 僕達 / 僕ら;ぼくたち / ぼくら;bokutachi / bokura;nosotros (informal masculino)
 私達 / 私ら;あたしたち / あたしら;atashitachi / atashira;nosotros (informal femenino)
 俺達 / 俺ら;おれたち / おれら;oretachi / orera;nosotros (vulgar masculino)
-貴方 / 貴男 / 貴女;あなた;anata; usted (formal, kanjis raramente usados)
+貴方 / 貴男 / 貴女;あなた;anata; tú / usted (formal, kanjis raramente usados)
 君;きみ;kimi;tú (informal)
 お前;おまえ;omae;tú (vulgar masculino)
 あんた;anta;tú (vulgar)
@@ -312,7 +312,7 @@
 椅子;いす;isu;silla / taburete
 ハモーン;hamōn;jamón
 気;き;ki;ánimo / espíritu (fuerza espiritual)
-基地;きち;kichi;base (militar, investigación)
+基地;きち;kichi;base (militar, investigación, etc)
 コンピュータ;konpyūta;ordenador
 くうそ;kūso;vacío / insustancial
 くそ;kuso;mierda
@@ -344,7 +344,7 @@
 死;し;shi;muerte
 新聞;しんぶん;shinbun;periódico
 白;しろ;shiro;blanco
-出発;;しゅっぱつ;shuppatsu;salida / partida
+出発;;しゅっぱつ;shuppatsu;salida / partida (típicamente para viajes)
 外;そと;soto;fuera
 全て;すべて;subete;todo / todas las cosas
 スキャンダル;sukyandaru;escándalo
@@ -368,8 +368,8 @@
 冬眠;とおみん;tōmin;hibernación
 休み;やすみ;yasumi;vacaciones
 春休み;はるやすみ;haruyasumi;vacaciones de primavera
-夏休み;なつやすみ;natsuyasumi;vacaciones de primavera
-秋休み;あきやすみ;akiyasumi;vacaciones de primavera
-冬休み;ふゆやすみ;fuyuyasumi;vacaciones de primavera
+夏休み;なつやすみ;natsuyasumi;vacaciones de verano
+秋休み;あきやすみ;akiyasumi;vacaciones de otoño
+冬休み;ふゆやすみ;fuyuyasumi;vacaciones de invierno
 雨水;うすい;usui;agua de lluvia
 油田;ゆでん;yuden;yacimiento de petróleo
