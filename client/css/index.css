@@ -455,7 +455,7 @@ p {margin: 0;padding: 0;}
 }
 
 #fileText p {margin: 10px auto;}
-#fileText .fileTextBig {font-size: 2em;}
+#fileText .fileTextBig {font-size: 2.5em;}
 #fileText .fileTextMed {font-size: 1.5em;}
 
 #fileText .fileTextWrong {

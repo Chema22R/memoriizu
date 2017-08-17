@@ -696,7 +696,7 @@ exports.postResults = function(req, res) {
             word.ref = true;
             word.count.wrong++;
 
-            word.countdown.wrong = 3;
+            word.countdown.wrong = 2;
         }
 
         logger.log("      Changes generated for word '" + word._id + "' with state '" + state + "'");

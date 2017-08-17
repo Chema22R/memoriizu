@@ -19,7 +19,7 @@ var languageSchema = new mongoose.Schema({
             wrong: {type: Number, default: 0}
         },
         countdown: {
-            new: {type: Number, default: 5},
+            new: {type: Number, default: 4},
             wrong: {type: Number, default: 0}
         }
     }],
