@@ -84,7 +84,7 @@
 それ;sore;eso
 あれ;are;aquello
 どれ?;dore?;¿cuál? (sustantivo)
-この;kono;este
+この;kono;este (pronombre)
 その;sono;ese
 あの;ano;aquel
 どの?;dono?;¿cuál? / ¿qué? (adjetivo interrogativo)
@@ -93,7 +93,7 @@
 あそこ;asoko;allí
 どこ?;doko?;¿dónde?
 それは犬です;それはいぬです;sore wa inu desu;eso es un perro
-この犬は大きい;このいぬはおおきい;kono inu wa ōkī desu;este perro es grande
+この犬は大きいです;このいぬはおおきいです;kono inu wa ōkī desu;este perro es grande
 あそこに犬がいる;あそこにいぬがいる;asoko ni inu ga iru;allí hay un perro
 何?;なに? / なん?;nani? / nan?;¿qué?
 これは何ですか?;これはなんですか?;kore wa nan desu ka;¿qué es esto?
@@ -118,7 +118,7 @@
 あなた方 / あなた達;あなたがた / あなたたち;anatagata / anatatachi;ustedes (formal)
 君たち / 君ら;きみたち / きみら;kimitachi / kimira;vosotros (informal)
 お前達 / お前ら;おまえたち / おまえら;omaetachi / omaera;vosotros (vulgar masculino)
-あんた達;あんたたち / あんたら;antatachi / antara;vosotros (vulgar)
+あんた達 / あんたら;あんたたち / あんたら;antatachi / antara;vosotros (vulgar)
 彼;かれ;kare;él / mi novio (formal / informal)
 彼女;かのじょ;kanojo;ella / mi novia (formal / informal)
 彼ら;かれら;karera;ellos (formal)
@@ -138,7 +138,7 @@
 喫茶店;きっさてん;kissaten;cafetería / tetería
 店;みせ;mise;tienda
 ホットポット;hottopotto;estofado
-コオヒイ;kōhī;café
+コーヒー;kōhī;café
 クッキー;kukkī;galleta
 抹茶;まっちゃ;matcha / maccha;té verde
 ミルク;miruku;leche
@@ -231,7 +231,7 @@
 人;ひと;hito;persona
 男女;だんじょ;danjo;ambos sexos / hombre y mujer
 男;おとこ;otoko;hombre
-女;おんあ;onna;mujer
+女;おんな;onna;mujer
 女子;じょし;joshi;mujeres / chicas
 子;こ;ko;niño/a
 父;ちち;chichi;padre (familia propia)
@@ -246,7 +246,7 @@
 姉;あね;ane;hermana mayor (familia propia)
 弟;おとうと;otōto;hermano menor (familia propia)
 妹;いもうと;imōto;hermana menor (familia propia)
-お父さん;おとおさん;otōsan;padre (familia ajena)
+お父さん;おとうさん;otōsan;padre (familia ajena)
 お母さん;おかあさん;okāsan;madre (familia ajena)
 息子さん;むすこさん;musukosan;hijo (familia ajena)
 娘さん;むすめさん;musumesan;hija (familia ajena)
@@ -256,8 +256,8 @@
 祖母さん;おばあさん;obāsan;abuela (familia ajena)
 お兄さん;おにいさん;onīsan;hermano mayor (familia ajena)
 お姉さん;おねえさん;onēsan;hermana mayor (familia ajena)
-弟さん;おとおとさん;otōtosan;hermano menor (familia ajena)
-妹さん;いもおとさん;imōtosan;hermana menor (familia ajena)
+弟さん;おとうとさん;otōtosan;hermano menor (familia ajena)
+妹さん;いもうとさん;imōtosan;hermana menor (familia ajena)
 兄貴;あにき;aniki;hermano mayor (respetuoso)
 姉貴;あねき;aneki;hermana mayor (respetuoso)
 サア;sā;señor
@@ -276,7 +276,7 @@
 博士;はかせ;hakase;doctor
 コオち;kōchi;entrenador/a
 ミスタあ;misutā;míster
-りいだあ;rīdā;líder 
+リーダー;rīdā;líder
 先生;せんせい;sensei;profesor
 士;し;shi;samurái / guerrero
 ゼネラル;zeneraru;general
@@ -354,18 +354,18 @@
 ティラミス;tiramisu;tiramisú
 歌;うた;uta;canción
 ヴァイオレント;vaiorento;violento
-平成１７年;へいせいじゅうななねん;heisei jū nana nen;2005
-明治５年;めいじごねん;meiji go nen;1872
-昭和５１年;しょうわごじゅういちねん;shōwa go jū ichi nen;1976
-大正１０年;たいしょうじゅうねん;taishō jū nen;1921
-昭和３０年;しょうわさんじゅうねん;shōwa san jū nen;1995
+平成１７年;へいせいじゅうななねん;heisei jū nana nen;año 2005
+明治５年;めいじごねん;meiji go nen;año 1872
+昭和５１年;しょうわごじゅういちねん;shōwa go jū ichi nen;año 1976
+大正１０年;たいしょうじゅうねん;taishō jū nen;año 1921
+昭和３０年;しょうわさんじゅうねん;shōwa san jū nen;año 1995
 
 
 
 
 
 
-冬眠;とおみん;tōmin;hibernación
+冬眠;とうみん;tōmin;hibernación
 休み;やすみ;yasumi;vacaciones
 春休み;はるやすみ;haruyasumi;vacaciones de primavera
 夏休み;なつやすみ;natsuyasumi;vacaciones de verano
