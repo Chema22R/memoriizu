@@ -48,6 +48,30 @@ p {margin: 0;padding: 0;}
 }
 
 
+/* Loading Bar */
+
+#fixedLoadingBar {
+    position: fixed;
+    top: 0;
+    left: 20%;
+    right: 20%;
+
+    height: 7px;
+
+    border: 1px solid #929292;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    overflow: hidden;background-color: #E0D5B7;
+}
+
+#fixedLoadingBarProgress {
+    width: 0%;
+    background-color: #00C000;
+}
+
+
 /* Edit Buttons */
 
 #fixedEditButtons .icon {

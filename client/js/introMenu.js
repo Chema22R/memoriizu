@@ -82,8 +82,9 @@ $(function() {
             newQuiz();
             
             $("#introContainer, #fixedEditButtons, #fixedStatsButton").fadeOut("fast", function() {
-                $("#quizContainer, #fixedExit").fadeIn("slow");
+                $("#quizContainer, #fixedExit, #fixedLoadingBar").fadeIn("slow");
             });
+            $("#fixedLoadingBarProgress").css("width", ((counter+1)*100/session.length).toString() + "%");
             window.onbeforeunload = exitBlocked;
         }
 
@@ -138,7 +139,7 @@ $(function() {
 
         var next = function(exit) {
             if (++counter == session.length || exit) {
-                $("#quizContainer, #fileContainer, #fixedExit").fadeOut(0, function() {
+                $("#quizContainer, #fileContainer, #fixedExit, #fixedLoadingBar").fadeOut(0, function() {
                     $("#introContainer, #fixedEditButtons, #fixedStatsButton").fadeIn("slow");
                 });
                 window.onbeforeunload = exitUnblocked;
@@ -189,6 +190,10 @@ $(function() {
 
             if (e.target.id == "fileButtonRight") {
                 state = true;
+                
+                $("#fixedLoadingBarProgress").animate({
+                    width: ((counter+2)*100/session.length).toString() + "%"
+                }, 1000);
             } else {
                 state = false;
                 session[session.length] = session[counter];
