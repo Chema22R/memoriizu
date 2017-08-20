@@ -66,10 +66,10 @@
 やっぱり;yappari;lo sabía
 より;yori;más que
 年;ねん;nen;año
-明治;meiji;era meiji (1868-1912)
-大正;taishō;era taishō (1912-1926)
-昭和;shōwa;era shōwa (1926-1989)
-平成;heisei;era heisei (1989-)
+明治;めいじ;meiji;era meiji (1868-1912)
+大正;たいしょう;taishō;era taishō (1912-1926)
+昭和;しょうわ;shōwa;era shōwa (1926-1989)
+平成;へいせい;heisei;era heisei (1989-)
 月曜日 / 月曜;げつようび / げつよう;getsuyōbi / getsuyō;lunes
 火曜日 / 火曜;かようび / かよう;kayōbi / kayō;martes
 水曜日 / 水曜;すいようび / すいよう;suiyōbi / suiyō;miércoles
@@ -188,7 +188,7 @@
 雲;くも;kumo;nube
 曇り;くもり;kumori;nublado
 水;みず;mizu;agua
-紅葉;もみじ / こおよお;momiji / kōyō;hojas rojas de otoño
+紅葉;もみじ / こうよう;momiji / kōyō;hojas rojas de otoño
 桜;さくら;sakura;cerezo / flor de cerezo
 空;そら;sora;cielo
 田;た;ta;campo
@@ -196,8 +196,8 @@
 土;つち;tsuchi;tierra / suelo
 山;やま;yama;montaña
 雪;ゆき;yuki;nieve
-今日は雨が降っています;きょうあめがふっています;kyō wa ame ga futte imasu;hoy está lloviendo
-今日は雪が降っています;きょうゆきがふっています;kyō wa yuki ga futte imasu;hoy está nevando
+今日は雨が降っています;きょうはあめがふっています;kyō wa ame ga futte imasu;hoy está lloviendo
+今日は雪が降っています;きょうはゆきがふっています;kyō wa yuki ga futte imasu;hoy está nevando
 寒いですね;さむいですね;samui desu ne;hace frío, ¿verdad?
 零;れい;rei / zero;0
 一;いち;ichi;1
@@ -224,7 +224,7 @@
 一億;いちおく;ichi oku;100.000.000
 一兆;いっちょう;icchō;1.000.000.000.000 (billón)
 七万五百一;ななまんごひゃくいち;nana man go hyaku ichi;70.501
-七万三千五百八十一;ななまんさんぜんごぴゃくはちじゅういち;nana man san zen go hyaku hachi jū ichi;73.581
+七万三千五百八十一;ななまんさんぜんごひゃくはちじゅういち;nana man san zen go hyaku hachi jū ichi;73.581
 第六;だいろく;dai roku;6º
 第五十四;だいごじゅうよん;dai go jū yon;54º
 第八百二十九;だいはっぴゃくにじゅうきゅう;dai happyaku ni jū kyū;829º
@@ -260,7 +260,7 @@
 妹さん;いもうとさん;imōtosan;hermana menor (familia ajena)
 兄貴;あにき;aniki;hermano mayor (respetuoso)
 姉貴;あねき;aneki;hermana mayor (respetuoso)
-サア;sā;señor
+サー;sā;señor
 北;きた;kita;norte
 南;みなみ;minami;sur
 東;ひがし;higashi;este
@@ -274,8 +274,8 @@
 学生;がくせい;gakusei;estudiante
 グルメ;gurume;gourmet
 博士;はかせ;hakase;doctor
-コオち;kōchi;entrenador/a
-ミスタあ;misutā;míster
+コーチ;kōchi;entrenador/a
+ミスター;misutā;míster
 リーダー;rīdā;líder
 先生;せんせい;sensei;profesor
 士;し;shi;samurái / guerrero
@@ -358,7 +358,7 @@
 明治５年;めいじごねん;meiji go nen;año 1872
 昭和５１年;しょうわごじゅういちねん;shōwa go jū ichi nen;año 1976
 大正１０年;たいしょうじゅうねん;taishō jū nen;año 1921
-昭和３０年;しょうわさんじゅうねん;shōwa san jū nen;año 1995
+昭和３０年;しょうわさんじゅうねん;shōwa san jū nen;año 1955
 
 
 
