@@ -518,10 +518,6 @@ exports.getSession = function(req, res) {
         var sequence = new Array();
         var session = new Array();
 
-        if (language.period.current == 0) {
-            resetWords(language._id, dictionarySize);
-        }
-
         logger.log("    Getting session size...");
 
         for (var i=0; i<dictionarySize; i++) {
@@ -572,6 +568,7 @@ exports.getSession = function(req, res) {
 
         if (language.period.current == language.period.length) {
             language.period.current = 0;
+            resetWords(language._id, dictionarySize);
         } else {
             language.period.current++;
         }
