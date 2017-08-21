@@ -99,7 +99,7 @@ $(function() {
         var regexSort = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
         var regexSeparator = /([0-9áªàäâãåąæāéèëêęėēíïìîįīóºòöôõøœōúüùûū¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-])/ig;
         var info =  "<h3>" + language.dictionary.length + " words</h3>"+
-                    "<h3>" + language.period.current + "/" + ++language.period.length + " sessions</h3>"+
+                    "<h3>" + ++language.period.current + "/" + ++language.period.length + " sessions</h3>"+
                     "<h3>" + new Date(language.session.date).toLocaleDateString() + "</h3>"+
                     "<h3>" + new Date(language.date).toLocaleDateString() + "</h3>";
         var table = "<tr><th class='alignLeft'>Fields</th><th>Count</th><th>Countdown</th><th>Completed</th></tr>";
