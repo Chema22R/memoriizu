@@ -518,10 +518,14 @@ exports.getSession = function(req, res) {
         var sequence = new Array();
         var session = new Array();
 
+        if (language.period.current == 0) {
+            resetWords(language._id, dictionarySize);
+        }
+
         logger.log("    Getting session size...");
 
         for (var i=0; i<dictionarySize; i++) {
-            if ((!language.dictionary[i].ref) && (language.dictionary[i].countdown.new == 0) && (language.dictionary[i].countdown.wrong == 0)) {
+            if ((!language.dictionary[i].ref || language.period.current == 0) && (language.dictionary[i].countdown.new == 0) && (language.dictionary[i].countdown.wrong == 0)) {
                 pendingWords++;
             }
         }
@@ -540,7 +544,7 @@ exports.getSession = function(req, res) {
         logger.log("      Special session sequence obtained (" + sequenceSpecial.length + " elements): [" + sequenceSpecial + "]");
 
         for (var i=0; i<dictionarySize && sequenceNormal.length<sessionSize; i++) {
-            if ((sequenceNormal.indexOf(i) == -1) && (sequenceSpecial.indexOf(i) == -1) && (!language.dictionary[i].ref)) {
+            if ((sequenceNormal.indexOf(i) == -1) && (sequenceSpecial.indexOf(i) == -1) && (!language.dictionary[i].ref || language.period.current == 0)) {
                 sequenceNormal[sequenceNormal.length] = i;
             }
         }
@@ -568,7 +572,6 @@ exports.getSession = function(req, res) {
 
         if (language.period.current == language.period.length) {
             language.period.current = 0;
-            resetWords(language._id, dictionarySize);
         } else {
             language.period.current++;
         }
