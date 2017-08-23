@@ -159,10 +159,10 @@ $(function() {
         $("#quizForm").off().on("submit", function(e) {
             e.preventDefault();
 
-            var input = $("#quizTranslation").val().toLowerCase().replace(regexSpecials, "").replace(regexSust, function(match) {return mapSust[match];});
+            var input = $("#quizTranslation").val().toLowerCase().replace(regexSust, function(match) {return mapSust[match];}).replace(regexSpecials, "");
             var fields = session[counter].fields.slice(0, session[counter].fields.length-1); // ignoring the last one
             for (var i=0; i<fields.length; i++) {
-                fields[i] = fields[i].toLowerCase().replace(regexSpecials, "").replace(regexSust, function(match) {return mapSust[match];});
+                fields[i] = fields[i].toLowerCase().replace(regexSust, function(match) {return mapSust[match];}).replace(regexSpecials, "");
             }
 
             if (fields.indexOf(input) != -1) {
