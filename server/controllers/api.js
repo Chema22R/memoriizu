@@ -493,9 +493,9 @@ exports.getSession = function(req, res) {
                     var current = new Date();
                     
                     if ((query.session.date == undefined) ||
-                        ((current.getFullYear() >= query.session.date.getFullYear()) &&
-                        (current.getMonth() >= query.session.date.getMonth()) &&
-                        (current.getDate() > query.session.date.getDate()))) {
+                        (current.getFullYear() > query.session.date.getFullYear()) ||
+                        (current.getMonth() > query.session.date.getMonth()) ||
+                        (current.getDate() > query.session.date.getDate())) {
                             generateSession(query);
                     } else {
                         continueSession(query);
