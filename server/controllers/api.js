@@ -522,6 +522,13 @@ exports.getSession = function(req, res) {
             resetWords(language._id, dictionarySize);
         }
 
+        for (var j, x, i=dictionarySize; i; i--) {
+            j = Math.floor(Math.random() * i);
+            x = language.dictionary[i-1];
+            language.dictionary[i-1] = language.dictionary[j];
+            language.dictionary[j] = x;
+        }
+
         logger.log("    Getting session size...");
 
         for (var i=0; i<dictionarySize; i++) {
