@@ -97,6 +97,7 @@ $(function() {
 
     function fillTable(language) {
         var regexSpecials = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+        var regexLetters = /[A-Záàäâãåąæāéèëêęėēíïìîįīóòöôõøœōúüùûū]/ig;
         var regexNumbsVocals = /([0-9áàäâãåąæāéèëêęėēíïìîįīóòöôõøœōúüùûū])/ig;
         var info =  "<h3>" + language.dictionary.length + " words</h3>"+
                     "<h3>" + language.period.current + "/" + ++language.period.length + " sessions</h3>"+
@@ -108,8 +109,8 @@ $(function() {
         language.dictionary.sort(function(a, b){
             var a=a.fields[a.fields.length-1].toLowerCase().replace(regexSpecials, "");
             var b=b.fields[b.fields.length-1].toLowerCase().replace(regexSpecials, "");
-            if (!isNaN(a) && !isNaN(b)) {
-                return Number(a)>Number(b);
+            if (!isNaN(a.substring(0,1)) && !isNaN(b.substring(0,1))) {
+                return a.replace(regexLetters, "") - b.replace(regexLetters, "");
             } else {
                 return a.localeCompare(b);
             }
