@@ -96,8 +96,8 @@ $(function() {
     }
 
     function fillTable(language) {
-        var regexSort = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
-        var regexSeparator = /([0-9áªàäâãåąæāéèëêęėēíïìîįīóºòöôõøœōúüùûū¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-])/ig;
+        var regexSpecials = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+        var regexNumbsVocals = /([0-9áàäâãåąæāéèëêęėēíïìîįīóòöôõøœōúüùûū])/ig;
         var info =  "<h3>" + language.dictionary.length + " words</h3>"+
                     "<h3>" + language.period.current + "/" + ++language.period.length + " sessions</h3>"+
                     "<h3>" + new Date(language.session.date).toLocaleDateString() + "</h3>"+
@@ -106,8 +106,8 @@ $(function() {
         var letterSeparator;
 
         language.dictionary.sort(function(a, b){
-            var a=a.fields[a.fields.length-1].toLowerCase().replace(regexSort, "");
-            var b=b.fields[b.fields.length-1].toLowerCase().replace(regexSort, "");
+            var a=a.fields[a.fields.length-1].toLowerCase().replace(regexSpecials, "");
+            var b=b.fields[b.fields.length-1].toLowerCase().replace(regexSpecials, "");
             if (!isNaN(a) && !isNaN(b)) {
                 return Number(a)>Number(b);
             } else {
@@ -116,7 +116,7 @@ $(function() {
         });
 
         for (var i=0; i<language.dictionary.length; i++) {
-            var firstLetter = language.dictionary[i].fields[language.dictionary[i].fields.length-1].substring(0, 1).replace(regexSeparator, "");
+            var firstLetter = language.dictionary[i].fields[language.dictionary[i].fields.length-1].replace(regexSpecials, "").substring(0, 1).replace(regexNumbsVocals, "");
             if ((firstLetter != letterSeparator) && (firstLetter != "")) {
                 letterSeparator = firstLetter;
                 table += "<tr><td class='alignLeft letterSeparator' colspan='4'>" + letterSeparator + "</td></tr>";
