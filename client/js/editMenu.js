@@ -225,11 +225,12 @@ $(function() {
                     res = res.dictionary;
 
                     res.sort(function(a, b){
-                        var regexSort = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
-                        var a=a.fields[a.fields.length-1].toLowerCase().replace(regexSort, "");
-                        var b=b.fields[b.fields.length-1].toLowerCase().replace(regexSort, "");
-                        if (!isNaN(a) && !isNaN(b)) {
-                            return Number(a)>Number(b);
+                        var regexSpecials = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+                        var regexLetters = /[A-Záàäâãåąæāéèëêęėēíïìîįīóòöôõøœōúüùûū]/ig;
+                        var a=a.fields[a.fields.length-1].toLowerCase().replace(regexSpecials, "");
+                        var b=b.fields[b.fields.length-1].toLowerCase().replace(regexSpecials, "");
+                        if (!isNaN(a.substring(0,1)) && !isNaN(b.substring(0,1))) {
+                            return a.replace(regexLetters, "") - b.replace(regexLetters, "");
                         } else {
                             return a.localeCompare(b);
                         }
