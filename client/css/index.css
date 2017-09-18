@@ -63,7 +63,8 @@ p {margin: 0;padding: 0;}
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 
-    overflow: hidden;background-color: #E0D5B7;
+    overflow: hidden;
+    background-color: #E0D5B7;
 }
 
 #fixedLoadingBarProgress {
@@ -128,7 +129,7 @@ p {margin: 0;padding: 0;}
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
 
     background-color: #e2e2da;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 #fixedEditMenu * {text-align: center;}
@@ -239,7 +240,7 @@ p {margin: 0;padding: 0;}
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
 
     background-color: #e2e2da;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 #fixedStatsMenu * {text-align: center;}
@@ -379,7 +380,7 @@ p {margin: 0;padding: 0;}
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
 
     background-color: #e2e2da;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 #mainContent * {text-align: center;}
