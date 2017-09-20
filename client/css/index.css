@@ -31,7 +31,7 @@ p {margin: 0;padding: 0;}
 /* Fixed Content
     ========================================================================== */
 
-#fixedContent * {z-index: 9999;}
+#fixedContent * {z-index: 3;}
 
 /* Log */
 
@@ -42,11 +42,12 @@ p {margin: 0;padding: 0;}
 }
 
 #fixedLogMsj {
+    display: none;
     position: relative;
     left: -50%;
 
     padding: 8px 15px;
-    border-radius: 20px;
+    border-radius: 10px;
     text-align: center;
     cursor: default;
 }
@@ -55,6 +56,7 @@ p {margin: 0;padding: 0;}
 /* Loading Bar */
 
 #fixedLoadingBar {
+    display: none;
     position: fixed;
     top: 0;
     left: 20%;
@@ -97,6 +99,11 @@ p {margin: 0;padding: 0;}
     font-size: 40px;
 }
 
+#fixedEditSubButtons,
+#fixedEditSubSubButtons {
+    display: none;
+}
+
 #fixedEditSubButtons .subButton {
     left: 15px;
     height: 40px;
@@ -119,6 +126,7 @@ p {margin: 0;padding: 0;}
 /* Edit Menu */
 
 #fixedEditMenu {
+    display: none;
     position: fixed;
     top: 15%;
 
@@ -220,7 +228,7 @@ p {margin: 0;padding: 0;}
     color: #575048;
     background: transparent;
 
-    z-index: 9997;
+    z-index: 1;
 }
 
 #fixedStatsButton:hover {color: #777068;}
@@ -229,6 +237,7 @@ p {margin: 0;padding: 0;}
 /* Stats Menu */
 
 #fixedStatsMenu {
+    display: none;
     position: fixed;
     top: 10%;
     left: 10%;
@@ -348,6 +357,7 @@ p {margin: 0;padding: 0;}
 /* Leftover */
 
 #fixedLeftover {
+    display: none;
     position: fixed;
     height: 100%;
     width: 100%;
@@ -355,7 +365,7 @@ p {margin: 0;padding: 0;}
     background-color: #000;
     opacity: 0.3;
     
-    z-index: 9998;
+    z-index: 2;
 }
 
 
@@ -369,6 +379,7 @@ p {margin: 0;padding: 0;}
 }
 
 #mainContent .container {
+    display: none;
     position: relative;
     top: 15%;
 
@@ -377,11 +388,11 @@ p {margin: 0;padding: 0;}
     max-width: 80%;
 
     margin: 0 auto;
-    border-radius: 20px;
+    border-radius: 10px;
 
-    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
 
     background-color: #e2e2da;
     overflow-y: auto;
@@ -393,6 +404,7 @@ p {margin: 0;padding: 0;}
 /* Exit button */
 
 #fixedExit {
+    display: none;
     position: fixed;
     top: 10px;
     left: 15px;
@@ -404,7 +416,7 @@ p {margin: 0;padding: 0;}
     color: #575048;
     background: transparent;
 
-    z-index: 9999;
+    z-index: 3;
 }
 
 #fixedExit:hover {color: #777068;}
@@ -493,7 +505,8 @@ p {margin: 0;padding: 0;}
 }
 
 
-#fileButtons * {
+#fileButtons button {
+    display: none;
     float: left;
     height: 40px;
 

@@ -52,6 +52,7 @@ $(function() {
         $("#fixedStatsMenu").fadeIn("slow");
 
         document.getElementById("fixedStatsMenu").scrollTo(0, 0);
+        $(".scroll").perfectScrollbar("update");
     }
 
     function fillSelector(type, id, selector) {

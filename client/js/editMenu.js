@@ -115,6 +115,9 @@ $(function() {
         $("#fixedLeftover").fadeIn("slow");
         $("#fixedEditMenu").fadeIn("slow");
 
+        document.getElementById("fixedEditMenu").scrollTo(0, 0);
+        $(".scroll").perfectScrollbar("update");
+
         delayedLoad();
     }
 

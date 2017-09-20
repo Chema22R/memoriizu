@@ -38,9 +38,10 @@ $(function() {
                 entry = ("<h2 class='noInfo' title='no info to display'>No information to display</h2>");
             }
 
-            $("#introContainer *").remove();
             $(entry).appendTo("#introContainer");
             $("#introContainer").fadeIn(0);
+
+            $(".scroll").perfectScrollbar("update");
         }
 
         var languageTrigger = function() {
@@ -83,8 +84,11 @@ $(function() {
             
             $("#introContainer, #fixedEditButtons, #fixedStatsButton").fadeOut("fast", function() {
                 $("#quizContainer, #fixedExit, #fixedLoadingBar").fadeIn("slow");
+                document.getElementById("quizContainer").scrollTo(0, 0);
             });
+
             $("#fixedLoadingBarProgress").css("width", ((counter+1)*100/session.length).toString() + "%");
+
             window.onbeforeunload = exitBlocked;
         }
 
@@ -134,6 +138,7 @@ $(function() {
 
             $("#quizContainer").fadeOut(0, function() {
                 $("#fileContainer").fadeIn(0);
+                document.getElementById("fileContainer").scrollTo(0, 0);
             });
         }
 
@@ -148,6 +153,7 @@ $(function() {
 
                 $("#fileContainer").fadeOut(0, function() {
                     $("#quizContainer").fadeIn(0);
+                    document.getElementById("quizContainer").scrollTo(0, 0);
                 });
             }
         }

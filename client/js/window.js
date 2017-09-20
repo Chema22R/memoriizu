@@ -31,5 +31,7 @@ $(function() {
 		$("#fixedStatsMenu").css({
             left: (window.innerWidth - $("#fixedStatsMenu").width()) / 2
         });
+
+        $(".scroll").perfectScrollbar("update");
 	});
 });
