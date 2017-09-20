@@ -463,12 +463,12 @@ p {margin: 0;padding: 0;}
 }
 
 #quizTranslate {
-    display:block;
+    display: block;
     font-size: 1.8em;
 }
 
 #quizDescription{
-    display:block;
+    display: block;
     margin-top: 3px;
     font-size: 1em;
 }
@@ -505,7 +505,7 @@ p {margin: 0;padding: 0;}
 }
 
 
-#fileButtons button {
+#fileButtons * {
     display: none;
     float: left;
     height: 40px;
