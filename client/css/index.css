@@ -293,6 +293,8 @@ p {margin: 0;padding: 0;}
     background-color: transparent;
 }
 
+#fixedStatsMenuSubmit:hover {color: #777068;}
+
 
 #fixedStatsMenuInfo {
     max-width: 100%;
