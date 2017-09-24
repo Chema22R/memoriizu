@@ -38,6 +38,7 @@ $(function() {
                 entry = ("<h2 class='noInfo' title='no info to display'>No information to display</h2>");
             }
 
+            $("#introContainer *").remove();
             $(entry).appendTo("#introContainer");
             $("#introContainer").fadeIn(0);
 
