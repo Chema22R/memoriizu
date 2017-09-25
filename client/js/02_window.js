@@ -2,21 +2,18 @@ $(function() {
     // click touchstart
     $(window).on("click touchstart", function(e) {
         // edit buttons (close buttons)
-        if ((!$(e.target).is("#fixedEditButtons *")) && ($("#fixedEditSubButtons").is(":visible"))) {
-            $("#fixedEditSubSubButtons").fadeOut("slow");
-            $("#fixedEditSubButtons").fadeOut("slow");
+        if ($("#fixedEditSubButtons").is(":visible") && !$(e.target).is("#fixedEditButtons *")) {
+            $("#fixedEditSubSubButtons, #fixedEditSubButtons").fadeOut("slow");
         }
 
         // edit menu (close the menu)
-        if ((!$(e.target).is("#fixedEditMenu, #fixedEditMenu *, #fixedEditButtons *")) && ($("#fixedEditMenu").is(":visible"))) {
-            $("#fixedLeftover").fadeOut("slow");
-            $("#fixedEditMenu").fadeOut("slow");
+        if ($("#fixedEditMenu").is(":visible") && (!$(e.target).is("#fixedEditMenu, #fixedEditMenu *, #fixedEditButtons *") || $(e.target).is(".exitButton"))) {
+            $("#fixedLeftover, #fixedEditMenu").fadeOut("slow");
         }
 
         // stats menu (close the menu)
-        if ((!$(e.target).is("#fixedStatsMenu, #fixedStatsMenu *, #fixedStatsButton")) && ($("#fixedStatsMenu").is(":visible"))) {
-            $("#fixedLeftover").fadeOut("slow");
-            $("#fixedStatsMenu").fadeOut("slow");
+        if ($("#fixedStatsMenu").is(":visible") && (!$(e.target).is("#fixedStatsMenu, #fixedStatsMenu *, #fixedStatsButton") || $(e.target).is(".exitButton"))) {
+            $("#fixedLeftover, #fixedStatsMenu").fadeOut("slow");
         }
     });
 
