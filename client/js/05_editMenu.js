@@ -115,10 +115,11 @@ $(function() {
         $("#fixedLeftover").fadeIn("slow");
         $("#fixedEditMenu").fadeIn("slow");
 
-        document.getElementById("fixedEditMenu").scrollTo(0, 0);
-        $(".scroll").perfectScrollbar("update");
-
-        delayedLoad();
+        setTimeout(function() {
+            $("#fixedEditMenu").scrollTop(0);
+            $(".scroll").perfectScrollbar("update");
+            delayedLoad();
+        }, 10);
     }
 
     function delayedLoad() {

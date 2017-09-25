@@ -85,7 +85,9 @@ $(function() {
             
             $("#introContainer, #fixedEditButtons, #fixedStatsButton").fadeOut("fast", function() {
                 $("#quizContainer, #fixedExit, #fixedLoadingBar").fadeIn("slow");
-                document.getElementById("quizContainer").scrollTo(0, 0);
+                setTimeout(function() {
+                    $("#quizContainer").scrollTop(0);
+                }, 10);
             });
 
             $("#fixedLoadingBarProgress").css("width", ((counter+1)*100/session.length).toString() + "%");
@@ -139,7 +141,9 @@ $(function() {
 
             $("#quizContainer").fadeOut(0, function() {
                 $("#fileContainer").fadeIn(0);
-                document.getElementById("fileContainer").scrollTo(0, 0);
+                setTimeout(function() {
+                    $("#fileContainer").scrollTop(0);
+                }, 10);
             });
         }
 
@@ -154,7 +158,9 @@ $(function() {
 
                 $("#fileContainer").fadeOut(0, function() {
                     $("#quizContainer").fadeIn(0);
-                    document.getElementById("quizContainer").scrollTo(0, 0);
+                    setTimeout(function() {
+                        $("#quizContainer").scrollTop(0);
+                    }, 10);
                 });
             }
         }

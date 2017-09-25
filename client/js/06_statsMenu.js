@@ -51,8 +51,10 @@ $(function() {
         $("#fixedLeftover").fadeIn("slow");
         $("#fixedStatsMenu").fadeIn("slow");
 
-        document.getElementById("fixedStatsMenu").scrollTo(0, 0);
-        $(".scroll").perfectScrollbar("update");
+        setTimeout(function() {
+            $("#fixedStatsMenu").scrollTop(0);
+            $(".scroll").perfectScrollbar("update");
+        }, 10);
     }
 
     function fillSelector(type, id, selector) {
