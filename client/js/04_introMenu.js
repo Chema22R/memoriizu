@@ -88,6 +88,7 @@ $(function() {
                 setTimeout(function() {
                     $("#quizContainer").scrollTop(0);
                     $(".scroll").perfectScrollbar("update");
+                    $("#quizTranslation").focus();
                 }, 10);
             });
 
@@ -145,6 +146,11 @@ $(function() {
                 setTimeout(function() {
                     $("#fileContainer").scrollTop(0);
                     $(".scroll").perfectScrollbar("update");
+                    if (state) {
+                        $("#fileButtonRight").focus();
+                    } else {
+                        $("#fileButtonContinue").focus();
+                    }
                 }, 10);
             });
         }
@@ -163,6 +169,7 @@ $(function() {
                     setTimeout(function() {
                         $("#quizContainer").scrollTop(0);
                         $(".scroll").perfectScrollbar("update");
+                        $("#quizTranslation").focus();
                     }, 10);
                 });
             }
