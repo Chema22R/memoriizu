@@ -87,6 +87,7 @@ $(function() {
                 $("#quizContainer, #fixedExit, #fixedLoadingBar").fadeIn("slow");
                 setTimeout(function() {
                     $("#quizContainer").scrollTop(0);
+                    $(".scroll").perfectScrollbar("update");
                 }, 10);
             });
 
@@ -143,6 +144,7 @@ $(function() {
                 $("#fileContainer").fadeIn(0);
                 setTimeout(function() {
                     $("#fileContainer").scrollTop(0);
+                    $(".scroll").perfectScrollbar("update");
                 }, 10);
             });
         }
@@ -160,6 +162,7 @@ $(function() {
                     $("#quizContainer").fadeIn(0);
                     setTimeout(function() {
                         $("#quizContainer").scrollTop(0);
+                        $(".scroll").perfectScrollbar("update");
                     }, 10);
                 });
             }
