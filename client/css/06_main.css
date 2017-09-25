@@ -26,28 +26,8 @@
 #mainContent * {text-align: center;}
 
 
-/* Exit button */
-
-#fixedExit {
-    display: none;
-    position: fixed;
-    top: 10px;
-    left: 15px;
-    padding: 5px;
-
-    border: none;
-
-    font-size: 30px;
-    color: #575048;
-    background: transparent;
-
-    z-index: 3;
-}
-
-#fixedExit:hover {color: #777068;}
-
-
-/* Intro */
+/* Intro
+    ========================================================================== */
 
 #introContainer {padding-bottom: 10px;}
 
@@ -80,7 +60,8 @@
 #introContainer .noInfo {text-transform: none;}
 
 
-/* Quiz */
+/* Quiz
+    ========================================================================== */
 
 #quizForm {
     max-width: 90%;
@@ -112,7 +93,8 @@
 }
 
 
-/* File */
+/* File
+    ========================================================================== */
 
 #fileText {
     max-width: 90%;

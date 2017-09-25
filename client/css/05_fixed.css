@@ -1,6 +1,8 @@
 #fixedContent * {z-index: 3;}
 
-/* Leftover */
+
+/* Leftover
+    ========================================================================== */
 
 #fixedLeftover {
     display: none;
@@ -15,7 +17,8 @@
 }
 
 
-/* Log */
+/* Log
+    ========================================================================== */
 
 #fixedLog {
     position: fixed;
@@ -35,7 +38,8 @@
 }
 
 
-/* Loading Bar */
+/* Loading Bar
+    ========================================================================== */
 
 #fixedLoadingBar {
     display: none;
@@ -61,7 +65,31 @@
 }
 
 
-/* Edit Buttons */
+/* Exit button (from main)
+    ========================================================================== */
+
+#fixedExit {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px 25px 25px 10px;
+
+    border: none;
+    border-bottom-right-radius: 100%;
+
+    font-size: 30px;
+    color: #575048;
+    background: #e2e2da;
+
+    z-index: 3;
+}
+
+#fixedExit:hover {color: #777068;}
+
+
+/* Edit Buttons
+    ========================================================================== */
 
 #fixedEditButtons .icon {
     position: fixed;
@@ -105,7 +133,8 @@
 #fixedEditRemove {left: 85px;}
 
 
-/* Edit Menu */
+/* Edit Menu
+    ========================================================================== */
 
 #fixedEditMenu {
     display: none;
@@ -197,7 +226,8 @@
 }
 
 
-/* Stats Button */
+/* Stats Button
+    ========================================================================== */
 
 #fixedStatsButton {
     position: fixed;
@@ -217,7 +247,8 @@
 #fixedStatsButton:hover {color: #777068;}
 
 
-/* Stats Menu */
+/* Stats Menu
+    ========================================================================== */
 
 #fixedStatsMenu {
     display: none;
