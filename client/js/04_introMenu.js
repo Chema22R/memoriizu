@@ -38,11 +38,14 @@ $(function() {
                 entry = ("<h2 class='noInfo' title='no info to display'>No information to display</h2>");
             }
 
-            $("#introContainer *").remove();
+            $("#introContainer h2, #introContainer button").remove();
             $(entry).appendTo("#introContainer");
             $("#introContainer").fadeIn(0);
 
-            $(".scroll").perfectScrollbar("update");
+            setTimeout(function() {
+                $("#introContainer").scrollTop(0);
+                $(".scroll").perfectScrollbar("update");
+            }, 10);
         }
 
         var languageTrigger = function() {
