@@ -74,6 +74,7 @@ $(function() {
         var regexSpecials = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
         var regexSust = /aa|ii|uu|ee|oo|au|iu|eu|ou/ig;
         var mapSust = {"aa":"ā", "ii":"ī", "uu":"ū", "ee":"ē", "oo":"ō", "au":"ā", "iu":"ī", "eu":"ē", "ou":"ō"};
+        var blockNext = false;
         
         var session;
         var language;
@@ -156,6 +157,11 @@ $(function() {
                     }
                 }, 10);
             });
+
+            blockNext = true;
+            setTimeout(function() {
+                blockNext = false;
+            }, 1000);
         }
 
         var next = function(exit) {
@@ -175,6 +181,11 @@ $(function() {
                         $("#quizTranslation").focus();
                     }, 10);
                 });
+
+                blockNext = true;
+                setTimeout(function() {
+                    blockNext = false;
+                }, 1000);
             }
         }
 
@@ -185,26 +196,28 @@ $(function() {
         $("#quizForm").off().on("submit", function(e) {
             e.preventDefault();
 
-            var input = $("#quizTranslation").val().toLowerCase().replace(regexSust, function(match) {return mapSust[match];}).replace(regexSpecials, "");
-            var fields = session[counter].fields.slice(0, session[counter].fields.length-1); // ignoring the last one
-            for (var i=0; i<fields.length; i++) {
-                fields[i] = fields[i].toLowerCase().replace(regexSust, function(match) {return mapSust[match];}).replace(regexSpecials, "");
-            }
-
-            if (fields.indexOf(input) != -1) {
-                newFile(true);
-            } else {
-                var inputSorted = input.split("").sort().join("");
-                var fieldsSorted = new Array();
-                
+            if (!blockNext) {
+                var input = $("#quizTranslation").val().toLowerCase().replace(regexSust, function(match) {return mapSust[match];}).replace(regexSpecials, "");
+                var fields = session[counter].fields.slice(0, session[counter].fields.length-1); // ignoring the last one
                 for (var i=0; i<fields.length; i++) {
-                    fieldsSorted[fieldsSorted.length] = fields[i].split("").sort().join("");
+                    fields[i] = fields[i].toLowerCase().replace(regexSust, function(match) {return mapSust[match];}).replace(regexSpecials, "");
                 }
 
-                if (fieldsSorted.indexOf(inputSorted) != -1) {
+                if (fields.indexOf(input) != -1) {
                     newFile(true);
                 } else {
-                    newFile(false);
+                    var inputSorted = input.split("").sort().join("");
+                    var fieldsSorted = new Array();
+                    
+                    for (var i=0; i<fields.length; i++) {
+                        fieldsSorted[fieldsSorted.length] = fields[i].split("").sort().join("");
+                    }
+
+                    if (fieldsSorted.indexOf(inputSorted) != -1) {
+                        newFile(true);
+                    } else {
+                        newFile(false);
+                    }
                 }
             }
         });
@@ -212,36 +225,38 @@ $(function() {
         $("#fileButtons button").off().on("click touchstart", function(e) {
             e.preventDefault();
 
-            var state;
+            if (!blockNext) {
+                var state;
 
-            if (e.target.id == "fileButtonRight") {
-                state = true;
-                
-                $("#fixedLoadingBarProgress").animate({
-                    width: ((counter+2)*100/session.length).toString() + "%"
-                }, 1000);
-            } else {
-                state = false;
-                session[session.length] = session[counter];
-            }
+                if (e.target.id == "fileButtonRight") {
+                    state = true;
+                    
+                    $("#fixedLoadingBarProgress").animate({
+                        width: ((counter+2)*100/session.length).toString() + "%"
+                    }, 1000);
+                } else {
+                    state = false;
+                    session[session.length] = session[counter];
+                }
 
-            if (counter == session.indexOf(session[counter])) {
-                $.ajax({
-                    url: "http://"+serverAddress+":"+serverPort+"/api/session?language=" + language + "&word=" + session[counter]._id + "&state=" + state,
-                    method: "POST",
-                    success: function(res, status) {
-                        next();
-                    },
-                    error: function(jqXHR, status, err) {
-                        if (!err) {
-                            showMessage("Unable to connect to server", "red");
-                        } else {
-                            showMessage(jqXHR.responseText, "red");
+                if (counter == session.indexOf(session[counter])) {
+                    $.ajax({
+                        url: "http://"+serverAddress+":"+serverPort+"/api/session?language=" + language + "&word=" + session[counter]._id + "&state=" + state,
+                        method: "POST",
+                        success: function(res, status) {
+                            next();
+                        },
+                        error: function(jqXHR, status, err) {
+                            if (!err) {
+                                showMessage("Unable to connect to server", "red");
+                            } else {
+                                showMessage(jqXHR.responseText, "red");
+                            }
                         }
-                    }
-                });
-            } else {
-                next();
+                    });
+                } else {
+                    next();
+                }
             }
         });
 
