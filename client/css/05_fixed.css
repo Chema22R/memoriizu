@@ -73,7 +73,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    padding: 10px 25px 25px 10px;
+    padding: 10px 20px 20px 10px;
 
     border: none;
     border-bottom-right-radius: 100%;
@@ -82,14 +82,14 @@
     -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
 
-    font-size: 30px;
+    font-size: 18px;
     color: #575048;
     background: #e2e2da;
 
     z-index: 3;
 }
 
-#fixedExit:hover {color: #777068;}
+#fixedExit:hover {color: #e00;}
 
 
 /* Edit Buttons
