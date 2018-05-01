@@ -1,1 +1,5 @@
 Añadir que en la lista de palabras, al pulsar una letra, se salte a esa seccion de la lista
+Añadir número de días seguidos completando las sesiones
+Añadir porcentaje de la sesión actual completando
+Quitar que se de por correcto palabras con letras desordenadas (hola esta bien y ohla esta bien) o ponerlo como error leve, y en su lugar poner que se comprueben todos los posibles ordenes cuando hay varias palabras separadas por "/"
+Quitar tanto log
