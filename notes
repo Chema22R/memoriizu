@@ -1,5 +1,10 @@
 Añadir que en la lista de palabras, al pulsar una letra, se salte a esa seccion de la lista
 Añadir número de días seguidos completando las sesiones
+Añadir que al entrar en una sesion, se ordenen aleatoriamente las palabras (Desde el cliente), para que se reordene todo cada vez que se salga y vuelva a entrar
 Añadir porcentaje de la sesión actual completando
+Añadir mini boton de ayuda en los titulos de las columnas del listado de palabras, de modo que al posicionarse encima muestre un popup describiendo para que es la columna
+Añadir que al hacer scroll en el listado de palabras los titulos se mantengan cuando lleguen a la parte superior, de modo que siempre se vean los titulos de cada columna
+Añadir configuraciones de idiomas, de modo que al elegir japones, por ejemplo, se genere un numero de forma aleatoria en cada sesion (como 70501)
 Quitar que se de por correcto palabras con letras desordenadas (hola esta bien y ohla esta bien) o ponerlo como error leve, y en su lugar poner que se comprueben todos los posibles ordenes cuando hay varias palabras separadas por "/"
 Quitar tanto log
+Cambiar el fondo de pantalla (por ejemplo: poner solo el arbol de la derecha, sin fondo, sobre un fondo monocolor)
