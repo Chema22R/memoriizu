@@ -7,8 +7,7 @@ html, body {
 }
 
 body {
-    background-position: right top;
-    background-size: cover;
+    background-repeat: repeat;
     background-color: #E4DDCA;
 }
 
@@ -43,3 +42,11 @@ p {
 }
 
 .exitButton:hover {color: #e00;}
+
+#backgroundTree {
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+}
