@@ -4,13 +4,12 @@
   "description": "Memoriizu",
   "main": "server.js",
   "dependencies": {
-  	"express": "4.x",
+    "express": "4.x",
     "mongoose": "4.x",
     "body-parser": "1.x",
     "cors": "2.x"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
