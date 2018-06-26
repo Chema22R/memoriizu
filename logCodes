@@ -40,7 +40,7 @@ ADDINFO
 DELETEINFO
     10  Database disconnected
     11  Error at removing user from database (specified user, error message)
-    12  Error at removing language from user (specified user, language, error message)
+    12  Error at removing language from user (specified user, language id, error message)
     13  Error at removing language from database (specified language, error message)
     14  Error at removing language link with user (specified language, user, error message)
     15  Error at checking language existence (specified language, error message)
@@ -58,12 +58,12 @@ DELETEINFO
 GETSESSION
     10  Database disconnected
     11  Error at getting words list from language (specified language, error message)
-    12  Error at updating period state of language (specified language, error message)
+    12  Error at updating period state of language (language id, error message)
     13  Error at reseting words references on language (specified language, error message)
 
     20  Language does not exist (specified language)
     21  Words list is empty (specified language)
-    22  Today's session already completed (specified language)
+    22  Today's session already completed (language id)
 
     30  Words list obtained (specified language, number of words)
     31  Session length calculated (session length)
@@ -71,17 +71,17 @@ GETSESSION
     33  Normal session sequence obtained (normal session sequence length, normal session sequence)
     34  Session sequences combined and shuffled (sequence length, sequence)
     35  Session generated (number of elements)
-    36  Period state of language updated (specified language, next session, period length)
-    37  Today's session recovered and incompleted yet (specified language, new session length, original session length)
+    36  Period state of language updated (language id, next session, period length)
+    37  Today's session recovered and incompleted yet (language id, new session length, original session length)
     38  Words references reseted on language (specified language)
 
 POSTRESULTS
     10  Database disconnected
     11  Error at checking language and word existence (specified language, specified word, error message)
-    12  Error at applying changes into database for word (specified word, error message)
+    12  Error at applying changes into database for word (word id, error message)
 
     20  Language and/or word does not exist (specified language, specified word)
 
     30  Word existence confirmed into language (specified language, specified word)
-    31  Changes generated for word (specified word, state)
-    32  Changes applied to word (specified word)
+    31  Changes generated for word (word id, word state)
+    32  Changes applied to word (word id)
