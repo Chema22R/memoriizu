@@ -1,9 +1,10 @@
+"use strict";
+
 /* packages
 ========================================================================== */
 
 var mongoose = require("mongoose");
 var fs = require("fs");
-var Console = require("console").Console;
 
 
 /* models
@@ -13,23 +14,10 @@ var User = require("./../models/user.js");
 var Language = require("./../models/language.js");
 
 
-/* Log
-========================================================================== */
-
-if (!fs.existsSync("./log")) {fs.mkdirSync("./log");}
-
-var log = fs.createWriteStream("./log/node.log", {flags: "a"});
-var logErr = fs.createWriteStream("./log/error.log", {flags: "a"});
-var logger = new Console(log, logErr);
-
-
 /* API
 ========================================================================== */
 
 exports.getInfo = function(req, res) {
-    logger.log("\n> GETINFO request initiated (" + new Date() + ", " + req.connection.remoteAddress + ")");
-    logger.time("  GETINFO request completed");
-    
     if (mongoose.connection.readyState === 1) {
         switch (req.query.type) {
             case "tree": getTree();break;
@@ -37,83 +25,64 @@ exports.getInfo = function(req, res) {
             case "languages": getLanguages(req.query.id);break;
             case "words": getWords(req.query.id);break;
             default:
-                logger.error("\n- ERROR GETINFO unknown type '" + req.query.type + "' (" + new Date() + ")");
+                writeLog(20, req.query.type);
                 res.sendStatus(400);
-                logger.timeEnd("  GETINFO request completed");
         }
     } else {
-        logger.error("\n- ERROR GETINFO database disconnected (" + new Date() + ")");
+        writeLog(10, null);
         res.sendStatus(500);
-        logger.log("  GETINFO request completed");
     }
 
 
     function getTree() {
-        logger.log("    Getting tree info...");
-
         User.find({}, {
             _id: 1,
             name: 1,
             languages: 1
         }, function (err, query) {
             if (err) {
-				logger.error("\n- ERROR GETINFO at getting tree info from database (" + new Date() + "):\n    " + err.message);
+                writeLog(11, err.message);
 				res.sendStatus(500);
 			} else {
-                logger.log("      Tree info obtained (" + query.length + " users)");
+                writeLog(30, query.length);
 				res.json(query);
             }
-
-            logger.log("  GETINFO request completed");
         });
     }
 
-
     function getUsers() {
-        logger.log("    Getting users list...");
-
         User.find({}, {
             _id: 1,
             name: 1
         }, function (err, query) {
             if (err) {
-				logger.error("\n- ERROR GETINFO at getting users list from database (" + new Date() + "):\n    " + err.message);
+                writeLog(12, err.message);
 				res.sendStatus(500);
 			} else {
-                logger.log("      Users list obtained (" + query.length + " elements)");
+                writeLog(31, query.length);
 				res.json(query);
             }
-
-            logger.log("  GETINFO request completed");
         });
     }
 
-
     function getLanguages(user) {
-        logger.log("    Getting languages list...");
-
         User.findById(user, {
             languages: 1
         }, function (err, query) {
             if (err) {
-				logger.error("\n- ERROR GETINFO at getting languages list from user '" + user + "' (" + new Date() + "):\n    " + err.message);
+                writeLog(13, [user, err.message]);
 				res.sendStatus(500);
 			} else if (query === null) {
-                logger.error("\n- ERROR GETINFO user '" + user + "' doesn't exist (" + new Date() + ")");
+                writeLog(21, user);
                 res.sendStatus(400);
             } else {
-                logger.log("      Languages list obtained from user '" + user + "' (" + query.languages.length + " elements)");
+                writeLog(32, [user, query.languages.length]);
 				res.json(query.languages);
             }
-
-            logger.log("  GETINFO request completed");
         });
     }
 
-
     function getWords(language) {
-        logger.log("    Getting words list...");
-
         Language.findById(language, {
             _id: 1,
             period: 1,
@@ -122,27 +91,36 @@ exports.getInfo = function(req, res) {
             date: 1
         }, function (err, query) {
             if (err) {
-				logger.error("\n- ERROR GETINFO at getting words list from language '" + language + "' (" + new Date() + "):\n    " + err.message);
+                writeLog(14, [language, err.message]);
 				res.sendStatus(500);
 			} else if (query === null) {
-                logger.error("\n- ERROR GETINFO language '" + language + "' doesn't exist (" + new Date() + ")");
+                writeLog(22, language);
                 res.sendStatus(400);
             } else {
-                logger.log("      Words list obtained from language '" + language + "' (" + query.dictionary.length + " elements)");
+                writeLog(33, [language, query.dictionary.length]);
                 if (!query.session.date) {query.session.date = null;}
 				res.json(query);
             }
-
-            logger.log("  GETINFO request completed");
         });
+    }
+
+    function writeLog(code, info) {
+        if (code < req.app.locals.logger.level) {
+            req.app.locals.logger.history.push({
+                date: new Date(),
+                origin: req.connection.remoteAddress,
+                request: 'GETINFO',
+                code: code,
+                info: info
+            });
+
+            fs.writeFileSync(req.app.locals.logPath, JSON.stringify(req.app.locals.logger), {encoding: 'utf8', flag: 'w'});
+        }
     }
 };
 
 
 exports.addInfo = function(req, res) {
-    logger.log("\n> ADDINFO request initiated (" + new Date() + ", " + req.connection.remoteAddress + ")");
-    logger.time("  ADDINFO request completed");
-
     if (mongoose.connection.readyState === 1) {
         switch (req.body.type) {
             case "user":
@@ -150,9 +128,8 @@ exports.addInfo = function(req, res) {
                     req.body.user = req.body.user.trim().toLowerCase().replace(/\s\s+/g, " ");
                     addUser(req.body.user);
                 } catch (err) {
-                    logger.error("\n- ERROR ADDINFO field 'user' doesn't exist (" + new Date() + ")");
+                    writeLog(20, null);
                     res.sendStatus(400);
-                    logger.timeEnd("  ADDINFO request completed");
                 }
                 break;
             case "language":
@@ -160,9 +137,8 @@ exports.addInfo = function(req, res) {
                     req.body.language = req.body.language.trim().toLowerCase().replace(/\s\s+/g, " ");
                     addLanguage(req.body.user, req.body.language, req.body.period);
                 } catch (err) {
-                    logger.error("\n- ERROR ADDINFO field 'language' doesn't exist (" + new Date() + ")");
+                    writeLog(21, null);
                     res.sendStatus(400);
-                    logger.timeEnd("  ADDINFO request completed");
                 }
                 break;
             case "word":
@@ -174,115 +150,85 @@ exports.addInfo = function(req, res) {
                     }
                     addWord(req.body.language, req.body.word);
                 } catch (err) {
-                    logger.error("\n- ERROR ADDINFO field 'word' doesn't exist (" + new Date() + ")");
+                    writeLog(22, null);
                     res.sendStatus(400);
-                    logger.timeEnd("  ADDINFO request completed");
                 }
                 break;
             default:
-                logger.error("\n- ERROR ADDINFO unknown type '" + req.body.type + "' (" + new Date() + ")");
+                writeLog(23, req.body.type);
                 res.sendStatus(400);
-                logger.timeEnd("  ADDINFO request completed");
         }
     } else {
-        logger.error("\n- ERROR ADDINFO database disconnected (" + new Date() + ")");
+        writeLog(10, null);
         res.sendStatus(500);
-        logger.timeEnd("  ADDINFO request completed");
     }
     
 
     function addUser(user) {
-        logger.log("    Checking user dublicity...");
-
         User.find({
             name: user
         }, {}, function (err, query) {
             if (err) {
-                logger.error("\n- ERROR ADDINFO at checking user '" + user + "' dublicity (" + new Date() + "):\n    " + err.message);
+                writeLog(11, [user, err.message]);
                 res.sendStatus(500);
-                logger.timeEnd("  ADDINFO request completed");
             } else if (query.length > 0) {
-                logger.log("      User '" + user + "' already exists");
+                writeLog(24, user);
                 res.status(400).send("User '" + user + "' already exists");
-                logger.timeEnd("  ADDINFO request completed");
             } else {
-                logger.log("      User '" + user + "' is available");
-                logger.log("    Adding user to database...");
-
                 User.create({
                     name: user
                 }, function(err, query) {
                     if (err) {
-                        logger.error("\n- ERROR ADDINFO at adding user '" + user + "' to database (" + new Date() + "):\n    " + err.message);
+                        writeLog(12, [user, err.message]);
                         res.sendStatus(500);
                     } else {
-                        logger.log("      User '" + user + "' successfully added");
+                        writeLog(30, user);
                         res.status(200).send("User '" + user + "' successfully added");
                     }
-
-                    logger.timeEnd("  ADDINFO request completed");
                 });
             }
         });
     }
 
-
     function addLanguage(user, language, period) {
-        logger.log("    Checking user existence...");
-
         User.findById(user, function (err, query) {
             if (err) {
-                logger.error("\n- ERROR ADDINFO at checking user '" + user + "' existence (" + new Date() + "):\n    " + err.message);
+                writeLog(13, [user, err.message]);
                 res.sendStatus(500);
-                logger.timeEnd("  ADDINFO request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR ADDINFO user '" + user + "' doesn't exist (" + new Date() + ")");
+                writeLog(25, user);
                 res.sendStatus(400);
-                logger.timeEnd("  ADDINFO request completed");
             } else {
-                logger.log("      User '" + user + "' existence confirmed");
-                logger.log("    Checking language dublicity...");
-
                 var check = false;
 
                 for (var i=0; i<query.languages.length && check==false; i++) {
                     if (query.languages[i].name === language) {
                         check = true;
-                        logger.log("      Language '" + language + "' already linked with user '" + user + "'");
+                        writeLog(26, [user, language]);
                         res.status(400).send("Language '" + language + "' already linked with user");
-                        logger.timeEnd("  ADDINFO request completed");
                     }
                 }
 
                 if (check == false) {
-                    logger.log("      Language '" + language + "' is available");
-                    logger.log("    Adding language to database...");
-
                     Language.create({
                         name: language,
                         user: user,
                         "period.length": --period
                     }, function(err, query) {
                         if (err) {
-                            logger.error("\n- ERROR ADDINFO at adding language '" + language + "' to database (" + new Date() + "):\n    " + err.message);
+                            writeLog(14, [language, err.message]);
                             res.sendStatus(500);
-                            logger.timeEnd("  ADDINFO request completed");
                         } else {
-                            logger.log("      Language '" + language + "' successfully added");
-                            logger.log("    Linking user and new language...");
-                            
                             User.findByIdAndUpdate(user, {
                                 $push: {"languages": query}
                             }, {}, function (err, query) {
                                 if (err) {
-                                    logger.error("\n- ERROR ADDINFO at linking language '" + language + "' with user '" + query.name + "' (" + new Date() + "):\n    " + err.message);
+                                    writeLog(15, [language, query.name, err.message]);
                                     res.sendStatus(500);
                                 } else {
-                                    logger.log("      Language '" + language + "' linked with user '" + query.name +"'");
+                                    writeLog(31, [language, query.name]);
                                     res.status(200).send("Language '" + language + "' added to user '" + query.name +"'");
                                 }
-
-                                logger.timeEnd("  ADDINFO request completed");
                             });
                         }
                     });
@@ -291,23 +237,15 @@ exports.addInfo = function(req, res) {
         });
     }
 
-
     function addWord(language, words) {
-        logger.log("    Checking language existence...");
-
         Language.findById(language, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR ADDINFO at checking language '" + language + "' existence (" + new Date() + "):\n    " + err.message);
+                writeLog(16, [language, err.message]);
                 res.sendStatus(500);
-                logger.timeEnd("  ADDINFO request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR ADDINFO language '" + language + "' doesn't exist (" + new Date() + ")");
+                writeLog(27, language);
                 res.sendStatus(400);
-                logger.timeEnd("  ADDINFO request completed");
             } else {
-                logger.log("      Language '" + language + "' existence confirmed");
-                logger.log("    Adding " + words.length + " words to language '" + language + "'");
-
                 var error = false;
 
                 for (var i=0; i<words.length && error==false; i++) {
@@ -316,24 +254,37 @@ exports.addInfo = function(req, res) {
                     }, function(err, query) {
                         if (err) {
                             error = true;
-                            logger.error("\n- ERROR ADDINFO at adding words to language '" + language + "' (" + new Date() + "):\n    " + err.message);
+                            writeLog(17, [language, err.message]);
                             res.status(500).send("One or more words couldn't be added");
                         }
                     });
                 }
                 
-                if (!error) {res.status(200).send("Words successfully added");}
-                logger.timeEnd("  ADDINFO request completed");
+                if (!error) {
+                    writeLog(32, [words.length, language]);
+                    res.status(200).send("Words successfully added");
+                }
             }
         });
+    }
+
+    function writeLog(code, info) {
+        if (code < req.app.locals.logger.level) {
+            req.app.locals.logger.history.push({
+                date: new Date(),
+                origin: req.connection.remoteAddress,
+                request: 'ADDINFO',
+                code: code,
+                info: info
+            });
+
+            fs.writeFileSync(req.app.locals.logPath, JSON.stringify(req.app.locals.logger), {encoding: 'utf8', flag: 'w'});
+        }
     }
 };
 
 
 exports.delInfo = function(req, res) {
-    logger.log("\n> DELETEINFO request initiated (" + new Date() + ", " + req.connection.remoteAddress + ")");
-    logger.time("  DELETEINFO request completed");
-
     if (mongoose.connection.readyState === 1) {
         switch (req.body.type) {
             case "user":
@@ -346,132 +297,112 @@ exports.delInfo = function(req, res) {
                 delWord(req.body.language, req.body.word);
                 break;
             default:
-                logger.error("\n- ERROR DELETEINFO unknown type '" + req.body.type + "' (" + new Date() + ")");
+                writeLog(20, req.body.type);
                 res.sendStatus(400);
-                logger.timeEnd("  DELETEINFO request completed");
         }
     } else {
-        logger.error("\n- ERROR DELETEINFO database disconnected (" + new Date() + ")");
+        writeLog(10, null);
         res.sendStatus(500);
-        logger.time("  DELETEINFO request completed");
     }
 
 
     function delUser(user) {
-        logger.log("    Removing user from database...");
-
         User.findByIdAndRemove(user, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR DELETEINFO at removing user '" + user + "' (" + new Date() + "):\n    " + err.message);
+                writeLog(11, [user, err.message]);
                 res.sendStatus(500);
-                logger.timeEnd("  DELETEINFO request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR DELETEINFO user '" + user + "' doesn't exist (" + new Date() + ")");
+                writeLog(21, user);
                 res.sendStatus(400);
-                logger.timeEnd("  DELETEINFO request completed");
             } else {
-                logger.log("      User '" + user + "' removed");
-                logger.log("    Removing " + query.languages.length + " languages from user '" + user + "'");
-                
                 for (var i=0; i<query.languages.length; i++) {
-                    Language.findByIdAndRemove(query.languages[i]._id, function(err, query) {
+                    Language.findByIdAndRemove(query.languages[i]._id, function(err, query2) {
                         if (err) {
-                            logger.error("\n- ERROR DELETEINFO at removing languages of user '" + user + "' (" + new Date() + "):\n    " + err.message);
+                            writeLog(12, [user, query.languages[i]._id, err.message]);
                         }
                     });
                 }
 
+                writeLog(30, user);
                 res.status(200).send("User successfully removed");
-                logger.timeEnd("  DELETEINFO request completed");
             }
         });
     }
 
-
     function delLanguage(language) {
-        logger.log("    Removing language from database...");
-
         Language.findByIdAndRemove(language, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR DELETEINFO at removing language '" + language + "' (" + new Date() + "):\n    " + err.message);
+                writeLog(13, [language, err.message]);
                 res.sendStatus(500);
-                logger.timeEnd("  DELETEINFO request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR DELETEINFO language '" + language + "' doesn't exist (" + new Date() + ")");
+                writeLog(22, language);
                 res.sendStatus(400);
-                logger.timeEnd("  DELETEINFO request completed");
             } else {
-                logger.log("      Language removed");
-                logger.log("    Removing user link with language...");
-
                 User.findByIdAndUpdate(query.user, {
                     $pull: {"languages": {"_id": language}}
-                }, {},function (err, query) {
+                }, {}, function (err, query2) {
                     if (err) {
-                        logger.error("\n- ERROR DELETEINFO at removing link with language '" + language + "' (" + new Date() + "):\n    " + err.message);
+                        writeLog(14, [language, query.user, err.message]);
                         res.sendStatus(500);
                     } else {
-                        logger.log("      User link with language '" + language + "' removed");
+                        writeLog(31, [language, query.user]);
                         res.status(200).send("Language successfully removed");
                     }
-
-                    logger.timeEnd("  DELETEINFO request completed");
                 });
             }
         });
     }
 
-
     function delWord(language, word) {
-        logger.log("    Checking language existence...");
-
         Language.findById(language, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR DELETEINFO at checking language '" + language + "' existence (" + new Date() + "):\n    " + err.message);
+                writeLog(15, [language, err.message]);
                 res.sendStatus(500);
-                logger.timeEnd("  DELETEINFO request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR DELETEINFO language '" + language + "' doesn't exist (" + new Date() + ")");
+                writeLog(23, language);
                 res.sendStatus(400);
-                logger.timeEnd("  DELETEINFO request completed");
             } else {
-                logger.log("      Language '" + language + "' existence confirmed");
-                logger.log("    Removing word from language...");
-
                 Language.findByIdAndUpdate(language, {
                     $pull: {"dictionary": {"_id": word}}
                 }, function(err, query) {
                     if (err) {
-                        logger.error("\n- ERROR DELETEINFO at removing word '" + word + "' from language '" + language + "' (" + new Date() + "):\n    " + err.message);
+                        writeLog(16, [word, language, err.message]);
                         res.sendStatus(500);
                     } else {
-                        logger.log("      Word '" + word + "' removed from language '" + language + "'");
+                        writeLog(32, [word, language]);
                         res.status(200).send("Word successfully removed");
                     }
-
-                    logger.timeEnd("  DELETEINFO request completed");
                 });
             }
         });
+    }
+
+    function writeLog(code, info) {
+        if (code < req.app.locals.logger.level) {
+            req.app.locals.logger.history.push({
+                date: new Date(),
+                origin: req.connection.remoteAddress,
+                request: 'DELETEINFO',
+                code: code,
+                info: info
+            });
+
+            fs.writeFileSync(req.app.locals.logPath, JSON.stringify(req.app.locals.logger), {encoding: 'utf8', flag: 'w'});
+        }
     }
 };
 
 
 exports.getSession = function(req, res) {
-    logger.log("\n> GETSESSION request initiated (" + new Date() + ", " + req.connection.remoteAddress + ")");
-    logger.time("  GETSESSION request completed");
-
     if (mongoose.connection.readyState === 1) {
         getDictionary(req.query.language);
     } else {
-        logger.error("\n- ERROR GETSESSION database disconnected (" + new Date() + ")");
+        writeLog(10, null);
         res.sendStatus(500);
-        logger.log("  GETSESSION request completed");
     }
 
-    function getDictionary(language) {
-        logger.log("    Getting dictionary...");
 
+    function getDictionary(language) {
         Language.findById(language, {
             _id: 1,
             period: 1,
@@ -479,15 +410,13 @@ exports.getSession = function(req, res) {
             dictionary: 1
         }, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR GETSESSION at getting dictionary from language '" + language + "' (" + new Date() + "):\n    " + err.message);
+                writeLog(11, [language, err.message]);
                 res.sendStatus(500);
-                logger.log("  GETSESSION request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR GETSESSION language '" + language + "' doesn't exist (" + new Date() + ")");
+                writeLog(20, language);
                 res.sendStatus(400);
-                logger.log("  GETSESSION request completed");
             } else {
-                logger.log("      Dictionary obtained from language '" + language + "' (" + query.dictionary.length + " elements)");
+                writeLog(30, [language, query.dictionary.length]);
 
                 if (query.dictionary.length > 0) {
                     var current = new Date();
@@ -501,9 +430,8 @@ exports.getSession = function(req, res) {
                         continueSession(query);
                     }
                 } else {
-                    logger.log("      Dictionary is empty, session won't be generated");
+                    writeLog(21, language);
                     res.status(400).send("Dictionary is empty");
-                    logger.timeEnd("  GETSESSION request completed");
                 }
             }
         });
@@ -529,8 +457,6 @@ exports.getSession = function(req, res) {
             language.dictionary[j] = x;
         }
 
-        logger.log("    Getting session size...");
-
         for (var i=0; i<dictionarySize; i++) {
             if ((!language.dictionary[i].ref || language.period.current == 0) && (language.dictionary[i].countdown.new == 0) && (language.dictionary[i].countdown.wrong == 0)) {
                 pendingWords++;
@@ -539,8 +465,7 @@ exports.getSession = function(req, res) {
 
         sessionSize = Math.ceil(pendingWords/(language.period.length-language.period.current+1));
 
-        logger.log("      Session size calculated: " + sessionSize);
-        logger.log("    Getting session sequence...");
+        writeLog(31, sessionSize);
 
         for (var i=0; i<dictionarySize; i++) {
             if ((language.dictionary[i].countdown.new > 0) || (language.dictionary[i].countdown.wrong > 0)) {
@@ -548,7 +473,7 @@ exports.getSession = function(req, res) {
             }
         }
 
-        logger.log("      Special session sequence obtained (" + sequenceSpecial.length + " elements): [" + sequenceSpecial + "]");
+        writeLog(32, [sequenceSpecial.length, sequenceSpecial]);
 
         for (var i=0; i<dictionarySize && sequenceNormal.length<sessionSize; i++) {
             if ((sequenceNormal.indexOf(i) == -1) && (sequenceSpecial.indexOf(i) == -1) && (!language.dictionary[i].ref || language.period.current == 0)) {
@@ -556,7 +481,7 @@ exports.getSession = function(req, res) {
             }
         }
 
-        logger.log("      Normal session sequence obtained (" + sequenceNormal.length + " elements): [" + sequenceNormal + "]");
+        writeLog(33, [sequenceNormal.length, sequenceNormal]);
 
         sequence = sequenceSpecial.concat(sequenceNormal);
 
@@ -567,15 +492,13 @@ exports.getSession = function(req, res) {
             sequence[j] = x;
         }
 
-        logger.log("      Session sequences combined and shuffled (" + sequence.length + " elements): [" + sequence + "]");
-        logger.log("    Generating session with calculated sequence...");
+        writeLog(34, [sequence.length, sequence]);
 
         for (var i=0; i<sequence.length; i++) {
             session[i] = language.dictionary[sequence[i]];
         }
 
-        logger.log("      Session generated (" + session.length + " elements)");
-        logger.log("    Updating language period state...");
+        writeLog(35, session.length);
 
         if (language.period.current == language.period.length) {
             language.period.current = 0;
@@ -591,22 +514,18 @@ exports.getSession = function(req, res) {
             "session.date": new Date()
         }, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR GETSESSION at updating period state of language '" + language._id + "' (" + new Date() + "):\n    " + err.message);
+                writeLog(12, [language._id, err.message]);
                 res.sendStatus(500);
             } else {
-                logger.log("      Period state for language '" + language._id + "' updated (next session is " + language.period.current + "/" + language.period.length + ")");
+                writeLog(36, [language._id, language.period.current, language.period.length]);
                 res.json(session);
             }
-            
-            logger.log("  GETSESSION request completed");
         });
     }
 
     function continueSession(language) {
         var lastSession = language.session.last;
         var newSession = new Array();
-
-        logger.log("    Recovering today's session...");
 
         for (var i=0; i<lastSession.length; i++) {
             for (var j=0; j<language.dictionary.length; j++) {
@@ -620,19 +539,15 @@ exports.getSession = function(req, res) {
         }
 
         if (newSession.length > 0) {
-            logger.log("      Today's session recovered and incompleted yet (" + newSession.length + "/" + lastSession.length + " left)");
+            writeLog(37, [language._id, newSession.length, lastSession.length]);
             res.json(newSession);
         } else {
-            logger.log("      Today's session already completed for language '" + language._id + "'");
+            writeLog(22, language._id);
             res.status(400).send("Today's session already completed");
         }
-        
-        logger.timeEnd("  GETSESSION request completed");
     }
 
     function resetWords(language, dictionarySize) {
-        logger.log("    Reseting words references...");
-
         for (var i=0; i<dictionarySize; i++) {
             Language.update({
                 _id: language,
@@ -641,32 +556,40 @@ exports.getSession = function(req, res) {
                 "dictionary.$.ref": false
             }, function(err, query) {
                 if (err) {
-                    logger.error("\n- ERROR GETSESSION at reseting words references on language '" + language + "' (" + new Date() + "):\n    " + err.message);
+                    writeLog(13, [language, err.message]);
                 }
             });
         }
 
-        logger.log("      Words references reseted on language '" + language + "'");
+        writeLog(38, language);
+    }
+
+    function writeLog(code, info) {
+        if (code < req.app.locals.logger.level) {
+            req.app.locals.logger.history.push({
+                date: new Date(),
+                origin: req.connection.remoteAddress,
+                request: 'GETSESSION',
+                code: code,
+                info: info
+            });
+
+            fs.writeFileSync(req.app.locals.logPath, JSON.stringify(req.app.locals.logger), {encoding: 'utf8', flag: 'w'});
+        }
     }
 };
 
 
 exports.postResults = function(req, res) {
-    logger.log("\n> POSTRESULTS request initiated (" + new Date() + ", " + req.connection.remoteAddress + ")");
-    logger.time("  POSTRESULTS request completed");
-
     if (mongoose.connection.readyState === 1) {
         getWord(req.query.language, req.query.word, req.query.state);
     } else {
-        logger.error("\n- ERROR POSTRESULTS database disconnected (" + new Date() + ")");
+        writeLog(10, null);
         res.sendStatus(500);
-        logger.log("  POSTRESULTS request completed");
     }
 
 
     function getWord(language, word, state) {
-        logger.log("    Checking language and word existence...");
-
         Language.findOne({
             _id: language,
             "dictionary._id": word
@@ -674,15 +597,13 @@ exports.postResults = function(req, res) {
             "dictionary.$": 1
         }, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR POSTRESULTS at checking language '" + language + "' and word '" + word + "' existence (" + new Date() + "):\n    " + err.message);
+                writeLog(11, [language, word, err.message]);
                 res.sendStatus(500);
-                logger.log("  POSTRESULTS request completed");
             } else if (query === null) {
-                logger.error("\n- ERROR POSTRESULTS language '" + language + "' or word '" + word + "' doesn't exist (" + new Date() + ")");
+                writeLog(20, [language, word]);
                 res.sendStatus(400);
-                logger.log("  POSTRESULTS request completed");
             } else {
-                logger.log("      Word '" + word + "' into language '" + language + "' existence confirmed");
+                writeLog(30, [language, word]);
                 postResult(query, state);
             }
         });
@@ -690,8 +611,6 @@ exports.postResults = function(req, res) {
 
     function postResult(data, state) {
         var word = data.dictionary[0];
-
-        logger.log("    Generating and applying changes...");
 
         if ((state == "true") || (state == true)) {
             word.ref = true;
@@ -706,7 +625,7 @@ exports.postResults = function(req, res) {
             word.countdown.wrong = 2;
         }
 
-        logger.log("      Changes generated for word '" + word._id + "' with state '" + state + "'");
+        writeLog(31, [word._id, state]);
 
         Language.update({
             _id: data._id,
@@ -719,14 +638,26 @@ exports.postResults = function(req, res) {
             "dictionary.$.countdown.wrong": word.countdown.wrong
         }, function(err, query) {
             if (err) {
-                logger.error("\n- ERROR POSTRESULTS at applying changes into database for word '" + word._id + "' (" + new Date() + "):\n    " + err.message);
+                writeLog(12, [word._id, err.message]);
                 res.sendStatus(500);
             } else {
-                logger.log("      Changes successfully applied to word '" + word._id + "'");
+                writeLog(32, word._id);
                 res.sendStatus(200);
             }
-
-            logger.log("  POSTRESULTS request completed");
         });
+    }
+
+    function writeLog(code, info) {
+        if (code < req.app.locals.logger.level) {
+            req.app.locals.logger.history.push({
+                date: new Date(),
+                origin: req.connection.remoteAddress,
+                request: 'POSTRESULTS',
+                code: code,
+                info: info
+            });
+
+            fs.writeFileSync(req.app.locals.logPath, JSON.stringify(req.app.locals.logger), {encoding: 'utf8', flag: 'w'});
+        }
     }
 };

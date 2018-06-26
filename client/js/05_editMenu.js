@@ -220,7 +220,7 @@ $(function() {
 
     function fillSelector(type, id, selector) {
         $.ajax({
-            url: "http://"+serverAddress+":"+serverPort+"/api/info?type=" + type + "&id=" + id,
+            url: "http://"+serverAddress+":"+serverPort+"/info?type=" + type + "&id=" + id,
             method: "GET",
             success: function(res, status) {
                 var options = "<option>" + type + "</option>";
@@ -271,7 +271,7 @@ $(function() {
 
     function submitForm(data, method) {
         $.ajax({
-            url: "http://"+serverAddress+":"+serverPort+"/api/info",
+            url: "http://"+serverAddress+":"+serverPort+"/info",
             method: method,
             contentType: "application/json",
             data: JSON.stringify(data),

@@ -1,12 +1,14 @@
+"use strict";
+
 /* packages
 ========================================================================== */
 
 var express = require("express");
-var bodyParser = require("body-parser")
-var router = express.Router();
 var app = express();
 
 var cors = require("cors");
+var bodyParser = require("body-parser");
+var fs = require("fs");
 var mongoose = require("mongoose");
 
 
@@ -20,8 +22,31 @@ var api = require("./controllers/api.js");
 ========================================================================== */
 
 app.use(cors());
-app.use(bodyParser.json())
-app.use("/api", router);
+app.use(bodyParser.json());
+
+
+/* log
+========================================================================== */
+
+app.locals.logPath = './log.json';
+
+if (fs.existsSync(app.locals.logPath)) {
+	app.locals.logger = JSON.parse(fs.readFileSync(app.locals.logPath, {encoding: 'utf8', flag: 'r'}));
+
+	for (var i=0; i<app.locals.logger.history.length;) {
+		if (new Date().getTime() - new Date(app.locals.logger.history[i].date).getTime() > 31556952000) {	// 31556952000ms = 1 year
+			app.locals.logger.history.splice(i, 1);
+		} else {
+			i++;
+		}
+	}
+} else {
+	app.locals.logger = {
+		level: 40,
+		history: []
+	};
+	fs.writeFileSync(app.locals.logPath, JSON.stringify(app.locals.logger), {encoding: 'utf8', flag: 'w'});
+}
 
 
 /* connections
@@ -47,11 +72,9 @@ promise = mongoose.connect(uri, {useMongoClient: true}, function(err) {
 /* API
 ========================================================================== */
 
-router.route("/info")
-	.get(api.getInfo)
-	.post(api.addInfo)
-	.delete(api.delInfo);
+app.get('/info', api.getInfo);
+app.post('/info', api.addInfo);
+app.delete('/info', api.delInfo);
 
-router.route("/session")
-	.get(api.getSession)
-	.post(api.postResults);
+app.get('/session', api.getSession);
+app.post('/session', api.postResults);

@@ -1,0 +1,87 @@
+GETINFO
+    10  Database disconnected
+    11  Error at getting users and languages list from database (error message)
+    12  Error at getting users list from database (error message)
+    13  Error at getting languages list from user (specified user, error message)
+    14  Error at getting words list from language (specified language, error message)
+
+    20  Unknown type of information to obtain (requested type)
+    21  Unknown user to obtain languages from (specified user)
+    22  Unknown language to obtain words from (specified language)
+
+    30  Users and languages list obtained (number of users)
+    31  Users list obtained (number of users)
+    32  Languages list obtained from user (specified user, number of languages)
+    33  Words list obtained from language (specified language, number of words)
+
+ADDINFO
+    10  Database disconnected
+    11  Error at checking user duplicity (specified user, error message)
+    12  Error at adding user to database (specified user, error message)
+    13  Error at checking user existence (specified user, error message)
+    14  Error al adding language to database (specified language, error message)
+    15  Error at linking language with user (specified language, specified user, error message)
+    16  Error at checking language existence (specified language, error message)
+    17  Error at adding words to language (specified language, error message)
+
+    20  Field "user" does not exist
+    21  Field "language" does not exist
+    22  Field "word" does not exist
+    23  Unkonown type of information to add (specified type)
+    24  User specified already exists (specified user)
+    25  User to add language into does not exist (specified user)
+    26  Language already added to user (specified user, specified language)
+    27  Language to add word into does not exist (specified language)
+
+    30  User added to database (specified user)
+    31  Language added to user (specified language, specified user)
+    32  Words added to language (number of words, specified language)
+
+DELETEINFO
+    10  Database disconnected
+    11  Error at removing user from database (specified user, error message)
+    12  Error at removing language from user (specified user, language, error message)
+    13  Error at removing language from database (specified language, error message)
+    14  Error at removing language link with user (specified language, user, error message)
+    15  Error at checking language existence (specified language, error message)
+    16  Error at removing word from language (specified word, language, error message)
+
+    20  Unkonown type of information to remove (specified type)
+    21  User does not exist (specified user)
+    22  Language does not exist (specified language)
+    23  Language does not exist (specified language)
+
+    30  User removed from database (specified user)
+    31  Language removed from user (specified language, user)
+    32  Word removed from language (specified word, language)
+
+GETSESSION
+    10  Database disconnected
+    11  Error at getting words list from language (specified language, error message)
+    12  Error at updating period state of language (specified language, error message)
+    13  Error at reseting words references on language (specified language, error message)
+
+    20  Language does not exist (specified language)
+    21  Words list is empty (specified language)
+    22  Today's session already completed (specified language)
+
+    30  Words list obtained (specified language, number of words)
+    31  Session length calculated (session length)
+    32  Special session sequence obtained (special session sequence length, special session sequence)
+    33  Normal session sequence obtained (normal session sequence length, normal session sequence)
+    34  Session sequences combined and shuffled (sequence length, sequence)
+    35  Session generated (number of elements)
+    36  Period state of language updated (specified language, next session, period length)
+    37  Today's session recovered and incompleted yet (specified language, new session length, original session length)
+    38  Words references reseted on language (specified language)
+
+POSTRESULTS
+    10  Database disconnected
+    11  Error at checking language and word existence (specified language, specified word, error message)
+    12  Error at applying changes into database for word (specified word, error message)
+
+    20  Language and/or word does not exist (specified language, specified word)
+
+    30  Word existence confirmed into language (specified language, specified word)
+    31  Changes generated for word (specified word, state)
+    32  Changes applied to word (specified word)

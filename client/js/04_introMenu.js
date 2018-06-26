@@ -7,7 +7,7 @@ $(function() {
     function IntroMenu() {
         this.show = function() {
             $.ajax({
-                url: "http://"+serverAddress+":"+serverPort+"/api/info?type=tree",
+                url: "http://"+serverAddress+":"+serverPort+"/info?type=tree",
                 method: "GET",
                 success: function(res, status) {
                     entriesGenerator(res);
@@ -51,7 +51,7 @@ $(function() {
         var languageTrigger = function() {
             $("#introContainer .introLanguage").off().on("click touchstart", function(e) {
                 $.ajax({
-                    url: "http://"+serverAddress+":"+serverPort+"/api/session?language=" + e.target.id,
+                    url: "http://"+serverAddress+":"+serverPort+"/session?language=" + e.target.id,
                     method: "GET",
                     success: function(res, status) {
                         new Session().start(e.target.id, res);
@@ -241,7 +241,7 @@ $(function() {
 
                 if (counter == session.indexOf(session[counter])) {
                     $.ajax({
-                        url: "http://"+serverAddress+":"+serverPort+"/api/session?language=" + language + "&word=" + session[counter]._id + "&state=" + state,
+                        url: "http://"+serverAddress+":"+serverPort+"/session?language=" + language + "&word=" + session[counter]._id + "&state=" + state,
                         method: "POST",
                         success: function(res, status) {
                             next();

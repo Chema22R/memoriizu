@@ -1,5 +1,7 @@
 $(function() {
     var selected = "#fixedStatsMenuForm option:selected";
+
+
     /* Stats Buttons
     ========================================================================== */
 
@@ -59,7 +61,7 @@ $(function() {
 
     function fillSelector(type, id, selector) {
         $.ajax({
-            url: "http://"+serverAddress+":"+serverPort+"/api/info?type=" + type + "&id=" + id,
+            url: "http://"+serverAddress+":"+serverPort+"/info?type=" + type + "&id=" + id,
             method: "GET",
             success: function(res, status) {
                 var options = "<option>" + type + "</option>";
@@ -83,7 +85,7 @@ $(function() {
 
     function submitForm(language) {
         $.ajax({
-            url: "http://"+serverAddress+":"+serverPort+"/api/info?type=words&id="+language,
+            url: "http://"+serverAddress+":"+serverPort+"/info?type=words&id="+language,
             method: "GET",
             success: function(res, status) {
                 fillTable(res);

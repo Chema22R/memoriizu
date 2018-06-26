@@ -6,6 +6,5 @@ Añadir mini boton de ayuda en los titulos de las columnas del listado de palabr
 Añadir que al hacer scroll en el listado de palabras los titulos se mantengan cuando lleguen a la parte superior, de modo que siempre se vean los titulos de cada columna
 Añadir configuraciones de idiomas, de modo que al elegir japones, por ejemplo, se genere un numero de forma aleatoria en cada sesion (como 70501)
 Quitar que se de por correcto palabras con letras desordenadas (hola esta bien y ohla esta bien) o ponerlo como error leve, y en su lugar poner que se comprueben todos los posibles ordenes cuando hay varias palabras separadas por "/"
-Quitar tanto log
 Añadir ayuda como en el TFM
 Controlar que el botón de cerrar ventana no desaparezca al hacer scroll
