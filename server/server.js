@@ -34,7 +34,7 @@ if (fs.existsSync(app.locals.logPath)) {
 	app.locals.logger = JSON.parse(fs.readFileSync(app.locals.logPath, {encoding: 'utf8', flag: 'r'}));
 
 	for (var i=0; i<app.locals.logger.history.length;) {
-		if (new Date().getTime() - new Date(app.locals.logger.history[i].date).getTime() > 31556952000) {	// 31556952000ms = 1 year
+		if (new Date().getTime() - new Date(app.locals.logger.history[i].date).getTime() > 5184000000) {	// 5184000000ms = 2 months
 			app.locals.logger.history.splice(i, 1);
 		} else {
 			i++;
@@ -62,9 +62,9 @@ app.listen(serverPort, function () {
 
 promise = mongoose.connect(uri, {useMongoClient: true}, function(err) {
 	if (err) {
-		console.error("- ERROR connecting to database memoriizu\n     " + err.message);
+		console.error("- ERROR connecting to database 'memoriizu'\n     " + err.message);
 	} else {
-		console.log("> Connected to database memoriizu");
+		console.log("> Connected to database 'memoriizu'");
 	}
 });
 
