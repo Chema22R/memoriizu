@@ -65,15 +65,16 @@ GETSESSION
     21  Words list is empty (specified language)
     22  Today's session already completed (language id)
 
-    30  Words list obtained (specified language, number of words)
-    31  Session length calculated (session length)
-    32  Special session sequence obtained (special session sequence length, special session sequence)
-    33  Normal session sequence obtained (normal session sequence length, normal session sequence)
-    34  Session sequences combined and shuffled (sequence length, sequence)
-    35  Session generated (number of elements)
-    36  Period state of language updated (language id, next session, period length)
-    37  Today's session recovered and incompleted yet (language id, new session length, original session length)
-    38  Words references reseted on language (specified language)
+    30  Period state of language updated (language id, next session, period length)
+    31  Today's session recovered and incompleted yet (language id, new session length, original session length)
+
+    40  Words list obtained (specified language, number of words)
+    41  Session length calculated (session length)
+    42  Special session sequence obtained (special session sequence length, special session sequence)
+    43  Normal session sequence obtained (normal session sequence length, normal session sequence)
+    44  Session sequences combined and shuffled (sequence length, sequence)
+    45  Session generated (number of elements)
+    46  Words references reseted on language (specified language)
 
 POSTRESULTS
     10  Database disconnected
@@ -82,6 +83,7 @@ POSTRESULTS
 
     20  Language and/or word does not exist (specified language, specified word)
 
-    30  Word existence confirmed into language (specified language, specified word)
-    31  Changes generated for word (word id, word state)
     32  Changes applied to word (word id)
+
+    40  Word existence confirmed into language (specified language, specified word)
+    41  Changes generated for word (word id, word state)

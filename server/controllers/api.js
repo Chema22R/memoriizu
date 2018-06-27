@@ -416,7 +416,7 @@ exports.getSession = function(req, res) {
                 writeLog(20, language);
                 res.sendStatus(400);
             } else {
-                writeLog(30, [language, query.dictionary.length]);
+                writeLog(40, [language, query.dictionary.length]);
 
                 if (query.dictionary.length > 0) {
                     var current = new Date();
@@ -465,7 +465,7 @@ exports.getSession = function(req, res) {
 
         sessionSize = Math.ceil(pendingWords/(language.period.length-language.period.current+1));
 
-        writeLog(31, sessionSize);
+        writeLog(41, sessionSize);
 
         for (var i=0; i<dictionarySize; i++) {
             if ((language.dictionary[i].countdown.new > 0) || (language.dictionary[i].countdown.wrong > 0)) {
@@ -473,7 +473,7 @@ exports.getSession = function(req, res) {
             }
         }
 
-        writeLog(32, [sequenceSpecial.length, sequenceSpecial]);
+        writeLog(42, [sequenceSpecial.length, sequenceSpecial]);
 
         for (var i=0; i<dictionarySize && sequenceNormal.length<sessionSize; i++) {
             if ((sequenceNormal.indexOf(i) == -1) && (sequenceSpecial.indexOf(i) == -1) && (!language.dictionary[i].ref || language.period.current == 0)) {
@@ -481,7 +481,7 @@ exports.getSession = function(req, res) {
             }
         }
 
-        writeLog(33, [sequenceNormal.length, sequenceNormal]);
+        writeLog(43, [sequenceNormal.length, sequenceNormal]);
 
         sequence = sequenceSpecial.concat(sequenceNormal);
 
@@ -492,13 +492,13 @@ exports.getSession = function(req, res) {
             sequence[j] = x;
         }
 
-        writeLog(34, [sequence.length, sequence]);
+        writeLog(44, [sequence.length, sequence]);
 
         for (var i=0; i<sequence.length; i++) {
             session[i] = language.dictionary[sequence[i]];
         }
 
-        writeLog(35, session.length);
+        writeLog(45, session.length);
 
         if (language.period.current == language.period.length) {
             language.period.current = 0;
@@ -517,7 +517,7 @@ exports.getSession = function(req, res) {
                 writeLog(12, [language._id, err.message]);
                 res.sendStatus(500);
             } else {
-                writeLog(36, [language._id, language.period.current, language.period.length]);
+                writeLog(30, [language._id, language.period.current, language.period.length]);
                 res.json(session);
             }
         });
@@ -539,7 +539,7 @@ exports.getSession = function(req, res) {
         }
 
         if (newSession.length > 0) {
-            writeLog(37, [language._id, newSession.length, lastSession.length]);
+            writeLog(31, [language._id, newSession.length, lastSession.length]);
             res.json(newSession);
         } else {
             writeLog(22, language._id);
@@ -561,7 +561,7 @@ exports.getSession = function(req, res) {
             });
         }
 
-        writeLog(38, language);
+        writeLog(46, language);
     }
 
     function writeLog(code, info) {
@@ -603,7 +603,7 @@ exports.postResults = function(req, res) {
                 writeLog(20, [language, word]);
                 res.sendStatus(400);
             } else {
-                writeLog(30, [language, word]);
+                writeLog(40, [language, word]);
                 postResult(query, state);
             }
         });
@@ -625,7 +625,7 @@ exports.postResults = function(req, res) {
             word.countdown.wrong = 2;
         }
 
-        writeLog(31, [word._id, state]);
+        writeLog(41, [word._id, state]);
 
         Language.update({
             _id: data._id,
