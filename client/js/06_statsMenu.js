@@ -5,7 +5,7 @@ $(function() {
     ========================================================================== */
 
     // trigger the button to open the stats menu
-    $("#fixedStatsButton").on("click touchstart", function() {showStatsMenu();});
+    $("#fixedStatsButton").on("click", function() {showStatsMenu();});
 
     // trigger the user selector
     $("#fixedStatsMenuSelectUser").off().on("change", function() {
