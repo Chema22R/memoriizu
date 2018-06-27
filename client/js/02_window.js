@@ -1,6 +1,5 @@
 $(function() {
-    // click
-    $(window).on("click", function(e) {
+    $(window).on("click touchstart", function(e) {
         // edit buttons (close buttons)
         if ($("#fixedEditSubButtons").is(":visible") && !$(e.target).is("#fixedEditButtons *")) {
             $("#fixedEditSubSubButtons, #fixedEditSubButtons").fadeOut("slow");
@@ -17,7 +16,6 @@ $(function() {
         }
     });
 
-    // resize
     $(window).on("resize", function() {
         // edit menu (center it on the window)
 		$("#fixedEditMenu").css({
