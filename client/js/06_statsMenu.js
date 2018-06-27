@@ -1,12 +1,11 @@
 $(function() {
     var selected = "#fixedStatsMenuForm option:selected";
 
-
     /* Stats Buttons
     ========================================================================== */
 
     // trigger the button to open the stats menu
-    $("#fixedStatsButton").on("click touchstart", function() {showStatsMenu();});
+    $("#fixedStatsButton").on("click", function() {showStatsMenu();});
 
     // trigger the user selector
     $("#fixedStatsMenuSelectUser").off().on("change", function() {
@@ -37,7 +36,6 @@ $(function() {
             submitForm(selection[1].id);
         }
     });
-
 
 
     /* Stats Menu

@@ -3,12 +3,11 @@ $(function() {
     var operation;
     var selected = "#fixedEditMenuForm option:selected";
 
-
     /* Edit Buttons
     ========================================================================== */
 
     // open/close subButtons
-    $("#fixedEditTrigger").on("click touchstart", function(e) {
+    $("#fixedEditTrigger").on("click", function(e) {
         e.preventDefault();
 
         if ($("#fixedEditSubButtons").is(":hidden")) {
@@ -20,7 +19,7 @@ $(function() {
     });
 
     // open/close and position subSubButtons
-    $("#fixedEditSubButtons .subButton").on("click touchstart", function(e) {
+    $("#fixedEditSubButtons .subButton").on("click", function(e) {
         e.preventDefault();
 
         switch (e.target.id) {
@@ -45,7 +44,7 @@ $(function() {
     });
 
     // trigger the subSubButtons to open the edit menu
-    $("#fixedEditSubSubButtons .subSubButton").on("click touchstart", function(e) {
+    $("#fixedEditSubSubButtons .subSubButton").on("click", function(e) {
         e.preventDefault();
 
         if ($("#fixedEditSubButtons").is(":visible")) {
@@ -57,7 +56,6 @@ $(function() {
 
         showEditMenu();
     });
-
 
 
     /* Edit Menu
@@ -216,7 +214,6 @@ $(function() {
             }
         });
     }
-
 
     function fillSelector(type, id, selector) {
         $.ajax({

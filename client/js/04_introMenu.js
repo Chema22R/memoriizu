@@ -49,7 +49,7 @@ $(function() {
         }
 
         var languageTrigger = function() {
-            $("#introContainer .introLanguage").off().on("click touchstart", function(e) {
+            $("#introContainer .introLanguage").off().on("click", function(e) {
                 $.ajax({
                     url: "http://"+serverAddress+":"+serverPort+"/session?language=" + e.target.id,
                     method: "GET",
@@ -222,7 +222,7 @@ $(function() {
             }
         });
 
-        $("#fileButtons button").off().on("click touchstart", function(e) {
+        $("#fileButtons button").off().on("click", function(e) {
             e.preventDefault();
 
             if (!blockNext) {
@@ -260,7 +260,7 @@ $(function() {
             }
         });
 
-        $("#fixedExit").off().on("click touchstart", function(e) {
+        $("#fixedExit").off().on("click", function(e) {
             if (confirm("You are leaving without finishing the session, are you sure? You can resume the session later")) {
                 next(true);
             }

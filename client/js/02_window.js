@@ -1,6 +1,6 @@
 $(function() {
-    // click touchstart
-    $(window).on("click touchstart", function(e) {
+    // click
+    $(window).on("click", function(e) {
         // edit buttons (close buttons)
         if ($("#fixedEditSubButtons").is(":visible") && !$(e.target).is("#fixedEditButtons *")) {
             $("#fixedEditSubSubButtons, #fixedEditSubButtons").fadeOut("slow");
