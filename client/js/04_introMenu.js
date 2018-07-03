@@ -71,7 +71,7 @@ $(function() {
 
     function Session() {
         var regexJapChars = /[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B/ig; // https://gist.github.com/ryanmcgrath/982242
-        var regexSpecials = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\-\s\t\v])/ig;
+        var regexSpecials = /(<[A-Z\/]*>|[¡!¿?/|"'(){}<>@#$%^&*ºª=+·.,;:_\\\[\]\s\t\v])/ig;
         var regexSust = /aa|ii|uu|ee|oo|au|iu|eu|ou/ig;
         var mapSust = {"aa":"ā", "ii":"ī", "uu":"ū", "ee":"ē", "oo":"ō", "au":"ā", "iu":"ī", "eu":"ē", "ou":"ō"};
         var blockNext = false;

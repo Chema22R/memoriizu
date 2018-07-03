@@ -373,3 +373,49 @@
     font-weight: bold;
     text-transform: uppercase;
 }
+
+
+/* Help button
+    ========================================================================== */
+
+div.dropdown {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+div.dropdown > button {
+    padding: 18px 5px 5px 22px;
+    font-size: 16px;
+    color: #888;
+}
+
+div.dropdown > div {
+    width: 100vw;
+    max-width: 300px;
+    padding: 10px 10px;
+
+    display: none;
+    position: absolute;
+    top: 34px;
+    left: 38px;
+
+    border: 1px solid #95989A;
+    cursor: default;
+
+    background-color: #FFF;
+}
+
+@media (max-width: 510px) {div.dropdown > div {max-width: 250px;}}
+@media (max-width: 450px) {div.dropdown > div {max-width: 200px;}}
+@media (max-width: 390px) {div.dropdown > div {max-width: 150px;}}
+@media (max-width: 330px) {div.dropdown > div {max-width: 100px;}}
+
+div.dropdown:hover > div {display: block;}
+
+div.dropdown > div > p {
+    white-space: initial;
+    text-align: justify !important;
+    font-size: .9em;
+    line-height: 1.3em;
+}
