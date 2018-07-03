@@ -1,6 +1,5 @@
 #fixedContent * {z-index: 3;}
 
-
 /* Leftover
     ========================================================================== */
 
@@ -394,7 +393,7 @@ div.dropdown > button {
 
 div.dropdown > div {
     width: 100vw;
-    max-width: 300px;
+    max-width: 40vw;
     padding: 10px 10px;
 
     display: none;
@@ -407,11 +406,6 @@ div.dropdown > div {
 
     background-color: #FFF;
 }
-
-@media (max-width: 510px) {div.dropdown > div {max-width: 250px;}}
-@media (max-width: 450px) {div.dropdown > div {max-width: 200px;}}
-@media (max-width: 390px) {div.dropdown > div {max-width: 150px;}}
-@media (max-width: 330px) {div.dropdown > div {max-width: 100px;}}
 
 div.dropdown:hover > div {display: block;}
 
