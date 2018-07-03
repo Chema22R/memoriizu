@@ -145,6 +145,9 @@ $(function() {
         $(info).appendTo("#fixedStatsMenuInfo02");
         $(table).appendTo("#fixedStatsMenuTable");
 
+        $("#fixedStatsMenuInfo").show();
+        $("#fixedStatsMenuTable").show();
+
         $("#fixedStatsMenu").animate({
             scrollTop: $("#fixedStatsMenuLanguage").position().top
         }, 1000);

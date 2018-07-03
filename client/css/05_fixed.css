@@ -316,6 +316,7 @@
 
 
 #fixedStatsMenuInfo {
+    display: none;
     max-width: 100%;
     border-top: 1px solid #AEAEAE;
     cursor: default;
@@ -353,6 +354,7 @@
 
 
 #fixedStatsMenuTable {
+    display: none;
     max-width: 95%;
     margin: 20px auto;
     cursor: default;
