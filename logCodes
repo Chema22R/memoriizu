@@ -69,12 +69,13 @@ GETSESSION
     31  Today's session recovered and incompleted yet (language id, new session length, original session length)
 
     40  Words list obtained (specified language, number of words)
-    41  Session length calculated (session length)
-    42  Special session sequence obtained (special session sequence length, special session sequence)
-    43  Normal session sequence obtained (normal session sequence length, normal session sequence)
-    44  Session sequences combined and shuffled (sequence length, sequence)
-    45  Session generated (number of elements)
+    41  Session length calculated (language id, session length)
+    42  Special session sequence obtained (language id, special session sequence length, special session sequence)
+    43  Normal session sequence obtained (language id, normal session sequence length, normal session sequence)
+    44  Session sequences combined and shuffled (language id, sequence length, sequence)
+    45  Session generated (language id, number of elements)
     46  Words references reseted on language (specified language)
+    47  Today's recovered session shuffled (language id, sequence length, sequence)
 
 POSTRESULTS
     10  Database disconnected

@@ -465,7 +465,7 @@ exports.getSession = function(req, res) {
 
         sessionSize = Math.ceil(pendingWords/(language.period.length-language.period.current+1));
 
-        writeLog(41, sessionSize);
+        writeLog(41, [language._id, sessionSize]);
 
         for (var i=0; i<dictionarySize; i++) {
             if ((language.dictionary[i].countdown.new > 0) || (language.dictionary[i].countdown.wrong > 0)) {
@@ -473,7 +473,7 @@ exports.getSession = function(req, res) {
             }
         }
 
-        writeLog(42, [sequenceSpecial.length, sequenceSpecial]);
+        writeLog(42, [language._id, sequenceSpecial.length, sequenceSpecial]);
 
         for (var i=0; i<dictionarySize && sequenceNormal.length<sessionSize; i++) {
             if ((sequenceNormal.indexOf(i) == -1) && (sequenceSpecial.indexOf(i) == -1) && (!language.dictionary[i].ref || language.period.current == 0)) {
@@ -481,7 +481,7 @@ exports.getSession = function(req, res) {
             }
         }
 
-        writeLog(43, [sequenceNormal.length, sequenceNormal]);
+        writeLog(43, [language._id, sequenceNormal.length, sequenceNormal]);
 
         sequence = sequenceSpecial.concat(sequenceNormal);
 
@@ -492,13 +492,13 @@ exports.getSession = function(req, res) {
             sequence[j] = x;
         }
 
-        writeLog(44, [sequence.length, sequence]);
+        writeLog(44, [language._id, sequence.length, sequence]);
 
         for (var i=0; i<sequence.length; i++) {
             session[i] = language.dictionary[sequence[i]];
         }
 
-        writeLog(45, session.length);
+        writeLog(45, [language._id, session.length]);
 
         if (language.period.current == language.period.length) {
             language.period.current = 0;
@@ -540,6 +540,16 @@ exports.getSession = function(req, res) {
 
         if (newSession.length > 0) {
             writeLog(31, [language._id, newSession.length, lastSession.length]);
+
+            for (var j, x, i=newSession.length; i; i--) {
+                j = Math.floor(Math.random() * i);
+                x = newSession[i-1];
+                newSession[i-1] = newSession[j];
+                newSession[j] = x;
+            }
+
+            writeLog(47, [language._id, newSession.length, newSession]);
+
             res.json(newSession);
         } else {
             writeLog(22, language._id);
