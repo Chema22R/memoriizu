@@ -158,9 +158,7 @@ $(function() {
     function keyDetector() {
         $(document).off("keydown").keydown(function(e) {
             if ($("#fixedStatsMenuTable").is(":visible") && (e.which || e.keyCode) >= 65 && (e.which || e.keyCode) <= 90 && $(".letterSeparator." + String.fromCharCode(e.which || e.keyCode)).length) {
-                $("#fixedStatsMenu").animate({
-                    scrollTop: $(".letterSeparator." + String.fromCharCode(e.which || e.keyCode)).position().top
-                }, 1000);
+                $("#fixedStatsMenu").scrollTop(0).scrollTop($(".letterSeparator." + String.fromCharCode(e.which || e.keyCode)).position().top);
             }
         });
     }
