@@ -123,7 +123,7 @@ $(function() {
             var firstLetter = language.dictionary[i].fields[language.dictionary[i].fields.length-1].replace(regexSpecials, "").substring(0, 1).replace(regexNumbsVocals, "");
             if ((firstLetter != letterSeparator) && (firstLetter != "")) {
                 letterSeparator = firstLetter;
-                table += "<tr><td class='alignLeft letterSeparator' colspan='4'>" + letterSeparator + "</td></tr>";
+                table += "<tr><td class='alignLeft letterSeparator " + letterSeparator.toLowerCase() + " " + letterSeparator.toUpperCase() + "' colspan='4'>" + letterSeparator + "</td></tr>";
             }
             
             table +=    "<tr><td class='alignLeft'>";
@@ -151,5 +151,17 @@ $(function() {
         $("#fixedStatsMenu").animate({
             scrollTop: $("#fixedStatsMenuLanguage").position().top
         }, 1000);
+
+        keyDetector();
+    }
+
+    function keyDetector() {
+        $(document).off("keydown").keydown(function(e) {
+            if ($("#fixedStatsMenuTable").is(":visible") && (e.which || e.keyCode) >= 65 && (e.which || e.keyCode) <= 90 && $(".letterSeparator." + String.fromCharCode(e.which || e.keyCode)).length) {
+                $("#fixedStatsMenu").animate({
+                    scrollTop: $(".letterSeparator." + String.fromCharCode(e.which || e.keyCode)).position().top
+                }, 1000);
+            }
+        });
     }
 });
