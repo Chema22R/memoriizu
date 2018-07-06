@@ -105,10 +105,12 @@ $(function() {
             var translate = session[counter].fields[session[counter].fields.length-1];
             var separator = translate.indexOf("(");
             if (separator != -1) {
-                $("#quizTranslate").text(translate.charAt(0).toUpperCase() + translate.substring(1, separator).trim());
+                translate = translate.charAt(0).toUpperCase() + translate.substring(1, separator);
+                $("#quizTranslate").text(translate.trim());
                 $("#quizDescription").text(translate.substring(separator).trim());
             } else {
-                $("#quizTranslate").text(translate.charAt(0).toUpperCase() + translate.substring(1).trim());
+                translate = translate.charAt(0).toUpperCase() + translate.substring(1);
+                $("#quizTranslate").text(translate.trim());
                 $("#quizDescription").text("");
             }
             $("#quizTranslation").val("");
