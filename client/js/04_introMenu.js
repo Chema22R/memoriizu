@@ -104,15 +104,17 @@ $(function() {
         var newQuiz = function() {
             var translate = session[counter].fields[session[counter].fields.length-1];
             var separator = translate.indexOf("(");
+
+            translate = translate.charAt(0).toUpperCase() + translate.substring(1);
+
             if (separator != -1) {
-                translate = translate.charAt(0).toUpperCase() + translate.substring(1, separator);
-                $("#quizTranslate").text(translate.trim());
+                $("#quizTranslate").text(translate.substring(0, separator).trim());
                 $("#quizDescription").text(translate.substring(separator).trim());
             } else {
-                translate = translate.charAt(0).toUpperCase() + translate.substring(1);
                 $("#quizTranslate").text(translate.trim());
                 $("#quizDescription").text("");
             }
+
             $("#quizTranslation").val("");
         }
 
