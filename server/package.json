@@ -4,10 +4,10 @@
   "description": "Memoriizu",
   "main": "server.js",
   "dependencies": {
-    "express": "4.x",
-    "mongoose": "4.x",
-    "body-parser": "1.x",
-    "cors": "2.x"
+    "express": "4.16.3",
+    "mongoose": "4.13.14",
+    "body-parser": "1.18.3",
+    "cors": "2.8.4"
   },
   "devDependencies": {},
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://chemarivera.visualstudio.com/_git/Memoriizu"
+    "url": "https://chemarivera.visualstudio.com/Memoriizu"
   },
   "author": "Jose Maria Rivera Alonso",
   "license": "ISC"

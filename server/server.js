@@ -54,13 +54,14 @@ if (fs.existsSync(app.locals.logPath)) {
 
 var serverPort = 8082;
 var uri = "mongodb://localhost/memoriizu";
-var promise;
 
 app.listen(serverPort, function () {
 	console.log("> Memoriizu server running on http://localhost:" + serverPort);
 });
 
-promise = mongoose.connect(uri, {useMongoClient: true}, function(err) {
+mongoose.connect(uri, {
+	useMongoClient: true
+}, function(err) {
 	if (err) {
 		console.error("- ERROR connecting to database 'memoriizu'\n     " + err.message);
 	} else {
