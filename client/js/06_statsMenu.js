@@ -106,7 +106,10 @@ $(function() {
                     "<h3>" + language.period.current + "/" + ++language.period.length + " sessions</h3>"+
                     "<h3>" + new Date(language.session.date).toLocaleDateString() + "</h3>"+
                     "<h3>" + new Date(language.date).toLocaleDateString() + "</h3>";
-        var table = "<tr><th class='alignLeft'>Fields</th><th>Count</th><th>Countdown</th><th>Completed</th></tr>";
+        var table = "<tr><th class='alignLeft' title='Fields column shows all the translation data of each word entered during its creation'>Fields</th>"+
+                    "<th title='Count column shows the hits and fails of each word'>Count</th>"+
+                    "<th title='Countdown column shows two special counts to solve each word in following consecutive sessions for being a new and/or failed word'>Countdown</th>"+
+                    "<th title='Completed column shows if each word is completed in the current period of sessions'>Completed</th></tr>";
         var letterSeparator;
 
         language.dictionary.sort(function(a, b){
@@ -125,17 +128,23 @@ $(function() {
                 letterSeparator = firstLetter;
                 table += "<tr><td class='alignLeft letterSeparator " + letterSeparator.toLowerCase() + " " + letterSeparator.toUpperCase() + "' colspan='4'>" + letterSeparator + "</td></tr>";
             }
-            
+
             table +=    "<tr><td class='alignLeft'>";
             for (var j=language.dictionary[i].fields.length-1; j; j--) {
                 table += language.dictionary[i].fields[j] + " <strong>&#92;</strong> ";
             }
             table += language.dictionary[i].fields[0] + "</td>";
 
-            table +=    "<td>" + language.dictionary[i].count.correct + "/" + language.dictionary[i].count.wrong + "</td>"+
-                        "<td>" + language.dictionary[i].countdown.new + "/" + language.dictionary[i].countdown.wrong + "</td>"+
-                        "<td>" + language.dictionary[i].ref + "</td>"+
-                        "</tr>";
+            table +=    "<td title='" + language.dictionary[i].count.correct + " hits&NewLine;" + language.dictionary[i].count.wrong + " failures'>" + language.dictionary[i].count.correct + "/" + language.dictionary[i].count.wrong + "</td>"+
+                        "<td title='" + language.dictionary[i].countdown.new + " following consecutive sessions in which to solve for being a new word&NewLine;" + language.dictionary[i].countdown.wrong + " following consecutive sessions in which to solve for being a failed word'>" + language.dictionary[i].countdown.new + "/" + language.dictionary[i].countdown.wrong + "</td>";
+
+            if (language.dictionary[i].ref) {
+                table +=    "<td title='Word already completed in the current period of sessions'>" + language.dictionary[i].ref + "</td>";
+            } else {
+                table +=    "<td title='Word not yet completed in the current period of sessions'>" + language.dictionary[i].ref + "</td>";
+            }
+
+            table +=    "</tr>";
         }
 
         $("#fixedStatsMenuLanguage").text($("#fixedStatsMenuSelectLang").val());
