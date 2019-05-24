@@ -1,7 +1,7 @@
 {
   "name": "memoriizu",
   "version": "1.0.0",
-  "description": "Memoriizu",
+  "description": "",
   "main": "server.js",
   "dependencies": {
     "express": "4.16.3",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://chemarivera.visualstudio.com/Memoriizu"
+    "url": "https://github.com/Chema22R/Memoriizu.git"
   },
   "author": "Jose Maria Rivera Alonso",
   "license": "ISC"
