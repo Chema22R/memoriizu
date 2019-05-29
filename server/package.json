@@ -1,22 +1,25 @@
 {
   "name": "memoriizu",
   "version": "1.0.0",
+  "license": "ISC",
+  "author": "Jose Maria Rivera Alonso (https://github.com/Chema22R)",
   "description": "",
   "main": "server.js",
-  "dependencies": {
-    "express": "4.16.3",
-    "mongoose": "4.13.14",
-    "body-parser": "1.18.3",
-    "cors": "2.8.4"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Chema22R/Memoriizu.git"
+    "url": "git+https://github.com/Chema22R/memoriizu.git"
   },
-  "author": "Jose Maria Rivera Alonso",
-  "license": "ISC"
+  "bugs": {
+    "url": "https://github.com/Chema22R/memoriizu/issues"
+  },
+  "homepage": "https://github.com/Chema22R/memoriizu#readme",
+  "dependencies": {
+    "express": "4.16.3",
+    "mongoose": "4.13.14",
+    "body-parser": "1.18.3",
+    "cors": "2.8.4"
+  }
 }
