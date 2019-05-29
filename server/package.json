@@ -1,8 +1,6 @@
 {
   "name": "memoriizu",
   "version": "1.0.0",
-  "license": "ISC",
-  "author": "Jose Maria Rivera Alonso (https://github.com/Chema22R)",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -12,6 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/Chema22R/memoriizu.git"
   },
+  "author": "Jose Maria Rivera Alonso (https://github.com/Chema22R)",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Chema22R/memoriizu/issues"
   },
