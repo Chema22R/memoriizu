@@ -1,4 +1,4 @@
-body.noScroll {overflow: hidden;}
+body.noScroll {overflow: hidden !important;}
 
 #projectIntroContainer {
     display: flex;
@@ -20,8 +20,6 @@ body.noScroll {overflow: hidden;}
     -moz-transition: opacity .5s;
     -webkit-transition: opacity .5s;
 }
-
-#projectIntroContainer.fadeOut {opacity: 0;}
 
 #projectIntroBack {
     position: fixed;
@@ -59,6 +57,7 @@ body.noScroll {overflow: hidden;}
 }
 
 #projectIntroText {
+    display: none;
     max-width: 600px;
 
     margin: 0;
