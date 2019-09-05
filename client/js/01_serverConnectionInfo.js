@@ -1,1 +1,1 @@
-var serverAddress=JSON.stringify(process.env.SERVER_URL);
+var serverAddress="https://memoriizu-old.herokuapp.com";
