@@ -1,1 +1,1 @@
-var serverAddress=(process.env.SERVER_URL);
+var serverAddress=JSON.stringify(process.env.SERVER_URL);
