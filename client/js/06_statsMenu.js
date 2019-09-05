@@ -59,7 +59,7 @@ $(function() {
 
     function fillSelector(type, id, selector) {
         $.ajax({
-            url: "http://"+serverAddress+":"+serverPort+"/info?type=" + type + "&id=" + id,
+            url: serverAddress+"/info?type=" + type + "&id=" + id,
             method: "GET",
             success: function(res, status) {
                 var options = "<option>" + type + "</option>";
@@ -83,7 +83,7 @@ $(function() {
 
     function submitForm(language) {
         $.ajax({
-            url: "http://"+serverAddress+":"+serverPort+"/info?type=words&id="+language,
+            url: serverAddress+"/info?type=words&id="+language,
             method: "GET",
             success: function(res, status) {
                 fillTable(res);

@@ -2,9 +2,8 @@
   "name": "memoriizu",
   "version": "1.0.0",
   "description": "Application focused on language learning, in which users add the content they want to study",
-  "main": "server.js",
   "scripts": {
-    "heroku-postbuild": "rm -r package.json",
+    "heroku-prebuild": "rm -r client package.json && mv server/* . && rm -r server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,11 +15,5 @@
   "bugs": {
     "url": "https://github.com/Chema22R/memoriizu-old/issues"
   },
-  "homepage": "https://github.com/Chema22R/memoriizu-old#readme",
-  "dependencies": {
-    "express": "4.16.3",
-    "mongoose": "4.13.14",
-    "body-parser": "1.18.3",
-    "cors": "2.8.4"
-  }
+  "homepage": "https://github.com/Chema22R/memoriizu-old#readme"
 }

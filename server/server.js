@@ -52,15 +52,15 @@ if (fs.existsSync(app.locals.logPath)) {
 /* connections
 ========================================================================== */
 
-var serverPort = 8082;
 var uri = "mongodb://localhost/memoriizu";
 
-app.listen(serverPort, function () {
-	console.log("> Memoriizu server running on http://localhost:" + serverPort);
+app.listen(process.env.PORT, function () {
+	console.log("> Memoriizu server running on http://localhost:" + process.env.PORT);
 });
 
-mongoose.connect(uri, {
-	useMongoClient: true
+mongoose.connect(process.env.DATABASE_URI, {
+	useNewUrlParser: true,
+	useFindAndModify: false
 }, function(err) {
 	if (err) {
 		console.error("- ERROR connecting to database 'memoriizu'\n     " + err.message);

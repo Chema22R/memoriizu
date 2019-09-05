@@ -1,2 +1,1 @@
-var serverAddress="localhost";
-var serverPort="8082";
+var serverAddress=(process.env.SERVER_URL);
