@@ -1,1 +1,1 @@
-var serverAddress="https://memoriizu-old.herokuapp.com";
+var serverAddress="https://api.memoriizu.chema22r.com";
