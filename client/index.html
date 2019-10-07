@@ -23,25 +23,28 @@
 	<body style="background-image: url('img/background.png');">
 		<img id="backgroundTree" src="img/tree.png" alt="Background tree">
 
-		<div id="projectIntroContainer">
-			<div id="projectIntroBack" onclick="projectIntrofadeOut()"></div>
-			<div id="projectIntroContent">
-				<img id="projectIntroImg" src="img/projectIntro.png" alt="Introduction Image">
-				<p id="projectIntroText">
-					This application is focused on language learning, in which users add the content they want
-					to study, in addition to the period in which they want the content to be distributed.<br>
-					Users can add or delete languages or content of an existing language through the main
-					interface (first left button). In addition, users can view all the content for each
-					language (second left button).<br>For each of the existing languages, the system generates
-					a daily session with randomly selected content, emphasizing the failures committed in
-					previous sessions. Users can access these sessions from the central part of the interface.
-					<br>During each daily session, users must write in the selected language the translation
-					of the word or expression shown, receiving feedback from the application, which indicates
-					whether the resolution provided is correct.
-				</p>
-				<span id="projectIntroExit" onclick="projectIntrofadeOut()">&times;</span>
-			</div>
-		</div>
+		<div id="projectIntroContainer" class="projectIntroContainer">
+            <div class="projectIntroBack" onclick="projectIntrofadeOut()"></div>
+            <div id="projectIntroContent" class="projectIntroContent">
+				<img id="projectIntroImg" src="img/projectIntro.png">
+				<div id="projectIntroText">
+                    <h2>Memoriizu</h2>
+                    <p>
+                        This application is focused on language learning, in which users add the content they want
+						to study, in addition to the period in which they want the content to be distributed.<br>
+						Users can add or delete languages or content of an existing language through the main
+						interface (first left button). In addition, users can view all the content for each
+						language (second left button).<br>For each of the existing languages, the system generates
+						a daily session with randomly selected content, emphasizing the failures committed in
+						previous sessions. Users can access these sessions from the central part of the interface.
+						<br>During each daily session, users must write in the selected language the translation
+						of the word or expression shown, receiving feedback from the application, which indicates
+						whether the resolution provided is correct.
+                    </p>
+                </div>
+                <span onclick="projectIntrofadeOut()">&times;</span>
+            </div>
+        </div>
 
 		<section id="fixedContent">
 			<div id="fixedLog">
