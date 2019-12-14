@@ -690,3 +690,56 @@ exports.postResults = function(req, res) {
         }
     }
 };
+
+
+exports.checkStatus = function(req, res) {
+	checkDatabase(0);
+
+	function checkDatabase(attempt) {
+		if (mongoose.connection.readyState === 1) {
+			User.find({}, {
+				_id: 0,
+				date: 1
+			}, function(err, query) {
+				if (err) {
+					if (attempt < 2) {
+						setTimeout(() => {
+							checkDatabase(++attempt);
+						}, 5000);
+					} else {
+						writeLog(1, "Error accessing Users collection", {origin: req.connection.remoteAddress, error: err.message});
+						res.sendStatus(500);
+					}
+				} else {
+					writeLog(3, "Database connected and Users collection accessible", {origin: req.connection.remoteAddress});
+					res.sendStatus(200);
+				}
+			});
+		} else {
+			if (attempt < 2) {
+			    setTimeout(() => {
+					checkDatabase(++attempt);
+			    }, 5000);
+			} else {
+				writeLog(1, "Database disconnected", {origin: req.connection.remoteAddress});
+				res.sendStatus(500);
+			}
+		}
+	}
+
+	function writeLog(type, msg, meta) {
+		switch (type) {
+			case 1:
+				req.app.locals.logger.error(msg, {app: 'Status Check', meta: meta});
+				break;
+			case 2:
+				req.app.locals.logger.warn(msg, {app: 'Status Check', meta: meta});
+				break;
+			case 3:
+				req.app.locals.logger.log(msg, {app: 'Status Check', meta: meta});
+				break;
+			default:
+				req.app.locals.logger.debug(msg, {app: 'Status Check', meta: meta});
+		}
+    }
+};
