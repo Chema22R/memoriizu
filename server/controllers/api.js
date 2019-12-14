@@ -4,7 +4,6 @@
 ========================================================================== */
 
 var mongoose = require("mongoose");
-var fs = require("fs");
 
 
 /* models
@@ -25,11 +24,11 @@ exports.getInfo = function(req, res) {
             case "languages": getLanguages(req.query.id);break;
             case "words": getWords(req.query.id);break;
             default:
-                writeLog(20, req.query.type);
+                writeLog(2, "Unknown type of information to obtain", {origin: req.connection.remoteAddress, type: req.query.type});
                 res.sendStatus(400);
         }
     } else {
-        writeLog(10, null);
+        writeLog(1, "Database disconnected", {origin: req.connection.remoteAddress});
         res.sendStatus(500);
     }
 
@@ -41,10 +40,10 @@ exports.getInfo = function(req, res) {
             languages: 1
         }, function (err, query) {
             if (err) {
-                writeLog(11, err.message);
+                writeLog(1, "Error at getting users and languages list from database", {origin: req.connection.remoteAddress, error: err.message});
 				res.sendStatus(500);
 			} else {
-                writeLog(30, query.length);
+                writeLog(3, "Users and languages list obtained", {origin: req.connection.remoteAddress, usersCount: query.length});
 				res.json(query);
             }
         });
@@ -56,10 +55,10 @@ exports.getInfo = function(req, res) {
             name: 1
         }, function (err, query) {
             if (err) {
-                writeLog(12, err.message);
+                writeLog(1, "Error at getting users list from database", {origin: req.connection.remoteAddress, error: err.message});
 				res.sendStatus(500);
 			} else {
-                writeLog(31, query.length);
+                writeLog(3, "Users list obtained", {origin: req.connection.remoteAddress, usersCount: query.length});
 				res.json(query);
             }
         });
@@ -70,13 +69,13 @@ exports.getInfo = function(req, res) {
             languages: 1
         }, function (err, query) {
             if (err) {
-                writeLog(13, [user, err.message]);
+                writeLog(1, "Error at getting languages list from user", {origin: req.connection.remoteAddress, user: user, error: err.message});
 				res.sendStatus(500);
 			} else if (query === null) {
-                writeLog(21, user);
+                writeLog(2, "Unknown user to obtain languages from", {origin: req.connection.remoteAddress, user: user});
                 res.sendStatus(400);
             } else {
-                writeLog(32, [user, query.languages.length]);
+                writeLog(3, "Languages list obtained from user", {origin: req.connection.remoteAddress, user: user, langsCount: query.languages.length});
 				res.json(query.languages);
             }
         });
@@ -91,30 +90,34 @@ exports.getInfo = function(req, res) {
             date: 1
         }, function (err, query) {
             if (err) {
-                writeLog(14, [language, err.message]);
+                writeLog(1, "Error at getting words list from language", {origin: req.connection.remoteAddress, language: language, error: err.message});
 				res.sendStatus(500);
 			} else if (query === null) {
-                writeLog(22, language);
+                writeLog(2, "Unknown language to obtain words from", {origin: req.connection.remoteAddress, language: language});
                 res.sendStatus(400);
             } else {
-                writeLog(33, [language, query.dictionary.length]);
+                writeLog(3, "Words list obtained from language", {origin: req.connection.remoteAddress, language: language, wordsCount: query.dictionary.length});
                 if (!query.session.date) {query.session.date = null;}
 				res.json(query);
             }
         });
     }
 
-    function writeLog(code, info) {
-        if (code < req.app.locals.logger.level) {
-            req.app.locals.logger.history.push({
-                date: new Date(),
-                origin: req.connection.remoteAddress,
-                request: 'GETINFO',
-                code: code,
-                info: info
-            });
+    function writeLog(type, msg, meta) {
+        msg = "Get Info: " + msg;
 
-            fs.writeFileSync(req.app.locals.logPath, JSON.stringify(req.app.locals.logger), {encoding: 'utf8', flag: 'w'});
+        switch (type) {
+            case 1:
+                req.app.locals.logger.error(msg, { meta: meta });
+                break;
+            case 2:
+                req.app.locals.logger.warn(msg, { meta: meta });
+                break;
+            case 3:
+                req.app.locals.logger.log(msg, { meta: meta });
+                break;
+            default:
+                req.app.locals.logger.debug(msg, { meta: meta });
         }
     }
 };
@@ -128,7 +131,7 @@ exports.addInfo = function(req, res) {
                     req.body.user = req.body.user.trim().toLowerCase().replace(/\s\s+/g, " ");
                     addUser(req.body.user);
                 } catch (err) {
-                    writeLog(20, null);
+                    writeLog(2, "Field 'user' does not exist", {origin: req.connection.remoteAddress});
                     res.sendStatus(400);
                 }
                 break;
@@ -137,7 +140,7 @@ exports.addInfo = function(req, res) {
                     req.body.language = req.body.language.trim().toLowerCase().replace(/\s\s+/g, " ");
                     addLanguage(req.body.user, req.body.language, req.body.period);
                 } catch (err) {
-                    writeLog(21, null);
+                    writeLog(2, "Field 'language' does not exist", {origin: req.connection.remoteAddress});
                     res.sendStatus(400);
                 }
                 break;
@@ -150,16 +153,16 @@ exports.addInfo = function(req, res) {
                     }
                     addWord(req.body.language, req.body.word);
                 } catch (err) {
-                    writeLog(22, null);
+                    writeLog(2, "Field 'word' does not exist", {origin: req.connection.remoteAddress});
                     res.sendStatus(400);
                 }
                 break;
             default:
-                writeLog(23, req.body.type);
+                writeLog(2, "Unkonown type of information to add", {origin: req.connection.remoteAddress, type: req.body.type});
                 res.sendStatus(400);
         }
     } else {
-        writeLog(10, null);
+        writeLog(1, "Database disconnected", {origin: req.connection.remoteAddress});
         res.sendStatus(500);
     }
     
@@ -169,20 +172,20 @@ exports.addInfo = function(req, res) {
             name: user
         }, {}, function (err, query) {
             if (err) {
-                writeLog(11, [user, err.message]);
+                writeLog(1, "Error at checking user duplicity", {origin: req.connection.remoteAddress, user: user, error: err.message});
                 res.sendStatus(500);
             } else if (query.length > 0) {
-                writeLog(24, user);
+                writeLog(2, "User specified already exists", {origin: req.connection.remoteAddress, user: user});
                 res.status(400).send("User '" + user + "' already exists");
             } else {
                 User.create({
                     name: user
                 }, function(err, query) {
                     if (err) {
-                        writeLog(12, [user, err.message]);
+                        writeLog(1, "Error at adding user to database", {origin: req.connection.remoteAddress, user: user, error: err.message});
                         res.sendStatus(500);
                     } else {
-                        writeLog(30, user);
+                        writeLog(3, "User added to database", {origin: req.connection.remoteAddress, user: user});
                         res.status(200).send("User '" + user + "' successfully added");
                     }
                 });
@@ -193,10 +196,10 @@ exports.addInfo = function(req, res) {
     function addLanguage(user, language, period) {
         User.findById(user, function (err, query) {
             if (err) {
-                writeLog(13, [user, err.message]);
+                writeLog(1, "Error at checking user existence", {origin: req.connection.remoteAddress, user: user, error: err.message});
                 res.sendStatus(500);
             } else if (query === null) {
-                writeLog(25, user);
+                writeLog(2, "User to add language into does not exist", {origin: req.connection.remoteAddress, user: user});
                 res.sendStatus(400);
             } else {
                 var check = false;
@@ -204,7 +207,7 @@ exports.addInfo = function(req, res) {
                 for (var i=0; i<query.languages.length && check==false; i++) {
                     if (query.languages[i].name === language) {
                         check = true;
-                        writeLog(26, [user, language]);
+                        writeLog(2, "Language already added to user", {origin: req.connection.remoteAddress, user: user, language: language});
                         res.status(400).send("Language '" + language + "' already linked with user");
                     }
                 }
@@ -216,17 +219,17 @@ exports.addInfo = function(req, res) {
                         "period.length": --period
                     }, function(err, query) {
                         if (err) {
-                            writeLog(14, [language, err.message]);
+                            writeLog(1, "Error at adding language to database", {origin: req.connection.remoteAddress, language: language, error: err.message});
                             res.sendStatus(500);
                         } else {
                             User.findByIdAndUpdate(user, {
                                 $push: {"languages": query}
                             }, {}, function (err, query) {
                                 if (err) {
-                                    writeLog(15, [language, query.name, err.message]);
+                                    writeLog(1, "Error at linking language with user", {origin: req.connection.remoteAddress, language: language, user: query.name, error: err.message});
                                     res.sendStatus(500);
                                 } else {
-                                    writeLog(31, [language, query.name]);
+                                    writeLog(3, "Language added to user", {origin: req.connection.remoteAddress, language: language, user: query.name});
                                     res.status(200).send("Language '" + language + "' added to user '" + query.name +"'");
                                 }
                             });
@@ -240,10 +243,10 @@ exports.addInfo = function(req, res) {
     function addWord(language, words) {
         Language.findById(language, function(err, query) {
             if (err) {
-                writeLog(16, [language, err.message]);
+                writeLog(1, "Error at checking language existence", {origin: req.connection.remoteAddress, language: language, error: err.message});
                 res.sendStatus(500);
             } else if (query === null) {
-                writeLog(27, language);
+                writeLog(2, "Language to add word into does not exist", {origin: req.connection.remoteAddress, language: language});
                 res.sendStatus(400);
             } else {
                 var error = false;
@@ -254,31 +257,35 @@ exports.addInfo = function(req, res) {
                     }, function(err, query) {
                         if (err) {
                             error = true;
-                            writeLog(17, [language, err.message]);
+                            writeLog(1, "Error at adding words to language", {origin: req.connection.remoteAddress, language: language, error: err.message});
                             res.status(500).send("One or more words couldn't be added");
                         }
                     });
                 }
                 
                 if (!error) {
-                    writeLog(32, [words.length, language]);
+                    writeLog(3, "Words added to language", {origin: req.connection.remoteAddress, wordsCount: words.length, language: language});
                     res.status(200).send("Words successfully added");
                 }
             }
         });
     }
 
-    function writeLog(code, info) {
-        if (code < req.app.locals.logger.level) {
-            req.app.locals.logger.history.push({
-                date: new Date(),
-                origin: req.connection.remoteAddress,
-                request: 'ADDINFO',
-                code: code,
-                info: info
-            });
+    function writeLog(type, msg, meta) {
+        msg = "Add Info: " + msg;
 
-            fs.writeFileSync(req.app.locals.logPath, JSON.stringify(req.app.locals.logger), {encoding: 'utf8', flag: 'w'});
+        switch (type) {
+            case 1:
+                req.app.locals.logger.error(msg, { meta: meta });
+                break;
+            case 2:
+                req.app.locals.logger.warn(msg, { meta: meta });
+                break;
+            case 3:
+                req.app.locals.logger.log(msg, { meta: meta });
+                break;
+            default:
+                req.app.locals.logger.debug(msg, { meta: meta });
         }
     }
 };
@@ -297,11 +304,11 @@ exports.delInfo = function(req, res) {
                 delWord(req.body.language, req.body.word);
                 break;
             default:
-                writeLog(20, req.body.type);
+                writeLog(2, "Unkonown type of information to remove", {origin: req.connection.remoteAddress, type: req.body.type});
                 res.sendStatus(400);
         }
     } else {
-        writeLog(10, null);
+        writeLog(1, "Database disconnected", {origin: req.connection.remoteAddress});
         res.sendStatus(500);
     }
 
@@ -309,21 +316,21 @@ exports.delInfo = function(req, res) {
     function delUser(user) {
         User.findByIdAndRemove(user, function(err, query) {
             if (err) {
-                writeLog(11, [user, err.message]);
+                writeLog(1, "Error at removing user from database", {origin: req.connection.remoteAddress, user: user, error: err.message});
                 res.sendStatus(500);
             } else if (query === null) {
-                writeLog(21, user);
+                writeLog(2, "User does not exist", {origin: req.connection.remoteAddress, user: user});
                 res.sendStatus(400);
             } else {
                 for (var i=0; i<query.languages.length; i++) {
                     Language.findByIdAndRemove(query.languages[i]._id, function(err, query2) {
                         if (err) {
-                            writeLog(12, [user, query.languages[i]._id, err.message]);
+                            writeLog(1, "Error at removing language from user", {origin: req.connection.remoteAddress, user: user, language: query.languages[i]._id, error: err.message});
                         }
                     });
                 }
 
-                writeLog(30, user);
+                writeLog(3, "User removed from database", {origin: req.connection.remoteAddress, user: user});
                 res.status(200).send("User successfully removed");
             }
         });
@@ -332,20 +339,20 @@ exports.delInfo = function(req, res) {
     function delLanguage(language) {
         Language.findByIdAndRemove(language, function(err, query) {
             if (err) {
-                writeLog(13, [language, err.message]);
+                writeLog(1, "Error at removing language from database", {origin: req.connection.remoteAddress, language: language, error: err.message});
                 res.sendStatus(500);
             } else if (query === null) {
-                writeLog(22, language);
+                writeLog(2, "Language does not exist", {origin: req.connection.remoteAddress, language: language});
                 res.sendStatus(400);
             } else {
                 User.findByIdAndUpdate(query.user, {
                     $pull: {"languages": {"_id": language}}
                 }, {}, function (err, query2) {
                     if (err) {
-                        writeLog(14, [language, query.user, err.message]);
+                        writeLog(1, "Error at removing language link with user", {origin: req.connection.remoteAddress, language: language, user: query.user, error: err.message});
                         res.sendStatus(500);
                     } else {
-                        writeLog(31, [language, query.user]);
+                        writeLog(3, "Language removed from user", {origin: req.connection.remoteAddress, language: language, user: query.user});
                         res.status(200).send("Language successfully removed");
                     }
                 });
@@ -356,20 +363,20 @@ exports.delInfo = function(req, res) {
     function delWord(language, word) {
         Language.findById(language, function(err, query) {
             if (err) {
-                writeLog(15, [language, err.message]);
+                writeLog(1, "Error at checking language existence", {origin: req.connection.remoteAddress, language: language, error: err.message});
                 res.sendStatus(500);
             } else if (query === null) {
-                writeLog(23, language);
+                writeLog(2, "Language does not exist", {origin: req.connection.remoteAddress, language: language});
                 res.sendStatus(400);
             } else {
                 Language.findByIdAndUpdate(language, {
                     $pull: {"dictionary": {"_id": word}}
                 }, function(err, query) {
                     if (err) {
-                        writeLog(16, [word, language, err.message]);
+                        writeLog(1, "Error at removing word from language", {origin: req.connection.remoteAddress, word: word, language: language, error: err.message});
                         res.sendStatus(500);
                     } else {
-                        writeLog(32, [word, language]);
+                        writeLog(3, "Word removed from language", {origin: req.connection.remoteAddress, word: word, language: language});
                         res.status(200).send("Word successfully removed");
                     }
                 });
@@ -377,17 +384,21 @@ exports.delInfo = function(req, res) {
         });
     }
 
-    function writeLog(code, info) {
-        if (code < req.app.locals.logger.level) {
-            req.app.locals.logger.history.push({
-                date: new Date(),
-                origin: req.connection.remoteAddress,
-                request: 'DELETEINFO',
-                code: code,
-                info: info
-            });
+    function writeLog(type, msg, meta) {
+        msg = "Delete Info: " + msg;
 
-            fs.writeFileSync(req.app.locals.logPath, JSON.stringify(req.app.locals.logger), {encoding: 'utf8', flag: 'w'});
+        switch (type) {
+            case 1:
+                req.app.locals.logger.error(msg, { meta: meta });
+                break;
+            case 2:
+                req.app.locals.logger.warn(msg, { meta: meta });
+                break;
+            case 3:
+                req.app.locals.logger.log(msg, { meta: meta });
+                break;
+            default:
+                req.app.locals.logger.debug(msg, { meta: meta });
         }
     }
 };
@@ -397,7 +408,7 @@ exports.getSession = function(req, res) {
     if (mongoose.connection.readyState === 1) {
         getDictionary(req.query.language);
     } else {
-        writeLog(10, null);
+        writeLog(1, "Database disconnected", {origin: req.connection.remoteAddress});
         res.sendStatus(500);
     }
 
@@ -410,13 +421,13 @@ exports.getSession = function(req, res) {
             dictionary: 1
         }, function(err, query) {
             if (err) {
-                writeLog(11, [language, err.message]);
+                writeLog(1, "Error at getting words list from language", {origin: req.connection.remoteAddress, language: language, error: err.message});
                 res.sendStatus(500);
             } else if (query === null) {
-                writeLog(20, language);
+                writeLog(2, "Language does not exist", {origin: req.connection.remoteAddress, language: language});
                 res.sendStatus(400);
             } else {
-                writeLog(40, [language, query.dictionary.length]);
+                writeLog(4, "Words list obtained", {origin: req.connection.remoteAddress, language: language, wordCount: query.dictionary.length});
 
                 if (query.dictionary.length > 0) {
                     var current = new Date();
@@ -430,7 +441,7 @@ exports.getSession = function(req, res) {
                         continueSession(query);
                     }
                 } else {
-                    writeLog(21, language);
+                    writeLog(2, "Words list is empty", {origin: req.connection.remoteAddress, language: language});
                     res.status(400).send("Dictionary is empty");
                 }
             }
@@ -465,7 +476,7 @@ exports.getSession = function(req, res) {
 
         sessionSize = Math.ceil(pendingWords/(language.period.length-language.period.current+1));
 
-        writeLog(41, [language._id, sessionSize]);
+        writeLog(4, "Session length calculated", {origin: req.connection.remoteAddress, language: language._id, sessionSize: sessionSize});
 
         for (var i=0; i<dictionarySize; i++) {
             if ((language.dictionary[i].countdown.new > 0) || (language.dictionary[i].countdown.wrong > 0)) {
@@ -473,7 +484,7 @@ exports.getSession = function(req, res) {
             }
         }
 
-        writeLog(42, [language._id, sequenceSpecial.length, sequenceSpecial]);
+        writeLog(4, "Special session sequence obtained", {origin: req.connection.remoteAddress, language: language._id, sequenceSpecialSize: sequenceSpecial.length});
 
         for (var i=0; i<dictionarySize && sequenceNormal.length<sessionSize; i++) {
             if ((sequenceNormal.indexOf(i) == -1) && (sequenceSpecial.indexOf(i) == -1) && (!language.dictionary[i].ref || language.period.current == 0)) {
@@ -481,7 +492,7 @@ exports.getSession = function(req, res) {
             }
         }
 
-        writeLog(43, [language._id, sequenceNormal.length, sequenceNormal]);
+        writeLog(4, "Normal session sequence obtained", {origin: req.connection.remoteAddress, language: language._id, sequenceNormalSize: sequenceNormal.length});
 
         sequence = sequenceSpecial.concat(sequenceNormal);
 
@@ -492,13 +503,13 @@ exports.getSession = function(req, res) {
             sequence[j] = x;
         }
 
-        writeLog(44, [language._id, sequence.length, sequence]);
+        writeLog(4, "Session sequences combined and shuffled", {origin: req.connection.remoteAddress, language: language._id, sequenceSize: sequence.length});
 
         for (var i=0; i<sequence.length; i++) {
             session[i] = language.dictionary[sequence[i]];
         }
 
-        writeLog(45, [language._id, session.length]);
+        writeLog(4, "Session generated", {origin: req.connection.remoteAddress, language: language._id, sessionSize: session.length});
 
         if (language.period.current == language.period.length) {
             language.period.current = 0;
@@ -514,10 +525,10 @@ exports.getSession = function(req, res) {
             "session.date": new Date()
         }, function(err, query) {
             if (err) {
-                writeLog(12, [language._id, err.message]);
+                writeLog(1, "Error at updating period state of language", {origin: req.connection.remoteAddress, language: language._id, error: err.message});
                 res.sendStatus(500);
             } else {
-                writeLog(30, [language._id, language.period.current, language.period.length]);
+                writeLog(3, "Period state of language updated", {origin: req.connection.remoteAddress, language: language._id, nextSession: language.period.current, period: language.period.length});
                 res.json(session);
             }
         });
@@ -539,7 +550,7 @@ exports.getSession = function(req, res) {
         }
 
         if (newSession.length > 0) {
-            writeLog(31, [language._id, newSession.length, lastSession.length]);
+            writeLog(3, "Today's session recovered and incompleted yet", {origin: req.connection.remoteAddress, language: language._id, newSessionSize: newSession.length, originalSessionSize: lastSession.length});
 
             for (var j, x, i=newSession.length; i; i--) {
                 j = Math.floor(Math.random() * i);
@@ -548,11 +559,11 @@ exports.getSession = function(req, res) {
                 newSession[j] = x;
             }
 
-            writeLog(47, [language._id, newSession.length, newSession]);
+            writeLog(4, "Today's recovered session shuffled", {origin: req.connection.remoteAddress, language: language._id, newSessionSize: newSession.length});
 
             res.json(newSession);
         } else {
-            writeLog(22, language._id);
+            writeLog(2, "Today's session already completed", {origin: req.connection.remoteAddress, language: language._id});
             res.status(400).send("Today's session already completed");
         }
     }
@@ -566,25 +577,29 @@ exports.getSession = function(req, res) {
                 "dictionary.$.ref": false
             }, function(err, query) {
                 if (err) {
-                    writeLog(13, [language, err.message]);
+                    writeLog(1, "Error at reseting words references on language", {origin: req.connection.remoteAddress, language: language, error: err.message});
                 }
             });
         }
 
-        writeLog(46, language);
+        writeLog(4, "Words references reseted on language", {origin: req.connection.remoteAddress, language: language});
     }
 
-    function writeLog(code, info) {
-        if (code < req.app.locals.logger.level) {
-            req.app.locals.logger.history.push({
-                date: new Date(),
-                origin: req.connection.remoteAddress,
-                request: 'GETSESSION',
-                code: code,
-                info: info
-            });
+    function writeLog(type, msg, meta) {
+        msg = "Get Session: " + msg;
 
-            fs.writeFileSync(req.app.locals.logPath, JSON.stringify(req.app.locals.logger), {encoding: 'utf8', flag: 'w'});
+        switch (type) {
+            case 1:
+                req.app.locals.logger.error(msg, { meta: meta });
+                break;
+            case 2:
+                req.app.locals.logger.warn(msg, { meta: meta });
+                break;
+            case 3:
+                req.app.locals.logger.log(msg, { meta: meta });
+                break;
+            default:
+                req.app.locals.logger.debug(msg, { meta: meta });
         }
     }
 };
@@ -594,7 +609,7 @@ exports.postResults = function(req, res) {
     if (mongoose.connection.readyState === 1) {
         getWord(req.query.language, req.query.word, req.query.state);
     } else {
-        writeLog(10, null);
+        writeLog(1, "Database disconnected", {origin: req.connection.remoteAddress});
         res.sendStatus(500);
     }
 
@@ -607,13 +622,13 @@ exports.postResults = function(req, res) {
             "dictionary.$": 1
         }, function(err, query) {
             if (err) {
-                writeLog(11, [language, word, err.message]);
+                writeLog(1, "Error at checking language and word existence", {origin: req.connection.remoteAddress, language: language, word: word, error: err.message});
                 res.sendStatus(500);
             } else if (query === null) {
-                writeLog(20, [language, word]);
+                writeLog(2, "Language and/or word does not exist", {origin: req.connection.remoteAddress, language: language, word: word});
                 res.sendStatus(400);
             } else {
-                writeLog(40, [language, word]);
+                writeLog(4, "Word existence confirmed into language", {origin: req.connection.remoteAddress, language: language, word: word});
                 postResult(query, state);
             }
         });
@@ -635,7 +650,7 @@ exports.postResults = function(req, res) {
             word.countdown.wrong = 2;
         }
 
-        writeLog(41, [word._id, state]);
+        writeLog(4, "Changes generated for word", {origin: req.connection.remoteAddress, word: word._id, state: state});
 
         Language.update({
             _id: data._id,
@@ -648,26 +663,83 @@ exports.postResults = function(req, res) {
             "dictionary.$.countdown.wrong": word.countdown.wrong
         }, function(err, query) {
             if (err) {
-                writeLog(12, [word._id, err.message]);
+                writeLog(1, "Error at applying changes into database for word", {origin: req.connection.remoteAddress, word: word._id, error: err.message});
                 res.sendStatus(500);
             } else {
-                writeLog(32, word._id);
+                writeLog(3, "Changes applied to word", {origin: req.connection.remoteAddress, word: word._id});
                 res.sendStatus(200);
             }
         });
     }
 
-    function writeLog(code, info) {
-        if (code < req.app.locals.logger.level) {
-            req.app.locals.logger.history.push({
-                date: new Date(),
-                origin: req.connection.remoteAddress,
-                request: 'POSTRESULTS',
-                code: code,
-                info: info
-            });
+    function writeLog(type, msg, meta) {
+        msg = "Post Results: " + msg;
 
-            fs.writeFileSync(req.app.locals.logPath, JSON.stringify(req.app.locals.logger), {encoding: 'utf8', flag: 'w'});
+        switch (type) {
+            case 1:
+                req.app.locals.logger.error(msg, { meta: meta });
+                break;
+            case 2:
+                req.app.locals.logger.warn(msg, { meta: meta });
+                break;
+            case 3:
+                req.app.locals.logger.log(msg, { meta: meta });
+                break;
+            default:
+                req.app.locals.logger.debug(msg, { meta: meta });
         }
+    }
+};
+
+
+exports.checkStatus = function(req, res) {
+	checkDatabase(0);
+
+	function checkDatabase(attempt) {
+		if (mongoose.connection.readyState === 1) {
+			User.find({}, {
+				_id: 0,
+				date: 1
+			}, function(err, query) {
+				if (err) {
+					if (attempt < 2) {
+						setTimeout(() => {
+							checkDatabase(++attempt);
+						}, 5000);
+					} else {
+						writeLog(1, "Error accessing Users collection", {origin: req.connection.remoteAddress, error: err.message});
+						res.sendStatus(500);
+					}
+				} else {
+					writeLog(3, "Database connected and Users collection accessible", {origin: req.connection.remoteAddress});
+					res.sendStatus(200);
+				}
+			});
+		} else {
+			if (attempt < 2) {
+			    setTimeout(() => {
+					checkDatabase(++attempt);
+			    }, 5000);
+			} else {
+				writeLog(1, "Database disconnected", {origin: req.connection.remoteAddress});
+				res.sendStatus(500);
+			}
+		}
+	}
+
+	function writeLog(type, msg, meta) {
+		switch (type) {
+			case 1:
+				req.app.locals.logger.error(msg, {app: 'Status Check', meta: meta});
+				break;
+			case 2:
+				req.app.locals.logger.warn(msg, {app: 'Status Check', meta: meta});
+				break;
+			case 3:
+				req.app.locals.logger.log(msg, {app: 'Status Check', meta: meta});
+				break;
+			default:
+				req.app.locals.logger.debug(msg, {app: 'Status Check', meta: meta});
+		}
     }
 };

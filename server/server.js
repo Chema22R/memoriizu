@@ -8,7 +8,7 @@ var app = express();
 
 var cors = require("cors");
 var bodyParser = require("body-parser");
-var fs = require("fs");
+var Logger = require('logdna');
 var mongoose = require("mongoose");
 
 
@@ -28,33 +28,19 @@ app.use(bodyParser.json());
 /* log
 ========================================================================== */
 
-app.locals.logPath = './log.json';
-
-if (fs.existsSync(app.locals.logPath)) {
-	app.locals.logger = JSON.parse(fs.readFileSync(app.locals.logPath, {encoding: 'utf8', flag: 'r'}));
-
-	for (var i=0; i<app.locals.logger.history.length;) {
-		if (new Date().getTime() - new Date(app.locals.logger.history[i].date).getTime() > 5184000000) {	// 5184000000ms = 2 months
-			app.locals.logger.history.splice(i, 1);
-		} else {
-			i++;
-		}
-	}
-} else {
-	app.locals.logger = {
-		level: 40,
-		history: []
-	};
-	fs.writeFileSync(app.locals.logPath, JSON.stringify(app.locals.logger), {encoding: 'utf8', flag: 'w'});
-}
+app.locals.logger = Logger.createLogger("9968ae38e22c86d247d0d64eaca26d00", {
+    app: "Memoriizu",
+    env: "Node.js",
+    index_meta: true,
+    tags: ['memoriizu', 'node']
+});
 
 
 /* connections
 ========================================================================== */
 
-var uri = "mongodb://localhost/memoriizu";
-
 app.listen(process.env.PORT, function () {
+	app.locals.logger.log("Initialization: Memoriizu server running on http://localhost:" + process.env.PORT);
 	console.log("> Memoriizu server running on http://localhost:" + process.env.PORT);
 });
 
@@ -63,8 +49,10 @@ mongoose.connect(process.env.DATABASE_URI, {
 	useFindAndModify: false
 }, function(err) {
 	if (err) {
+		app.locals.logger.error("Initialization: Error connecting to database 'memoriizu'", {meta: {error: err.message}});
 		console.error("- ERROR connecting to database 'memoriizu'\n     " + err.message);
 	} else {
+		app.locals.logger.log("Initialization: Connected to database 'memoriizu'");
 		console.log("> Connected to database 'memoriizu'");
 	}
 });
@@ -79,3 +67,5 @@ app.delete('/info', api.delInfo);
 
 app.get('/session', api.getSession);
 app.post('/session', api.postResults);
+
+app.get('/checkStatus', api.checkStatus);
