@@ -2,6 +2,5 @@
 .vscode
 
 package-lock.json
-log.json
 
 server/node_modules
