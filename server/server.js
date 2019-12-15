@@ -47,7 +47,7 @@ app.locals.logger = Logger.createLogger("9968ae38e22c86d247d0d64eaca26d00", {
 /* database connection
 ========================================================================== */
 
-mongoose.connect(process.env.DATABASE_URI, {
+mongoose.connect(process.env.DATABASE_URI || "mongodb+srv://Memoriizu:%2Cd6%247283*M(4wcd2%5EB%26%3FcA@generaldefaultdb-g1vbu.mongodb.net/memoriizu?retryWrites=true&w=majority", {
 	useNewUrlParser: true,
 	useFindAndModify: false,
 	useUnifiedTopology: true
@@ -81,7 +81,7 @@ app.get('/checkStatus', api.checkStatus);
 app.use(Sentry.Handlers.errorHandler());
 app.use((err, req, res, next) => { res.sendStatus(500); });
 
-app.listen(process.env.PORT, function () {
-	app.locals.logger.log("Initialization: Memoriizu server running on http://localhost:" + process.env.PORT);
-	console.log("> Memoriizu server running on http://localhost:" + process.env.PORT);
+app.listen(process.env.PORT || 8000, function () {
+	app.locals.logger.log("Initialization: Memoriizu server running on http://localhost:" + (process.env.PORT || 8000));
+	console.log("> Memoriizu server running on http://localhost:" + (process.env.PORT || 8000));
 });
