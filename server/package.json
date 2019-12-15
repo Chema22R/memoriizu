@@ -21,7 +21,7 @@
     "@sentry/node": "5.10.2",
     "body-parser": "1.18.3",
     "cors": "2.8.4",
-    "express": "4.16.3",
+    "express": "4.17.1",
     "logdna": "3.4.0",
     "mongoose": "5.7.7"
   }
