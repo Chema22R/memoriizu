@@ -9,7 +9,15 @@ var app = express();
 var cors = require("cors");
 var bodyParser = require("body-parser");
 var Logger = require('logdna');
+var Sentry = require('@sentry/node');
 var mongoose = require("mongoose");
+
+
+/* sentry
+========================================================================== */
+
+Sentry.init({ dsn: 'https://cfa54556c6a44f3c8738625204501397@sentry.io/1857315' });
+app.use(Sentry.Handlers.requestHandler());
 
 
 /* controllers
@@ -36,13 +44,8 @@ app.locals.logger = Logger.createLogger("9968ae38e22c86d247d0d64eaca26d00", {
 });
 
 
-/* connections
+/* database connection
 ========================================================================== */
-
-app.listen(process.env.PORT, function () {
-	app.locals.logger.log("Initialization: Memoriizu server running on http://localhost:" + process.env.PORT);
-	console.log("> Memoriizu server running on http://localhost:" + process.env.PORT);
-});
 
 mongoose.connect(process.env.DATABASE_URI, {
 	useNewUrlParser: true,
@@ -69,3 +72,15 @@ app.get('/session', api.getSession);
 app.post('/session', api.postResults);
 
 app.get('/checkStatus', api.checkStatus);
+
+
+/* app connection
+========================================================================== */
+
+app.use(Sentry.Handlers.errorHandler());
+app.use((err, req, res, next) => { res.sendStatus(500); });
+
+app.listen(process.env.PORT, function () {
+	app.locals.logger.log("Initialization: Memoriizu server running on http://localhost:" + process.env.PORT);
+	console.log("> Memoriizu server running on http://localhost:" + process.env.PORT);
+});
