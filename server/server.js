@@ -49,7 +49,8 @@ app.locals.logger = Logger.createLogger("9968ae38e22c86d247d0d64eaca26d00", {
 
 mongoose.connect(process.env.DATABASE_URI, {
 	useNewUrlParser: true,
-	useFindAndModify: false
+	useFindAndModify: false,
+	useUnifiedTopology: true
 }, function(err) {
 	if (err) {
 		app.locals.logger.error("Initialization: Error connecting to database 'memoriizu'", {meta: {error: err.message}});
