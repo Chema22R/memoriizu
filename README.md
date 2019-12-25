@@ -11,7 +11,7 @@ During each daily session, users must write in the selected language the transla
 
 Check out a real example of the application from [here](https://memoriizu.chema22r.com).
 
-## Directories Structure
+## Directory Structure
 ```
 |- /client
     |- /css
