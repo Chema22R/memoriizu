@@ -13,6 +13,8 @@ Check out a real example of the application from [here](https://memoriizu.chema2
 
 ## Directory Structure
 ```
+|- /github
+    |- ...
 |- /client
     |- /css
         |- ...
@@ -31,9 +33,12 @@ Check out a real example of the application from [here](https://memoriizu.chema2
         |- ...
     |- /models
         |- ...
+    |- package-lock.json
     |- package.json
     |- server.js
+|- _config.yml
 |- .gitignore
+|- package-lock.json
 |- package.json
 |- Procfile
 |- README.md
