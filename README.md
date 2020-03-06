@@ -13,7 +13,9 @@ Check out a real example of the application from [here](https://memoriizu.chema2
 
 ## Directory Structure
 ```
-|- /github
+|- /.dependabot
+    |- ...
+|- /.github
     |- ...
 |- /client
     |- /css
