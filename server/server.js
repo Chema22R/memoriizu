@@ -56,7 +56,6 @@ mongoose.connect(process.env.DATABASE_URI || "mongodb+srv://Memoriizu:%2Cd6%2472
 		app.locals.logger.error("Initialization: Error connecting to database 'memoriizu'", {meta: {error: err.message}});
 		console.error("- ERROR connecting to database 'memoriizu'\n     " + err.message);
 	} else {
-		app.locals.logger.log("Initialization: Connected to database 'memoriizu'");
 		console.log("> Connected to database 'memoriizu'");
 	}
 });
@@ -82,6 +81,5 @@ app.use(Sentry.Handlers.errorHandler());
 app.use((err, req, res, next) => { res.sendStatus(500); });
 
 app.listen(process.env.PORT || 8000, function () {
-	app.locals.logger.log("Initialization: Memoriizu server running on http://localhost:" + (process.env.PORT || 8000));
 	console.log("> Memoriizu server running on http://localhost:" + (process.env.PORT || 8000));
 });
