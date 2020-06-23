@@ -1,22 +1,22 @@
 {
-  "name": "memoriizu-old_server",
+  "name": "memoriizu_server",
   "version": "1.0.0",
   "description": "Application focused on language learning, in which users add the content they want to study",
   "main": "server.js",
   "scripts": {
-    "heroku-postbuild": "rm -r package.json",
+    "heroku-postbuild": "rm -r *.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chema22R/memoriizu-old.git"
+    "url": "git+https://github.com/Chema22R/memoriizu.git"
   },
   "author": "Jose Maria Rivera Alonso (https://github.com/Chema22R)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Chema22R/memoriizu-old/issues"
+    "url": "https://github.com/Chema22R/memoriizu/issues"
   },
-  "homepage": "https://github.com/Chema22R/memoriizu-old#readme",
+  "homepage": "https://github.com/Chema22R/memoriizu#readme",
   "dependencies": {
     "@sentry/node": "^5.15.4",
     "body-parser": "^1.19.0",
