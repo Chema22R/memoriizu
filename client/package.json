@@ -4,6 +4,7 @@
   "description": "Application focused on language learning, in which users add the content they want to study",
   "main": "index.html",
   "scripts": {
+    "build": "echo \"This command does nothing but Netlify is stupid and needs a useless command to avoid thinking this is a jekyll site...\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
