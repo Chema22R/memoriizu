@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 /* log
 ========================================================================== */
 
-app.locals.logger = Logger.createLogger("9968ae38e22c86d247d0d64eaca26d00", process.env.LOGDNA_OPTS || {
+app.locals.logger = Logger.createLogger("9968ae38e22c86d247d0d64eaca26d00", JSON.parse(process.env.LOGDNA_OPTS) || {
     app: "Memoriizu",
     env: "development",
     index_meta: true,
