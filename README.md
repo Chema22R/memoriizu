@@ -38,7 +38,6 @@ Check out a real example of the application from [here](https://memoriizu.chema2
     |- package-lock.json
     |- package.json
     |- server.js
-|- _config.yml
 |- .gitignore
 |- package-lock.json
 |- package.json
