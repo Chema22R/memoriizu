@@ -1,4 +1,8 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/9ab7dd07-71e2-4cdc-adcd-f536bb48c74f/deploy-status)](https://app.netlify.com/sites/memoriizu/deploys)
+![CodeQL](https://github.com/Chema22R/memoriizu/workflows/CodeQL/badge.svg)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/Chema22R/memoriizu.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Chema22R/memoriizu/alerts/)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Chema22R/memoriizu.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Chema22R/memoriizu/context:javascript)
+[![MIT License](https://camo.githubusercontent.com/d59450139b6d354f15a2252a47b457bb2cc43828/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f6c2f7365727665726c6573732e737667)](LICENSE)
 
 # Memoriizu
 This application is focused on language learning, in which users add the content they want to study, in addition to the period in which they want the content to be distributed.
@@ -39,6 +43,7 @@ Check out a real example of the application from [here](https://memoriizu.chema2
     |- package.json
     |- server.js
 |- .gitignore
+|- LICENSE
 |- package-lock.json
 |- package.json
 |- Procfile
