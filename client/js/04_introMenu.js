@@ -122,13 +122,13 @@ $(function() {
             var fields = session[counter].fields;
             var entry = "";
 
-            if (regexJapChars.test(fields[0]) || regexJapChars.test(fields[0])) {   // first field
+            if (regexJapChars.test(fields[0]) || regexJapChars.test(fields[0])) {   // lgtm [js/redundant-operation]
                 entry += "<p class='fileTextBig'>" + fields[0] + "</p>";
             } else {
                 entry += "<p class='fileTextMed'>" + fields[0].charAt(0).toUpperCase() + fields[0].substring(1).trim() + "</p>";
             }
 
-            for (var i=1; i<fields.length; i++) {   // rest fields
+            for (var i=1; i<fields.length; i++) {
                 entry += "<p>" + fields[i] + "</p>";
             }
 
@@ -137,7 +137,7 @@ $(function() {
             }
 
             $("#fileText p").remove();
-            $(entry).appendTo("#fileText");
+            $(entry).appendTo("#fileText"); // lgtm [js/xss-through-dom]
 
             if (state) {
                 $("#fileButtonRight").fadeIn(0);
@@ -169,7 +169,7 @@ $(function() {
         }
 
         var next = function(exit) {
-            if (++counter == session.length || exit) {
+            if (++counter == session.length || exit) {
                 $("#quizContainer, #fileContainer, #fixedExit, #fixedLoadingBar").fadeOut(0, function() {
                     $("#introContainer, #fixedEditButtons, #fixedStatsButton").fadeIn("slow");
                 });

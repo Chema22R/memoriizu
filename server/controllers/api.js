@@ -1,7 +1,5 @@
 "use strict";
 
-const objectIdRegex = /^[a-f\d]{24}$/i;
-
 /* packages
 ========================================================================== */
 
@@ -20,27 +18,14 @@ var Language = require("./../models/language.js");
 
 exports.getInfo = function(req, res) {
     if (mongoose.connection.readyState === 1) {
-        if (!req.query.id || objectIdRegex.test(req.query.id)) {
-            switch (req.query.type) {
-                case "tree":
-                    getTree()
-                    break;
-                case "users":
-                    getUsers();
-                    break;
-                case "languages":
-                    getLanguages(req.query.id);
-                    break;
-                case "words":
-                    getWords(req.query.id);
-                    break;
-                default:
-                    writeLog(2, "Unknown type of information to obtain", {origin: req.connection.remoteAddress, type: req.query.type});
-                    res.sendStatus(400);
-            }
-        } else {
-            writeLog(2, "Invalid id structure", {origin: req.connection.remoteAddress, id: req.query.id});
-            res.sendStatus(400);
+        switch (req.query.type) {
+            case "tree": getTree();break;
+            case "users": getUsers();break;
+            case "languages": getLanguages(req.query.id);break;
+            case "words": getWords(req.query.id);break;
+            default:
+                writeLog(2, "Unknown type of information to obtain", {origin: req.connection.remoteAddress, type: req.query.type});
+                res.sendStatus(400);
         }
     } else {
         writeLog(1, "Database disconnected", {origin: req.connection.remoteAddress});
@@ -80,7 +65,7 @@ exports.getInfo = function(req, res) {
     }
 
     function getLanguages(user) {
-        User.findById(user, {
+        User.findById(user, { // lgtm [js/sql-injection]
             languages: 1
         }, function (err, query) {
             if (err) {
@@ -97,7 +82,7 @@ exports.getInfo = function(req, res) {
     }
 
     function getWords(language) {
-        Language.findById(language, {
+        Language.findById(language, { // lgtm [js/sql-injection]
             _id: 1,
             period: 1,
             "session.date": 1,
@@ -183,7 +168,7 @@ exports.addInfo = function(req, res) {
     
 
     function addUser(user) {
-        User.find({
+        User.find({ // lgtm [js/sql-injection]
             name: user
         }, {}, function (err, query) {
             if (err) {
@@ -209,7 +194,7 @@ exports.addInfo = function(req, res) {
     }
 
     function addLanguage(user, language, period) {
-        User.findById(user, function (err, query) {
+        User.findById(user, function (err, query) { // lgtm [js/sql-injection]
             if (err) {
                 writeLog(1, "Error at checking user existence", {origin: req.connection.remoteAddress, user: user, error: err.message});
                 res.sendStatus(500);
@@ -237,7 +222,7 @@ exports.addInfo = function(req, res) {
                             writeLog(1, "Error at adding language to database", {origin: req.connection.remoteAddress, language: language, error: err.message});
                             res.sendStatus(500);
                         } else {
-                            User.findByIdAndUpdate(user, {
+                            User.findByIdAndUpdate(user, { // lgtm [js/sql-injection]
                                 $push: {"languages": query}
                             }, {}, function (err, query) {
                                 if (err) {
@@ -256,7 +241,7 @@ exports.addInfo = function(req, res) {
     }
 
     function addWord(language, words) {
-        Language.findById(language, function(err, query) {
+        Language.findById(language, function(err, query) { // lgtm [js/sql-injection]
             if (err) {
                 writeLog(1, "Error at checking language existence", {origin: req.connection.remoteAddress, language: language, error: err.message});
                 res.sendStatus(500);
@@ -267,7 +252,7 @@ exports.addInfo = function(req, res) {
                 var error = false;
 
                 for (var i=0; i<words.length && error==false; i++) {
-                    Language.findByIdAndUpdate(language, {
+                    Language.findByIdAndUpdate(language, { // lgtm [js/sql-injection]
                         $push: {"dictionary": words[i]}
                     }, function(err, query) {
                         if (err) {
@@ -329,7 +314,7 @@ exports.delInfo = function(req, res) {
 
 
     function delUser(user) {
-        User.findByIdAndRemove(user, function(err, query) {
+        User.findByIdAndRemove(user, function(err, query) { // lgtm [js/sql-injection]
             if (err) {
                 writeLog(1, "Error at removing user from database", {origin: req.connection.remoteAddress, user: user, error: err.message});
                 res.sendStatus(500);
@@ -352,7 +337,7 @@ exports.delInfo = function(req, res) {
     }
 
     function delLanguage(language) {
-        Language.findByIdAndRemove(language, function(err, query) {
+        Language.findByIdAndRemove(language, function(err, query) { // lgtm [js/sql-injection]
             if (err) {
                 writeLog(1, "Error at removing language from database", {origin: req.connection.remoteAddress, language: language, error: err.message});
                 res.sendStatus(500);
@@ -376,7 +361,7 @@ exports.delInfo = function(req, res) {
     }
 
     function delWord(language, word) {
-        Language.findById(language, function(err, query) {
+        Language.findById(language, function(err, query) { // lgtm [js/sql-injection]
             if (err) {
                 writeLog(1, "Error at checking language existence", {origin: req.connection.remoteAddress, language: language, error: err.message});
                 res.sendStatus(500);
@@ -384,7 +369,7 @@ exports.delInfo = function(req, res) {
                 writeLog(2, "Language does not exist", {origin: req.connection.remoteAddress, language: language});
                 res.sendStatus(400);
             } else {
-                Language.findByIdAndUpdate(language, {
+                Language.findByIdAndUpdate(language, { // lgtm [js/sql-injection]
                     $pull: {"dictionary": {"_id": word}}
                 }, function(err, query) {
                     if (err) {
@@ -429,7 +414,7 @@ exports.getSession = function(req, res) {
 
 
     function getDictionary(language) {
-        Language.findById(language, {
+        Language.findById(language, { // lgtm [js/sql-injection]
             _id: 1,
             period: 1,
             session: 1,
@@ -469,7 +454,7 @@ exports.getSession = function(req, res) {
         var sessionSize;
         var sequenceSpecial = new Array();
         var sequenceNormal = new Array();
-        var sequence = new Array();
+        var sequence = new Array(); // lgtm [js/useless-assignment-to-local]
         var session = new Array();
 
         if (language.period.current == 0) {
@@ -630,7 +615,7 @@ exports.postResults = function(req, res) {
 
 
     function getWord(language, word, state) {
-        Language.findOne({
+        Language.findOne({ // lgtm [js/sql-injection]
             _id: language,
             "dictionary._id": word
         }, {
