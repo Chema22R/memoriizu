@@ -106,7 +106,7 @@ $(function() {
         form += "</form>";
 
         $("#fixedEditMenuForm").remove();
-        $(form).appendTo("#fixedEditMenu");
+        $(form).appendTo("#fixedEditMenu"); // lgtm [js/xss-through-dom]
 
         $("#fixedEditMenu").css({left: (window.innerWidth - $("#fixedEditMenu").width()) / 2});
 
