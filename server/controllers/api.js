@@ -1,5 +1,7 @@
 "use strict";
 
+const objectIdRegex = /^[a-f\d]{24}$/i;
+
 /* packages
 ========================================================================== */
 
@@ -18,14 +20,27 @@ var Language = require("./../models/language.js");
 
 exports.getInfo = function(req, res) {
     if (mongoose.connection.readyState === 1) {
-        switch (req.query.type) {
-            case "tree": getTree();break;
-            case "users": getUsers();break;
-            case "languages": getLanguages(req.query.id);break;
-            case "words": getWords(req.query.id);break;
-            default:
-                writeLog(2, "Unknown type of information to obtain", {origin: req.connection.remoteAddress, type: req.query.type});
-                res.sendStatus(400);
+        if (!req.query.id || objectIdRegex.test(req.query.id)) {
+            switch (req.query.type) {
+                case "tree":
+                    getTree()
+                    break;
+                case "users":
+                    getUsers();
+                    break;
+                case "languages":
+                    getLanguages(req.query.id);
+                    break;
+                case "words":
+                    getWords(req.query.id);
+                    break;
+                default:
+                    writeLog(2, "Unknown type of information to obtain", {origin: req.connection.remoteAddress, type: req.query.type});
+                    res.sendStatus(400);
+            }
+        } else {
+            writeLog(2, "Invalid id structure", {origin: req.connection.remoteAddress, id: req.query.id});
+            res.sendStatus(400);
         }
     } else {
         writeLog(1, "Database disconnected", {origin: req.connection.remoteAddress});
@@ -486,7 +501,7 @@ exports.getSession = function(req, res) {
 
         writeLog(4, "Special session sequence obtained", {origin: req.connection.remoteAddress, language: language._id, sequenceSpecialSize: sequenceSpecial.length});
 
-        for (var i=0; i<dictionarySize && sequenceNormal.length<sessionSize; i++) {
+        for (var i=0; i<dictionarySize && sequenceNormal.length<sessionSize; i++) {
             if ((sequenceNormal.indexOf(i) == -1) && (sequenceSpecial.indexOf(i) == -1) && (!language.dictionary[i].ref || language.period.current == 0)) {
                 sequenceNormal[sequenceNormal.length] = i;
             }
@@ -618,7 +633,7 @@ exports.postResults = function(req, res) {
         Language.findOne({
             _id: language,
             "dictionary._id": word
-        }, {
+        }, {
             "dictionary.$": 1
         }, function(err, query) {
             if (err) {
