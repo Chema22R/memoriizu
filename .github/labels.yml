@@ -1,0 +1,51 @@
+- name: hotfix
+  description: Something isn't working
+  color: 400000
+- name: feature
+  description: New feature or request
+  color: a2eeef
+- name: frontend
+  description: This issue required to modify the frontend
+  color: f9f413
+- name: backend
+  description: This issue required to modify the backend
+  color: 1d51e0
+- name: high priority
+  description: This issue has high priority
+  color: FF0000
+- name: medium priority
+  description: This issue has medium priority
+  color: FFFF00
+- name: low priority
+  description: This issue has low priority
+  color: 00FF00
+- name: dependencies
+  description: Pull requests that update a dependency file
+  color: 008a00
+- name: documentation
+  description: Improvements or additions to documentation
+  color: 0075ca
+- name: blocked
+  description: This issue or pull request is blocked
+  color: ffffff
+- name: duplicate
+  description: This issue or pull request already exists
+  color: cfd3d7
+- name: good first issue
+  description: Good for newcomers
+  color: 7057ff
+- name: help wanted
+  description: Extra attention is needed
+  color: 008672
+- name: invalid
+  description: This doesn't seem right
+  color: e4e669
+- name: question
+  description: Further information is requested
+  color: d876e3
+- name: security
+  description: Pull requests that address a security vulnerability
+  color: ee0701
+- name: wontfix
+  description: This will not be worked on
+  color: ffffff
