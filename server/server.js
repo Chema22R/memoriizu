@@ -16,7 +16,7 @@ var mongoose = require("mongoose");
 /* sentry
 ========================================================================== */
 
-Sentry.init(process.env.MEMORIIZU_SENTRY);
+Sentry.init({ dsn: process.env.MEMORIIZU_SENTRY_DSN, environment: process.env.ENV || 'development' });
 app.use(Sentry.Handlers.requestHandler());
 
 
@@ -36,10 +36,12 @@ app.use(bodyParser.json());
 /* log
 ========================================================================== */
 
-app.locals.logger = Logger.createLogger(
-	process.env.MEMORIIZU_LOGDNA_KEY,
-	process.env.MEMORIIZU_LOGDNA_CONFIG
-);
+app.locals.logger = Logger.createLogger(process.env.MEMORIIZU_LOGDNA_KEY, {
+    app: "Memoriizu",
+    env: process.env.ENV || "development",
+    index_meta: true,
+    tags: ['memoriizu', process.env.ENV || 'development']
+});
 
 
 /* database connection
