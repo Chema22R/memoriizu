@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Application focused on language learning, in which users add the content they want to study",
   "scripts": {
-    "heroku-prebuild": "rm -r client *.json && mv server/* . && rm -r server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -4,7 +4,6 @@
   "description": "Application focused on language learning, in which users add the content they want to study",
   "main": "server.js",
   "scripts": {
-    "heroku-postbuild": "rm -r *.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
