@@ -71,7 +71,7 @@ app.delete('/info', api.delInfo);
 app.get('/session', api.getSession);
 app.post('/session', api.postResults);
 
-app.get('/checkStatus', api.checkStatus);
+app.get('/health', api.checkStatus);
 
 
 /* app connection
