@@ -1,1 +1,1 @@
-var serverAddress = process.env.SERVER_URL;
+var serverAddress = "https://memoriizu.onrender.com";
