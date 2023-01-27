@@ -1,1 +1,1 @@
-var serverAddress = "https://memoriizu.onrender.com";
+var serverAddress = "https://memoriizu.herokuapp.com";
