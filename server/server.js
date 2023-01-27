@@ -8,7 +8,7 @@ var app = express();
 
 var cors = require("cors");
 var bodyParser = require("body-parser");
-var Logger = require('logdna');
+const { Logtail } = require("@logtail/node");
 var Sentry = require('@sentry/node');
 var mongoose = require("mongoose");
 
@@ -36,12 +36,7 @@ app.use(bodyParser.json());
 /* log
 ========================================================================== */
 
-app.locals.logger = Logger.createLogger(process.env.MEMORIIZU_LOGDNA_KEY, {
-    app: "Memoriizu",
-    env: process.env.ENV || "development",
-    index_meta: true,
-    tags: ['memoriizu', process.env.ENV || 'development']
-});
+app.locals.logger = new Logtail(process.env.MEMORIIZU_LOGGER_KEY);
 
 
 /* database connection
