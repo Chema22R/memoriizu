@@ -1,6 +1,6 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/9ab7dd07-71e2-4cdc-adcd-f536bb48c74f/deploy-status)](https://app.netlify.com/sites/memoriizu/deploys)
 [![CodeQL](https://github.com/Chema22R/memoriizu/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Chema22R/memoriizu/actions/workflows/codeql-analysis.yml)
-[![MIT License](https://camo.githubusercontent.com/d59450139b6d354f15a2252a47b457bb2cc43828/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f6c2f7365727665726c6573732e737667)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 # Memoriizu
 This application is focused on language learning, in which users add the content they want to study, in addition to the period in which they want the content to be distributed.
